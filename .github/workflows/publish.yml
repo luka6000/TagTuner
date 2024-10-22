@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'The version of the firmware to build'
+        description: 'The version of the firmware to build is 2024.10'
         required: true
   release:
     types: [published]
