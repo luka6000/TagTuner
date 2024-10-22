@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         file:
-          - tagtuner.yaml
+          - tagtuner-atom-grove.yaml
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
