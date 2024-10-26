@@ -1,0 +1,154 @@
+blueprint:
+  name: TagTuner for HAss
+  description: TagTuner music player automation for NFC tags
+  domain: automation
+  input:
+    reader_id:
+      name: TagTuner for ESPHome
+      description: This is your NFC reader device
+      selector:
+        device:
+          filter:
+            - integration: esphome
+              model: TagTuner
+    player:
+      name: Media Player
+      description: This is your media player for this reader
+      selector:
+        entity:
+          filter:
+            - domain: media_player
+
+variables:
+  device_id: !input reader_id
+  action: >-
+    {%if trigger.event.event_type == 'tag_scanned' %}
+      tag_scanned
+    {%else%}
+      {{ trigger.event.data.action }}
+    {%endif%}
+  uri: >-
+    {%if trigger.event.event_type == 'tag_scanned' %}
+      {{ trigger.event.data.name }}
+    {%else%}
+      {{ trigger.event.data.uri }}
+    {%endif%}
+  source: >-
+    {%if uri[0:23]=='https://music.apple.com' %}
+      applemusic
+    {%elif uri[0:24]=='https://open.spotify.com' %}
+      spotify
+    {%elif uri[0:10]=='sonos-2://' %}
+      sonos
+    {%elif uri[0:14]=='apple_music://'
+      or uri[0:9]=='deezer://'
+      or uri[0:19]=='filesystem_local://'
+      or uri[0:17]=='filesystem_smb://'
+      or uri[0:7]=='plex://'
+      or uri[0:8]=='qobuz://'
+      or uri[0:15]=='radiobrowser://'
+      or uri[0:13]=='soundcloud://'
+      or uri[0:10]=='spotify://'
+      or uri[0:8]=='tidal://'
+      or uri[0:9]=='tunein://'
+      or uri[0:10]=='ytmusic://'
+      %}mass
+    {%endif%}
+
+triggers:
+  - trigger: event
+    event_type: esphome.tagtuner
+  - trigger: event
+    event_type: tag_scanned
+conditions:
+  - condition: template
+    value_template: "{{ trigger.event.data.device_id == device_id }}"
+actions:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'tag_removed' }}"
+        sequence:
+          - action: media_player.media_stop
+            target:
+              entity_id: !input player
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'tag_scanned' and source == 'sonos' and trigger.event.data.playlist != '' }}"
+        sequence:
+          - action: media_player.media_stop
+            target:
+              entity_id: !input player
+          - action: media_player.select_source
+            data:
+              source: "{{ trigger.event.data.playlist }}"
+            target:
+              entity_id: !input player
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'tag_scanned' and source not in ('sonos', '') }}"
+        sequence:
+          - action: media_player.play_media
+            data:
+              media_content_type: music
+              media_content_id: "{{ uri }}"
+            target:
+              entity_id: !input player
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'play_pause' }}"
+        sequence:
+          - action: media_player.media_play_pause
+            target:
+              entity_id: !input player
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'next' }}"
+        sequence:
+          - action: media_player.media_next_track
+            target:
+              entity_id: !input player
+      - conditions:
+          - condition: template
+            value_template: "{{ action == 'mute' }}"
+        sequence:
+          - if:
+              - condition: state
+                entity_id: !input player
+                attribute: is_volume_muted
+                state: 1
+            then:
+              - action: media_player.volume_mute
+                target:
+                  entity_id: !input player
+                data:
+                  is_volume_muted: false
+            else:
+              - action: media_player.volume_mute
+                target:
+                  entity_id: !input player
+                data:
+                  is_volume_muted: true
+      - conditions:
+          - condition: state
+            entity_id: !input player
+            state: "playing"
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ action == 'volume_up' }}"
+                sequence:
+                  - action: media_player.volume_up
+                    target:
+                      entity_id: !input player
+              - conditions:
+                  - condition: template
+                    value_template: "{{ action == 'volume_down' }}"
+                sequence:
+                  - action: media_player.volume_down
+                    target:
+                      entity_id: !input player
+
+mode: queued
+max: 10
