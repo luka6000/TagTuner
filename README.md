@@ -7,7 +7,7 @@ Physical music media offer several advantages:
  - it's inclusive
 
 TagTuner is made with [ESPHome](https://www.esphome.io) and includes
-- an NCF reader
+- an NFC reader
 - a dial
 - a button
 - a multicolor LED light
