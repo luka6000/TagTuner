@@ -79,6 +79,8 @@ The ladybug icon is your guide.
 ## How to get tags for TagTuner
 ### Buy tags
 Choose NTAG216 or 888-byte tags if you want to include the playlist name and artist. Otherwise, NTAG213 (144 bytes) will suffice for just links to playlists
+
+- [Plain white cards](https://s.click.aliexpress.com/e/_Deb0eeV)
 - [Wooden cards](https://s.click.aliexpress.com/e/_DdGYnJf)
 - [Round stickers](https://s.click.aliexpress.com/e/_DB8U8dB)
 
