@@ -16,7 +16,8 @@ jobs:
       max-parallel: 3
       matrix:
         file:
-          - tagtuner-atom-grove.yaml
+          - tagtuner-atom-grove
+          - tagtuner-for-tagreader
         esphome-version:
           - stable
           - beta
