@@ -1,4 +1,4 @@
-# About TagTuner music player
+# TagTuner music player
 TagTuner is a device that enables you to access music playlists or albums using NFC tags.\
 It only works when integrated with Home Assistant media players and the Music Assistant music library is optional. This setup seamlessly blends your digital only music collection with the tactile experience of playing a physical record, tape or cd.\
 Physical music media offer several advantages:
@@ -30,7 +30,7 @@ You can use the button below to install the pre-built firmware directly to your 
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
-- [Home Assistant](https://www.home-assistant.io) 2024.x
+- [Home Assistant](https://www.home-assistant.io)  2024.10.x
 - [Music Assistant](https://music-assistant.io) 2.x or [Sonos](https://www.sonos.com/) speaker 
 - configured MAss music [library](https://music-assistant.io/usage/#the-library) and/or a streaming subscription 
 - TagTuner device configured in HAss
@@ -179,7 +179,9 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 #### Wiring TBD
 
 ### Firmware options
-- tagtuner-atom-grove.yaml: based on m5stack Atom Echo and grove connectors
+
+- [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
+- [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - tagtuner-esp32.yaml: custom-built TBD
 
 ## A little history

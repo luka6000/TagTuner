@@ -78,7 +78,7 @@ The ladybug icon is your guide.
 
 ## How to get tags for TagTuner
 ### Buy tags
-Choose NTAG216 or 888-byte tags if you want to include the playlist name and artist. Otherwise, NTAG213 (144 bytes) will suffice for just links to playlists
+Choose NTAG215 (504 bytes) or NTAG216 (888 bytes) tags if you want to include the playlist name and artist. Otherwise, NTAG213 (144 bytes) will suffice for just links to playlists
 
 - [Plain white cards](https://s.click.aliexpress.com/e/_Deb0eeV)
 - [Wooden cards](https://s.click.aliexpress.com/e/_DdGYnJf)
@@ -171,7 +171,9 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 #### Wiring TBD
 
 ### Firmware options
-- tagtuner-atom-grove.yaml: based on m5stack Atom Echo and grove connectors
+
+- [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
+- [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - tagtuner-esp32.yaml: custom-built TBD
 
 ## A little history
