@@ -1,26 +1,32 @@
 blueprint:
   name: TagTuner for HAss
-  description: TagTuner music player automation for NFC tags
+  description: TagTuner music player for NFC tags automation
   domain: automation
   input:
-    reader_id:
+    tuner_id:
       name: TagTuner for ESPHome
-      description: This is your NFC reader device
+      description: This is your NFC tuner device
       selector:
         device:
           filter:
             - integration: esphome
-              model: TagTuner
     player:
       name: Media Player
-      description: This is your media player for this reader
+      description: This is your media player for this tuner
       selector:
         entity:
           filter:
             - domain: media_player
+    stop_on_tagremoved:
+      name: Stop music
+      description: on tag removed
+      selector:
+        boolean:
+      default: true
 
 variables:
-  device_id: !input reader_id
+  device_id: !input tuner_id
+  stop_on_tagremoved: !input stop_on_tagremoved
   action: >-
     {%if trigger.event.event_type == 'tag_scanned' %}
       tag_scanned
@@ -67,14 +73,16 @@ actions:
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ action == 'tag_removed' }}"
+            value_template: '{{ action == "tag_removed" }}'
         sequence:
+          - condition: template
+            value_template: "{{ stop_on_tagremoved == true }}"
           - action: media_player.media_stop
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: "{{ action == 'tag_scanned' and source == 'sonos' and trigger.event.data.playlist != '' }}"
+            value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
         sequence:
           - action: media_player.media_stop
             target:
@@ -86,7 +94,7 @@ actions:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: "{{ action == 'tag_scanned' and source not in ('sonos', '') }}"
+            value_template: '{{ action == "tag_scanned" and source not in ("sonos", "") }}'
         sequence:
           - action: media_player.play_media
             data:
@@ -96,21 +104,21 @@ actions:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: "{{ action == 'play_pause' }}"
+            value_template: '{{ action == "play_pause" }}'
         sequence:
           - action: media_player.media_play_pause
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: "{{ action == 'next' }}"
+            value_template: '{{ action == "next" }}'
         sequence:
           - action: media_player.media_next_track
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: "{{ action == 'mute' }}"
+            value_template: '{{ action == "mute" }}'
         sequence:
           - if:
               - condition: state
@@ -137,14 +145,14 @@ actions:
           - choose:
               - conditions:
                   - condition: template
-                    value_template: "{{ action == 'volume_up' }}"
+                    value_template: '{{ action == "volume_up" }}'
                 sequence:
                   - action: media_player.volume_up
                     target:
                       entity_id: !input player
               - conditions:
                   - condition: template
-                    value_template: "{{ action == 'volume_down' }}"
+                    value_template: '{{ action == "volume_down" }}'
                 sequence:
                   - action: media_player.volume_down
                     target:
@@ -152,3 +160,5 @@ actions:
 
 mode: queued
 max: 10
+trace:
+  stored_traces: 30
