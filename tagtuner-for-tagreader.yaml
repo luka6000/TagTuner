@@ -65,6 +65,7 @@ improv_serial:
 binary_sensor:
   - platform: template
     name: "=Reading="
+    id: txt_reading
     device_class: running
     entity_category: DIAGNOSTIC
     lambda: |-
@@ -75,6 +76,7 @@ binary_sensor:
       }
   - platform: template
     name: "=Writing="
+    id: txt_writing
     device_class: running
     entity_category: DIAGNOSTIC
     lambda: |-
@@ -91,6 +93,7 @@ output:
 
 rtttl:
   output: buzzer
+  id: buz
 
 # light:
 #   - platform: neopixelbus
@@ -268,11 +271,12 @@ text_sensor:
 button:
   - platform: restart
     name: "${friendly_name} Restart"
+    id: btn_restart
     entity_category: DIAGNOSTIC
 
   - platform: template
     name: Cancel writing 
-    id: cancel_writing
+    id: btn_cancel_writing
     icon: "mdi:broadcast-off"
     entity_category: CONFIG
     on_press:
@@ -292,7 +296,7 @@ button:
 
   - platform: template
     name: Erase Tag
-    id: erase_tag
+    id: btn_erase_tag
     icon: "mdi:nfc-search-variant"
     entity_category: CONFIG    
     on_press:
@@ -333,7 +337,7 @@ button:
 
   - platform: template
     name: Write Tag
-    id: write_tag
+    id: btn_write_tag
     icon: "mdi:cast-audio-variant"
     entity_category: CONFIG    
     on_press:
@@ -392,6 +396,7 @@ globals:
     type: std::string
 
 i2c:
+  id: bus_i2c
   scan: False
   frequency: 100kHz
   timeout: 13ms #to prevent pn532 timeout

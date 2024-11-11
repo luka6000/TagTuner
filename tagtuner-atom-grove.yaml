@@ -83,6 +83,7 @@ media_player:
 binary_sensor:
   - platform: template
     name: "=Reading="
+    id: txt_reading
     device_class: running
     entity_category: DIAGNOSTIC
     lambda: |-
@@ -93,6 +94,7 @@ binary_sensor:
       }
   - platform: template
     name: "=Writing="
+    id: txt_writing
     device_class: running
     entity_category: DIAGNOSTIC
     lambda: |-
@@ -335,11 +337,12 @@ sensor:
 button:
   - platform: restart
     name: "${friendly_name} Restart"
+    id: btn_restart
     entity_category: DIAGNOSTIC
 
   - platform: template
     name: Cancel writing 
-    id: cancel_writing
+    id: btn_cancel_writing
     icon: "mdi:broadcast-off"
     entity_category: CONFIG
     on_press:
@@ -359,7 +362,7 @@ button:
 
   - platform: template
     name: Erase Tag
-    id: erase_tag
+    id: btn_erase_tag
     icon: "mdi:nfc-search-variant"
     entity_category: CONFIG    
     on_press:
@@ -398,7 +401,7 @@ button:
 
   - platform: template
     name: Write Tag
-    id: write_tag
+    id: btn_write_tag
     icon: "mdi:cast-audio-variant"
     entity_category: CONFIG    
     on_press:
@@ -455,6 +458,7 @@ globals:
     type: std::string
 
 i2c:
+  id: bus_i2c
   sda: 26
   scl: 32
   scan: False
