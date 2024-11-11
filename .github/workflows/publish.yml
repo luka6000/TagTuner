@@ -20,7 +20,7 @@ jobs:
       files: |
         tagtuner-atom-grove.factory.yaml
         tagtuner-for-tagreader.factory.yaml
-      esphome-version: 2024.10.2
+      esphome-version: stable
       combined-name: firmware
       release-summary: ${{ github.event_name == 'release' && github.event.release.body || '' }}
       release-url: ${{ github.event_name == 'release' && github.event.release.html_url || '' }}
