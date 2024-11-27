@@ -1,0 +1,13 @@
+script:
+  - id: led_blink
+    then:
+    - lambda: return;
+  - id: led_ok
+    then:
+    - lambda: return;
+  - id: led_success
+    then:
+    - lambda: return;
+  - id: led_tagwrite
+    then:
+    - lambda: return;
