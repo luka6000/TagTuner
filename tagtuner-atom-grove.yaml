@@ -1,9 +1,3 @@
-# this is a modified PN532 to make it work with 888byte tags
-external_components:
-  - source: github://luka6000/TagTuner@main
-    components: [ pn532 ]
-    refresh: 1min
-
 # These substitutions allow the end user to override certain values
 substitutions:
   name: "tagtuner"
@@ -14,7 +8,7 @@ esphome:
   friendly_name: ${friendly_name}
   # Automatically add the mac address to the name
   # so you can use a single firmware for all devices
-  name_add_mac_suffix: true
+  name_add_mac_suffix: false
 
   # hello world
   on_boot:
@@ -48,24 +42,19 @@ logger:
     # pn532: DEBUG
     # pn532_i2c: DEBUG
 
-# API is a requirement of the dashboard import.
-api:
+packages:
+  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
+  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  # core-nfc: !include tagtuner-core-nfc.yaml
+  # core-comms: !include tagtuner-core-comms.yaml
 
-# OTA is required for Over-the-Air updating
-ota:
-  platform: esphome
-
-wifi:
-  # Set up a wifi access point using the device name above
-  ap:
-    password: "12345678"
-
-# In combination with the `ap` this allows the user
-# to provision wifi credentials to the device.
-captive_portal:
-
-# Sets up the improv via serial client for Wi-Fi provisioning
-improv_serial:
+i2c:
+  id: bus_i2c
+  sda: 26
+  scl: 32
+  scan: False
+  frequency: 100kHz
+  timeout: 13ms #to prevent pn532 timeout
 
 i2s_audio:
   - id: i2s_audio_bus
@@ -81,28 +70,6 @@ media_player:
     mode: mono
 
 binary_sensor:
-  - platform: template
-    name: "=Reading="
-    id: txt_reading
-    device_class: running
-    entity_category: DIAGNOSTIC
-    lambda: |-
-      if ( !id(pn532_board).is_writing() ) {
-        return true;
-      } else {
-        return false;
-      }
-  - platform: template
-    name: "=Writing="
-    id: txt_writing
-    device_class: running
-    entity_category: DIAGNOSTIC
-    lambda: |-
-      if ( id(pn532_board).is_writing() ) {
-        return true;
-      } else {
-        return false;
-      }
   - platform: gpio
     id: toggle
     pin:
@@ -203,15 +170,9 @@ light:
               duration: 50ms
 
 script:
-  - id: wait_input
-    then:
-      - delay: 3s
-      - text_sensor.template.publish:
-          id: status
-          state: "Waiting for input"
-
   - id: led_blink
     then:
+    - light.turn_off: led1
     - light.turn_on:
         id: led1
         brightness: 60%
@@ -221,6 +182,7 @@ script:
         flash_length: 100ms
   - id: led_ok
     then:
+    - light.turn_off: led1
     - light.turn_on:
         id: led1
         brightness: 100%
@@ -238,6 +200,7 @@ script:
         flash_length: 50ms
   - id: led_success
     then:
+    - light.turn_off: led1
     - light.turn_on:
         id: led1
         brightness: 100%
@@ -261,52 +224,11 @@ script:
         green: 100%
         blue: 0%
         flash_length: 500ms
-
-text:
-  - platform: template
-    id: playlist_artist
-    name: "Playlist artist"
-    icon: mdi:account-music
-    entity_category: CONFIG
-    optimistic: true
-    min_length: 0
-    max_length: 50
-    mode: text
-    initial_value: " "
-  - platform: template
-    id: playlist_info
-    name: "Playlist name or album title"
-    icon: mdi:playlist-music
-    entity_category: CONFIG
-    optimistic: true
-    min_length: 0
-    max_length: 100
-    mode: text
-    initial_value: " "
-  - platform: template
-    id: playlist_uri
-    name: "Playlist URI"
-    icon: mdi:link-variant
-    entity_category: CONFIG
-    optimistic: true
-    min_length: 0
-    max_length: 255
-    mode: text
-    initial_value: " "
-
-text_sensor:
-  - platform: template
-    id: status
-    name: "Status"
-    icon: mdi:ladybug
-    entity_category: DIAGNOSTIC
-    on_value:
-      if:
-        condition:
-          lambda: 'return id(status).state != "Waiting for input";'
-        then:
-        - script.stop: wait_input
-        - script.execute: wait_input
+  - id: led_tagwrite
+    then:
+    - light.turn_on:
+        id: led1
+        effect: TagWrite
 
 sensor:
   - platform: rotary_encoder
@@ -333,217 +255,3 @@ sensor:
           data:
             action: "volume_down"
       - script.execute: led_blink
-
-button:
-  - platform: restart
-    name: "${friendly_name} Restart"
-    id: btn_restart
-    entity_category: DIAGNOSTIC
-
-  - platform: template
-    name: Cancel writing 
-    id: btn_cancel_writing
-    icon: "mdi:broadcast-off"
-    entity_category: CONFIG
-    on_press:
-      then:
-      - lambda: 'id(pn532_board).read_mode();'
-      - wait_until:
-          timeout: 30s
-          condition:
-            not:
-              pn532.is_writing:
-      - delay: 5ms
-      - text_sensor.template.publish:
-          id: status
-          state: "Cancel writing tag"
-      - light.turn_off: led1
-      - script.execute: led_ok
-
-  - platform: template
-    name: Erase Tag
-    id: btn_erase_tag
-    icon: "mdi:nfc-search-variant"
-    entity_category: CONFIG    
-    on_press:
-      then:
-      - light.turn_on:
-          id: led1
-          effect: TagWrite
-      - text.set:
-          id: playlist_artist
-          value: ''
-      - text.set:
-          id: playlist_info
-          value: ''
-      - text.set:
-          id: playlist_uri
-          value: ''
-      - lambda: 'id(pn532_board).format_mode();'
-      - text_sensor.template.publish:
-          id: status
-          state: "Place tag"
-      - wait_until:
-          timeout: 30s
-          condition:
-            not:
-              pn532.is_writing:
-      - if:
-          condition:
-            pn532.is_writing:
-          then:
-          - lambda: 'id(pn532_board).read_mode();'
-      - text_sensor.template.publish:
-          id: status
-          state: "Finished erasing tag"
-      - light.turn_off: led1
-      - script.execute: led_success
-
-  - platform: template
-    name: Write Tag
-    id: btn_write_tag
-    icon: "mdi:cast-audio-variant"
-    entity_category: CONFIG    
-    on_press:
-      then:
-      - light.turn_on:
-          id: led1
-          effect: TagWrite
-      - lambda: |-
-          auto message = new nfc::NdefMessage();
-          message->add_text_record("TagTuner");
-          std::string uri = "";
-          std::string artist = "artist/";
-          std::string playlist = "playlist/";
-          uri += id(playlist_uri).state;
-          artist += id(playlist_artist).state;
-          playlist += id(playlist_info).state;
-          if ( artist != "" ) {
-            message->add_text_record(artist);
-          }
-          if ( playlist != "" ) {
-            message->add_text_record(playlist);
-          }
-          if ( uri != "" ) {
-            message->add_uri_record(uri);
-          }
-          ESP_LOGD("ndef", "Writing payload: %s", uri.c_str());
-          id(pn532_board).write_mode(message);
-      - text_sensor.template.publish:
-          id: status
-          state: "Place tag"
-      - wait_until:
-          timeout: 30s
-          condition:
-            not:
-              pn532.is_writing:
-      - if:
-          condition:
-            pn532.is_writing:
-          then:
-          - lambda: 'id(pn532_board).read_mode();'
-      - logger.log: "Finished writing tag"
-      - text_sensor.template.publish:
-          id: status
-          state: "Finished writing tag"
-      - light.turn_off: led1
-      - script.execute: led_success
-
-globals:
-  - id: artist
-    type: std::string
-  - id: playlist
-    type: std::string
-  - id: uri
-    type: std::string
-
-i2c:
-  id: bus_i2c
-  sda: 26
-  scl: 32
-  scan: False
-  frequency: 100kHz
-  timeout: 13ms #to prevent pn532 timeout
-
-pn532_i2c:
-  id: pn532_board
-  update_interval: 350ms
-  on_tag_removed:
-    - logger.log: "on_tag_removed"
-    - text_sensor.template.publish:
-        id: status
-        state: "Tag removed"
-    - wait_until:
-        condition:
-          api.connected:
-        timeout: 20s
-    - homeassistant.event:
-        event: esphome.tagtuner
-        data:
-          action: "tag_removed"
-          uid: !lambda 'return x;'
-    - script.execute: led_blink
-
-  on_tag:
-    - logger.log: "on_tag"
-    - text_sensor.template.publish:
-        id: status
-        state: !lambda 'return "Tag "+x;'
-    - lambda: |-
-        id(playlist)="";
-        id(artist)="";
-        id(uri)="";
-        if (tag.has_ndef_message()) {
-          for (auto &record : tag.get_ndef_message()->get_records() ) {
-            std::string payload = record->get_payload();
-            std::string type = record->get_type();
-
-            if ( payload.substr(0, 7) == "artist/" ) {
-              id(artist)=payload.substr(7);
-            }
-            else if ( payload.substr(0, 9) == "playlist/" ) {
-              id(playlist)=payload.substr(9);
-            }
-            else if (type == "U" && payload.substr(0, 20) != "https://mb.senic.com" ) {
-              id(uri)=payload;
-            }
-
-          }
-        }
-    - if:
-        condition:
-          lambda: 'return id(uri) == "" ;'
-        then:
-          - text_sensor.template.publish:
-              id: status
-              state: "Plain UID tag"
-          - homeassistant.tag_scanned: !lambda |-
-              ESP_LOGD("tagtuner", "No TagTuner NDEF, using UID");
-              return x;
-        else:
-          - wait_until:
-              condition:
-                api.connected:
-              timeout: 20s
-          - homeassistant.event:
-              event: esphome.tagtuner
-              data:
-                action: "tag_scanned"
-                uid: !lambda 'return x;'
-                uri: !lambda 'return id(uri);'
-                artist: !lambda 'return id(artist);'
-                playlist: !lambda 'return id(playlist);'
-          - text.set:
-              id: playlist_artist
-              value: !lambda |-
-                return id(artist);
-          - text.set:
-              id: playlist_info
-              value: !lambda |-
-                return id(playlist);
-          - text.set:
-              id: playlist_uri
-              value: !lambda |-
-                ESP_LOGD("tagtuner", "URI NDEF");
-                return id(uri);
-    - script.execute: led_blink
