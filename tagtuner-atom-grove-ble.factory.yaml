@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "tagtuner ble"
+  name: "tagtuner_ble"
   friendly_name: "TagTuner BLE"
 
 packages:
