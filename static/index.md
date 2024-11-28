@@ -181,6 +181,7 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 ### Firmware options
 
 - [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
+- [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo + Bluetooth & BLE proxy, no media player, ESP-IDF framework
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - tagtuner-esp32.yaml: custom-built TBD
 
@@ -196,6 +197,8 @@ All of this is my personal hobby project, available for free download and person
 [paypal.me/lukagra](http://paypal.me/lukagra)
 
 Links to parts listed above are affiliate links, which allow me to earn a small commission from your purchase. Thank you! 🙏
+
+In case you're interested in buying a ready-made TagTuner, please drop me an email at tagtuner at icloud.com.
 
 My work, including yaml files, 3d model and documentation, is licensed under \
 [Creative Commons (4.0 International License) Attribution—Noncommercial—Share Alike \

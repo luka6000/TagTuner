@@ -1,0 +1,19 @@
+esp32:
+  board: m5stack-atom
+  framework:
+    type: esp-idf
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: false
+bluetooth_proxy:
+  active: false
+
+packages:
+  atom-grove: github://luka6000/TagTuner/tagtuner-atom-grove.yaml@main
+
+i2s_audio:
+  - id: !remove i2s_audio_bus
+
+media_player:
+  - id: !remove mp1

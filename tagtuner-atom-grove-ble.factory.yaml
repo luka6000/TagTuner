@@ -1,11 +1,16 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "tagtuner"
-  friendly_name: "TagTuner"
+  name: "tagtuner-ble"
+  friendly_name: "TagTuner BLE"
 
 packages:
   # Include all of the core configuration
-  core: github://luka6000/TagTuner/tagtuner-atom-grove.yaml@main
+  # core: github://luka6000/TagTuner/tagtuner-atom-grove-ble.yaml@main
+  core: 
+    url: https://github.com/luka6000/TagTuner
+    files: tagtuner-atom-grove-ble.yaml
+    ref: main
+    refresh: 0d
 
 esphome:
   name: "${name}"
@@ -20,7 +25,7 @@ esphome:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://luka6000/TagTuner/tagtuner-atom-grove.yaml@main
+  package_import_url: github://luka6000/TagTuner/tagtuner-atom-grove-ble.yaml@main
   import_full_config: true
 
 # Sets up the improv via serial client for Wi-Fi provisioning

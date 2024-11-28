@@ -17,6 +17,7 @@ jobs:
       matrix:
         file:
           - tagtuner-atom-grove
+          - tagtuner-atom-grove-ble
           - tagtuner-for-tagreader
         esphome-version:
           - stable
