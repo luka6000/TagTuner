@@ -86,11 +86,11 @@ binary_sensor:
         - logger.log: "Double Clicked"
         - text_sensor.template.publish:
             id: status
-            state: "Next"
+            state: "clickDouble"
         - homeassistant.event:
             event: esphome.tagtuner
             data:
-              action: "next"
+              action: "clickDouble"
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -99,11 +99,11 @@ binary_sensor:
         - logger.log: "Single Long Clicked"
         - text_sensor.template.publish:
             id: status
-            state: "Mute"
+            state: "clickLong"
         - homeassistant.event:
             event: esphome.tagtuner
             data:
-              action: "mute"
+              action: "clickLong"
     - timing:
         - ON for at most 300ms
         - OFF for at least 260ms
@@ -112,11 +112,11 @@ binary_sensor:
         - logger.log: "Single Short Clicked"
         - text_sensor.template.publish:
             id: status
-            state: "Play/Pause"
+            state: "clickSingle"
         - homeassistant.event:
             event: esphome.tagtuner
             data:
-              action: "play_pause"
+              action: "clickSingle"
 
 light:
   - platform: esp32_rmt_led_strip
