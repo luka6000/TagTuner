@@ -1,6 +1,6 @@
 blueprint:
   name: TagTuner for HAss
-  description: TagTuner music player for NFC tags automation
+  description: TagTuner music player automation for NFC tags
   domain: automation
   input:
     tuner_id:
@@ -10,9 +10,18 @@ blueprint:
         device:
           filter:
             - integration: esphome
+    massplayer:
+      name: Music Assistant media player
+      description: This is your MAss media player for this tuner
+      default:
+      selector:
+        entity:
+          filter:
+            - integration: mass
     player:
-      name: Media Player
-      description: This is your media player for this tuner
+      name: Home Assistant media player
+      description: Controls play/stop/volume and maybe plays http playlists
+      # default:
       selector:
         entity:
           filter:
@@ -58,6 +67,7 @@ variables:
       or uri[0:8]=='tidal://'
       or uri[0:9]=='tunein://'
       or uri[0:10]=='ytmusic://'
+      or uri[0:10]=='library://'
       %}mass
     {%endif%}
 
@@ -92,9 +102,22 @@ actions:
               source: "{{ trigger.event.data.playlist }}"
             target:
               entity_id: !input player
+          - action: media_player.turn_on
+            target:
+              entity_id: !input massplayer
       - conditions:
           - condition: template
-            value_template: '{{ action == "tag_scanned" and source not in ("sonos", "") }}'
+            value_template: '{{ action == "tag_scanned" and source == "mass" }}'
+        sequence:
+          - action: media_player.play_media
+            data:
+              media_content_type: music
+              media_content_id: "{{ uri }}"
+            target:
+              entity_id: !input massplayer
+      - conditions:
+          - condition: template
+            value_template: '{{ action == "tag_scanned" and source not in ("sonos", "mass", "") }}'
         sequence:
           - action: media_player.play_media
             data:
@@ -102,23 +125,26 @@ actions:
               media_content_id: "{{ uri }}"
             target:
               entity_id: !input player
+          - action: media_player.turn_on
+            target:
+              entity_id: !input massplayer
       - conditions:
           - condition: template
-            value_template: '{{ action == "play_pause" }}'
+            value_template: '{{ action == "clickDouble" }}'
         sequence:
           - action: media_player.media_play_pause
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: '{{ action == "next" }}'
+            value_template: '{{ action == "clickSingle" }}'
         sequence:
           - action: media_player.media_next_track
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: '{{ action == "mute" }}'
+            value_template: '{{ action == "clickLong" }}'
         sequence:
           - if:
               - condition: state
