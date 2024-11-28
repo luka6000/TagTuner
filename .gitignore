@@ -5,7 +5,5 @@
 /.esphome/
 /secrets.yaml
 __pycache__
-tagtunerdev.yaml
-tagtunerdev1.yaml
-tagtunerdev2.yaml
-tagtunerdev3.yaml
+tagtunerdev*.yaml
+tagtuner-dev*.yaml
