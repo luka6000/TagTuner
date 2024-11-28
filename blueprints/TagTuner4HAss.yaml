@@ -4,15 +4,25 @@ blueprint:
   domain: automation
   input:
     tuner_id:
+    tuner_id:
       name: TagTuner for ESPHome
       description: This is your NFC tuner device
       selector:
         device:
           filter:
             - integration: esphome
+    massplayer:
+      name: Music Assistant media player
+      description: This is your MAss media player for this tuner
+      default:
+      selector:
+        entity:
+          filter:
+            - integration: mass
     player:
-      name: Media Player
-      description: This is your media player for this tuner
+      name: Home Assistant media player
+      description: Controls play/stop/volume and maybe plays http playlists
+      # default:
       selector:
         entity:
           filter:
@@ -23,8 +33,16 @@ blueprint:
       selector:
         boolean:
       default: true
+    stop_on_tagremoved:
+      name: Stop music
+      description: on tag removed
+      selector:
+        boolean:
+      default: true
 
 variables:
+  device_id: !input tuner_id
+  stop_on_tagremoved: !input stop_on_tagremoved
   device_id: !input tuner_id
   stop_on_tagremoved: !input stop_on_tagremoved
   action: >-
@@ -58,6 +76,7 @@ variables:
       or uri[0:8]=='tidal://'
       or uri[0:9]=='tunein://'
       or uri[0:10]=='ytmusic://'
+      or uri[0:10]=='library://'
       %}mass
     {%endif%}
 
@@ -74,7 +93,10 @@ actions:
       - conditions:
           - condition: template
             value_template: '{{ action == "tag_removed" }}'
+            value_template: '{{ action == "tag_removed" }}'
         sequence:
+          - condition: template
+            value_template: "{{ stop_on_tagremoved == true }}"
           - condition: template
             value_template: "{{ stop_on_tagremoved == true }}"
           - action: media_player.media_stop
@@ -82,6 +104,7 @@ actions:
               entity_id: !input player
       - conditions:
           - condition: template
+            value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
             value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
         sequence:
           - action: media_player.media_stop
@@ -92,9 +115,22 @@ actions:
               source: "{{ trigger.event.data.playlist }}"
             target:
               entity_id: !input player
+          - action: media_player.turn_on
+            target:
+              entity_id: !input massplayer
       - conditions:
           - condition: template
-            value_template: '{{ action == "tag_scanned" and source not in ("sonos", "") }}'
+            value_template: '{{ action == "tag_scanned" and source == "mass" }}'
+        sequence:
+          - action: media_player.play_media
+            data:
+              media_content_type: music
+              media_content_id: "{{ uri }}"
+            target:
+              entity_id: !input massplayer
+      - conditions:
+          - condition: template
+            value_template: '{{ action == "tag_scanned" and source not in ("sonos", "mass", "") }}'
         sequence:
           - action: media_player.play_media
             data:
@@ -102,23 +138,26 @@ actions:
               media_content_id: "{{ uri }}"
             target:
               entity_id: !input player
+          - action: media_player.turn_on
+            target:
+              entity_id: !input massplayer
       - conditions:
           - condition: template
-            value_template: '{{ action == "play_pause" }}'
+            value_template: '{{ action == "clickDouble" }}'
         sequence:
           - action: media_player.media_play_pause
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: '{{ action == "next" }}'
+            value_template: '{{ action == "clickSingle" }}'
         sequence:
           - action: media_player.media_next_track
             target:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: '{{ action == "mute" }}'
+            value_template: '{{ action == "clickLong" }}'
         sequence:
           - if:
               - condition: state
@@ -146,12 +185,14 @@ actions:
               - conditions:
                   - condition: template
                     value_template: '{{ action == "volume_up" }}'
+                    value_template: '{{ action == "volume_up" }}'
                 sequence:
                   - action: media_player.volume_up
                     target:
                       entity_id: !input player
               - conditions:
                   - condition: template
+                    value_template: '{{ action == "volume_down" }}'
                     value_template: '{{ action == "volume_down" }}'
                 sequence:
                   - action: media_player.volume_down
