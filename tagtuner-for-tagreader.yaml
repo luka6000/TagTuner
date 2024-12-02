@@ -17,9 +17,6 @@ esphome:
   on_boot:
     priority: -100
     then:
-    # - light.turn_on:
-    #     id: led1
-    #     effect: HelloWorld
     - wait_until:
         condition:
           api.connected:
@@ -48,8 +45,10 @@ logger:
 packages:
   core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
   core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
-  # core-nfc: !include tagtuner-core-nfc.yaml
-  # core-comms: !include tagtuner-core-comms.yaml
+  # I was not able to use light with tagreader hardware and TagTuner firmware.
+  # My nodemcu is restarting every time I try to turn on the light.
+  # Please experiment on your own.
+  # tagreader-light: !include tagtuner-for-tagreader-light.yaml
 
 i2c:
   id: bus_i2c
@@ -66,16 +65,76 @@ rtttl:
   output: buzzer
   id: buz
 
+switch:
+  - platform: template
+    name: "Buzzer Enabled"
+    id: buzzon
+    icon: mdi:volume-high
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+
+#Enable light and check if it works for you. My nodemcu keeps restarting with light enabled.
 script:
   - id: led_blink
     then:
-    - rtttl.play: "write:d=24,o=5,b=100:b,b"
+    - if:
+        condition:
+          switch.is_on: buzzon
+        then:
+        - rtttl.play: "write:d=24,o=5,b=100:g,b"
+    # - if:
+    #     condition:
+    #       switch.is_on: ledon
+    #     then:
+    #     - light.turn_on:
+    #         id: led1
+    #         effect: blinkWhite
+    #     - delay: 600ms
+    #     - light.turn_off: led1
   - id: led_ok
     then:
-    - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+    - if:
+        condition:
+          switch.is_on: buzzon
+        then:
+        - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+    # - if:
+    #     condition:
+    #       switch.is_on: ledon
+    #     then:
+    #     - light.turn_on:
+    #         id: led1
+    #         effect: blinkGreen
+    #     - delay: 600ms
+    #     - light.turn_off: led1
   - id: led_success
     then:
-    - rtttl.play: "write:d=24,o=5,b=100:b,b"
+    - if:
+        condition:
+          switch.is_on: buzzon
+        then:
+        - rtttl.play: "write:d=24,o=5,b=100:b,b"
+    # - if:
+    #     condition:
+    #       switch.is_on: ledon
+    #     then:
+    #     - light.turn_on:
+    #         id: led1
+    #         effect: blinkGreen
+    #     - delay: 600ms
+    #     - light.turn_off: led1
   - id: led_tagwrite
     then:
-    - rtttl.play: "write:d=24,o=5,b=100:b"
+    - if:
+        condition:
+          switch.is_on: buzzon
+        then:
+        - rtttl.play: "write:d=24,o=5,b=100:b"
+    # - if:
+    #     condition:
+    #       switch.is_on: ledon
+    #     then:
+    #     - light.turn_on:
+    #         id: led1
+    #         effect: blinkRed
