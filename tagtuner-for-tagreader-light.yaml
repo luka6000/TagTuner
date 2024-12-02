@@ -1,0 +1,56 @@
+# I was not able to use light with tagreader hardware and TagTuner firmware.
+# My nodemcu is restarting every time I try to turn on this light.
+# Please experiment on your own.
+light:
+  - platform: neopixelbus
+    variant: WS2812
+    id: led1
+    pin: $ledpin
+    num_leds: 1
+    type: grb
+    restore_mode: ALWAYS_OFF
+    default_transition_length: 0s
+    flash_transition_length: 0s
+    effects:
+      - strobe:
+          name: blinkWhite
+          colors:
+            - state: true
+              brightness: 60%
+              red: 100%
+              green: 100%
+              blue: 100%
+              duration: 250ms
+            - state: false
+              duration: 50ms
+      - strobe:
+          name: blinkRed
+          colors:
+            - state: true
+              brightness: 100%
+              red: 100%
+              green: 0%
+              blue: 0%
+              duration: 250ms
+            - state: false
+              duration: 50ms
+      - strobe:
+          name: blinkGreen
+          colors:
+            - state: true
+              brightness: 100%
+              red: 0%
+              green: 100%
+              blue: 0%
+              duration: 250ms
+            - state: false
+              duration: 50ms
+
+switch:
+  - platform: template
+    name: "LED enabled"
+    id: ledon
+    icon: mdi:alarm-light-outline
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
