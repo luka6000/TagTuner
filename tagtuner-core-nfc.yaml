@@ -101,7 +101,7 @@ text_sensor:
 
 button:
   - platform: restart
-    name: "${friendly_name} Restart"
+    name: "Restart"
     id: btn_restart
     entity_category: DIAGNOSTIC
 
