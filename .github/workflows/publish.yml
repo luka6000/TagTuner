@@ -18,9 +18,9 @@ jobs:
     uses: esphome/workflows/.github/workflows/build.yml@main
     with:
       files: |
-        # tagtuner-atom-grove.factory.yaml
         tagtuner-atom-grove-ble.factory.yaml
         tagtuner-for-tagreader.factory.yaml
+# tagtuner-atom-grove.factory.yaml
       esphome-version: stable
       combined-name: firmware
       release-summary: ${{ github.event_name == 'release' && github.event.release.body || '' }}
