@@ -181,9 +181,16 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 ### Firmware options
 
 - [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
-- [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo + Bluetooth & BLE proxy, no media player, ESP-IDF framework
+- [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo + Bluetooth & BLE proxy, no media player, ESP-IDF framework. This is current default install
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - tagtuner-esp32.yaml: custom-built TBD
+
+## Help me
+OK, I can try. Please choose your preferred way of communication
+
+- [reddit](https://www.reddit.com/r/homeassistant/comments/1go2l9l/tagtuner_nfc_music_player_showoff/)
+- [HAss community](https://community.home-assistant.io/t/tagtuner-music-player-for-nfc-tags/787529)
+- [MAss discord](https://discord.com/channels/753947050995089438/1300230612958838908/1300230612958838908)
 
 ## A little history
 It all began one day back in 2022. \
