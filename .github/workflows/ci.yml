@@ -21,8 +21,8 @@ jobs:
           - tagtuner-for-tagreader
         esphome-version:
           - stable
-          - beta
-          - dev
+          # - beta
+          # - dev
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4.1.7
