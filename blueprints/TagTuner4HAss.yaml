@@ -4,7 +4,6 @@ blueprint:
   domain: automation
   input:
     tuner_id:
-    tuner_id:
       name: TagTuner for ESPHome
       description: This is your NFC tuner device
       selector:
@@ -33,16 +32,8 @@ blueprint:
       selector:
         boolean:
       default: true
-    stop_on_tagremoved:
-      name: Stop music
-      description: on tag removed
-      selector:
-        boolean:
-      default: true
 
 variables:
-  device_id: !input tuner_id
-  stop_on_tagremoved: !input stop_on_tagremoved
   device_id: !input tuner_id
   stop_on_tagremoved: !input stop_on_tagremoved
   action: >-
@@ -93,7 +84,6 @@ actions:
       - conditions:
           - condition: template
             value_template: '{{ action == "tag_removed" }}'
-            value_template: '{{ action == "tag_removed" }}'
         sequence:
           - condition: template
             value_template: "{{ stop_on_tagremoved == true }}"
@@ -104,7 +94,6 @@ actions:
               entity_id: !input player
       - conditions:
           - condition: template
-            value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
             value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
         sequence:
           - action: media_player.media_stop
@@ -185,14 +174,12 @@ actions:
               - conditions:
                   - condition: template
                     value_template: '{{ action == "volume_up" }}'
-                    value_template: '{{ action == "volume_up" }}'
                 sequence:
                   - action: media_player.volume_up
                     target:
                       entity_id: !input player
               - conditions:
                   - condition: template
-                    value_template: '{{ action == "volume_down" }}'
                     value_template: '{{ action == "volume_down" }}'
                 sequence:
                   - action: media_player.volume_down
