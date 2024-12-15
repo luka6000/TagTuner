@@ -13,14 +13,14 @@ blueprint:
     massplayer:
       name: Music Assistant media player
       description: This is your MAss media player for this tuner
-      default:
+      # default:
       selector:
         entity:
           filter:
             - integration: mass
     player:
       name: Home Assistant media player
-      description: Controls play/stop/volume and maybe plays http playlists
+      description: Controls play/stop/volume and maybe plays http playlists. Choose same MAss media player as above in case you don't know better
       # default:
       selector:
         entity:
@@ -32,6 +32,12 @@ blueprint:
       selector:
         boolean:
       default: true
+    shuffle_playlist:
+      name: Shuffle
+      description: every playlist
+      selector:
+        boolean:
+      default: false
 
 variables:
   device_id: !input tuner_id
@@ -70,6 +76,17 @@ variables:
       or uri[0:10]=='library://'
       %}mass
     {%endif%}
+  text_playlist_uri: >-
+    {% for entity in  device_entities(device_id) %}
+      {% if entity|contains("playlist_uri") %}
+        {{ entity }}
+      {% endif%}
+    {% endfor%}
+  shuffle_config: !input shuffle_playlist
+  shuffle_playlist: >-
+    {%if shuffle_config == true
+    or uri[-8:]=='/shuffle'
+    %}{{true}}{%else%}{{false}}{%endif%}
 
 triggers:
   - trigger: event
@@ -87,11 +104,16 @@ actions:
         sequence:
           - condition: template
             value_template: "{{ stop_on_tagremoved == true }}"
-          - condition: template
-            value_template: "{{ stop_on_tagremoved == true }}"
           - action: media_player.media_stop
             target:
               entity_id: !input player
+          - action: media_player.shuffle_set
+            data:
+              shuffle: false
+            target:
+              entity_id:
+                - !input player
+                - !input massplayer
       - conditions:
           - condition: template
             value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
@@ -107,6 +129,17 @@ actions:
           - action: media_player.turn_on
             target:
               entity_id: !input massplayer
+          - condition: template
+            value_template: "{{ shuffle_playlist == true }}"
+          - wait_for_trigger:
+              - trigger: state
+                entity_id: !input player
+                to: playing
+          - action: media_player.shuffle_set
+            data:
+              shuffle: true
+            target:
+              entity_id: !input player
       - conditions:
           - condition: template
             value_template: '{{ action == "tag_scanned" and source == "mass" }}'
@@ -114,7 +147,18 @@ actions:
           - action: media_player.play_media
             data:
               media_content_type: music
-              media_content_id: "{{ uri }}"
+              media_content_id: "{%if uri[-8:] == '/shuffle'%}{{ uri[0:-8] }}{%else%}{{ uri }}{%endif%}"
+            target:
+              entity_id: !input massplayer
+          - condition: template
+            value_template: "{{ shuffle_playlist == true }}"
+          - wait_for_trigger:
+              - trigger: state
+                entity_id: !input massplayer
+                to: playing
+          - action: media_player.shuffle_set
+            data:
+              shuffle: true
             target:
               entity_id: !input massplayer
       - conditions:
@@ -124,12 +168,23 @@ actions:
           - action: media_player.play_media
             data:
               media_content_type: music
-              media_content_id: "{{ uri }}"
+              media_content_id: "{%if uri[-8:] == '/shuffle'%}{{ uri[0:-8] }}{%else%}{{ uri }}{%endif%}"
             target:
               entity_id: !input player
           - action: media_player.turn_on
             target:
               entity_id: !input massplayer
+          - condition: template
+            value_template: "{{ shuffle_playlist == true }}"
+          - wait_for_trigger:
+              - trigger: state
+                entity_id: !input player
+                to: playing
+          - action: media_player.shuffle_set
+            data:
+              shuffle: true
+            target:
+              entity_id: !input player
       - conditions:
           - condition: template
             value_template: '{{ action == "clickDouble" }}'
@@ -185,7 +240,16 @@ actions:
                   - action: media_player.volume_down
                     target:
                       entity_id: !input player
-
+  - if:
+      - condition: template
+        value_template: '{{ action == "tag_scanned" }}'
+    then:
+      - action: text.set_value
+        data:
+          value: "{{ uri }}"
+        target:
+          entity_id: >-
+            {{ text_playlist_uri }}
 mode: queued
 max: 10
 trace:
