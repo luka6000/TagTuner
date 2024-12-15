@@ -199,7 +199,7 @@ Built-in LED is used as confirmation light
 
 ### Case options
 - [3d models](https://github.com/luka6000/TagTuner/tree/main/3d%20models): Atom Echo Grove version 3d models
-- [printables](): 16mm D1-Custom version model
+- [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1): 16mm D1-Custom version model
 
 ### Firmware options
 
