@@ -17,6 +17,9 @@ TagTuner is made with [ESPHome](https://www.esphome.io) and includes
 All of this is housed in a sleek, custom design case.
 ![B71AED4C-08D7-4F52-AC81-285DC6743BAC](https://github.com/user-attachments/assets/35055b52-55a9-4207-9440-7b8cfff1b8df)
 
+D1-Custom version is only 16mm high
+![66AA4F85-2C12-4B6F-A300-D6C1CED9CAEC_1_105_c](https://github.com/user-attachments/assets/7e018411-fecd-4189-b498-19e88d62dc3b)
+
 Here is an exploded view of the TagTuner 3D model with a round tag card \
 <img width="1077" alt="35F8BCBF-CFB4-4F8B-A8F3-9931829DD101" src="https://github.com/user-attachments/assets/cd764ba3-65bd-4c20-bd40-68724a8d0756">
 
@@ -56,8 +59,8 @@ Place your tag flat on the TagTuner or use the slot to position it nicely.\
 TagTuner will read the tag and send the playlist information to Home Assistant. Using automation, HAss will play music on the speaker you've set up for this TagTuner.
 
 ### Button operations
-**Single click**: play/pause \
-**Double click**: next \
+**Single click**: next \
+**Double click**: play/pause \
 **Long click** (>1s): mute/unmute
 
 ### Volume control
@@ -164,18 +167,43 @@ Everything will fit into the enclosure.\
 Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything else (nfc board, volume encoder, front plate).
 ![BD16EF90-5222-40EF-A131-2C27C6EE5493_1_102_o](https://github.com/user-attachments/assets/3339c19f-d8e6-4a7f-83e1-4b611bee51d4)
 
-### Parts for custom-built version
+### Parts for D1-Custom version
+This version requires a bit more soldering but allows the knob to be used as a button.
 - [esp32 D1 mini](https://s.click.aliexpress.com/e/_DkyEAwt) controller with USBC
 - [pn532](https://s.click.aliexpress.com/e/_De8uw89) NFC reader
-- [rotary encoder](https://s.click.aliexpress.com/e/_DlIIMtn)
-#### Wiring TBD
+- [hw040](https://s.click.aliexpress.com/e/_DlIIMtn) rotary encoder
+#### Wiring D1-Custom
+pn532 connector:
+- GND: GND
+- VCC: VCC (+5V)
+- SDA/TXD: IO21
+- SCL/RXD: IO22
+
+hw040 connector:
+- CLK: IO18
+- DT: IO19
+- SW: IO23
+- +: +3.3V
+- GND: GND
+
+![BCAC91FD-93C7-45B1-BD3F-C07717A7AF5C_1_201_a](https://github.com/user-attachments/assets/6c01184f-bc0a-4e16-bff7-f1452aa176a0)
+
+ESP23 D1 mini will fit perfectly into the bottom part braces
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c7907571-c27f-4d40-ac83-a28fe8a409e3" />
+
+Built-in LED is used as confirmation light
+![85EAFCF9-9730-4185-8AF7-A039E5863FB1_1_105_c](https://github.com/user-attachments/assets/4572c1d7-16c5-45c3-8909-0a0d37272bc1)
+
+### Case options
+- [3d models](https://github.com/luka6000/TagTuner/tree/main/3d%20models): Atom Echo Grove version 3d models
+- [printables](): 16mm D1-Custom version model
 
 ### Firmware options
 
 - [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
 - [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo + Bluetooth & BLE proxy, no media player, ESP-IDF framework. This is current default install
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
-- tagtuner-esp32.yaml: custom-built TBD
+- [tagtuner-D1-custom1.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-D1-custom1.yaml): ESP32 D1 mini with HW-040 rotary encoder and button. Bluetooth & BLE proxy, ESP-IDF framework
 
 ## Help me
 OK, I can try. Please choose your preferred way of communication
