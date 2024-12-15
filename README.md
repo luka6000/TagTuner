@@ -172,6 +172,9 @@ This version requires a bit more soldering but allows the knob to be used as a b
 - [esp32 D1 mini](https://s.click.aliexpress.com/e/_DkyEAwt) controller with USBC
 - [pn532](https://s.click.aliexpress.com/e/_De8uw89) NFC reader
 - [hw040](https://s.click.aliexpress.com/e/_DlIIMtn) rotary encoder
+
+Remember to set the pn532 DIP switches to 10 to enable I2C (as described above).
+
 #### Wiring D1-Custom
 pn532 connector:
 - GND: GND
