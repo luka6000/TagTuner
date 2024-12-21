@@ -38,6 +38,16 @@ blueprint:
       selector:
         boolean:
       default: false
+    max_volume:
+      name: Volume limiter
+      description: maximum allowed volume
+      default: 1
+      selector:
+        number:
+          min: 0
+          max: 1
+          step: 0.01
+          mode: slider
 
 variables:
   device_id: !input tuner_id
@@ -77,7 +87,7 @@ variables:
       %}mass
     {%endif%}
   text_playlist_uri: >-
-    {% for entity in  device_entities(device_id) %}
+    {% for entity in device_entities(device_id) %}
       {% if entity|contains("playlist_uri") %}
         {{ entity }}
       {% endif%}
@@ -87,6 +97,7 @@ variables:
     {%if shuffle_config == true
     or uri[-8:]=='/shuffle'
     %}{{true}}{%else%}{{false}}{%endif%}
+  max_volume: !input max_volume
 
 triggers:
   - trigger: event
@@ -229,6 +240,10 @@ actions:
               - conditions:
                   - condition: template
                     value_template: '{{ action == "volume_up" }}'
+                  - condition: numeric_state
+                    entity_id: !input player
+                    attribute: volume_level
+                    below: !input max_volume
                 sequence:
                   - action: media_player.volume_up
                     target:
