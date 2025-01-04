@@ -73,10 +73,26 @@ binary_sensor:
         pullup: true
     on_multi_click:
     - timing:
-        - ON for at most 300ms
-        - OFF for at most 250ms
-        - ON for at most 300ms
-        - OFF for at least 50ms
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+      then:
+        - script.execute: led_blink
+        - logger.log: "Triple Clicked"
+        - text_sensor.template.publish:
+            id: status
+            state: "clickTriple"
+        - homeassistant.event:
+            event: esphome.tagtuner
+            data:
+              action: "clickTriple"
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at least 0.25s
       then:
         - script.execute: led_blink
         - logger.log: "Double Clicked"
@@ -101,7 +117,7 @@ binary_sensor:
             data:
               action: "clickLong"
     - timing:
-        - ON for at most 300ms
+        - ON for at most 0.5s
         - OFF for at least 260ms
       then:
         - script.execute: led_blink
