@@ -69,7 +69,15 @@ variables:
   stop_on_tagremoved: !input stop_on_tagremoved
   action: >-
     {%if trigger.event.event_type == 'tag_scanned' %}
-      tag_scanned
+      tagScanned
+    {%elif trigger.event.data.action == 'tag_scanned' %}
+      tagScanned
+    {%elif trigger.event.data.action == 'tag_removed' %}
+      tagRemoved
+    {%elif trigger.event.data.action == 'volume_up' %}
+      volumeUp
+    {%elif trigger.event.data.action == 'volume_down' %}
+      volumeDown
     {%else%}
       {{ trigger.event.data.action }}
     {%endif%}
@@ -137,7 +145,7 @@ actions:
   - choose:
       - conditions:
           - condition: template
-            value_template: '{{ action == "tag_removed" }}'
+            value_template: '{{ action == "tagRemoved" }}'
         sequence:
           - condition: template
             value_template: "{{ stop_on_tagremoved == true }}"
@@ -154,7 +162,7 @@ actions:
         alias: tag_removed
       - conditions:
           - condition: template
-            value_template: '{{ action == "tag_scanned" and source != "" }}'
+            value_template: '{{ action == "tagScanned" and source != "" }}'
         sequence:
           - parallel:
               - sequence:
@@ -196,7 +204,7 @@ actions:
               - choose:
                   - conditions:
                       - condition: template
-                        value_template: '{{ action == "tag_scanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
+                        value_template: '{{ action == "tagScanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
                     sequence:
                       - action: media_player.media_stop
                         target:
@@ -209,7 +217,7 @@ actions:
                     alias: sonos
                   - conditions:
                       - condition: template
-                        value_template: '{{ action == "tag_scanned" and source == "mass" }}'
+                        value_template: '{{ action == "tagScanned" and source == "mass" }}'
                     sequence:
                       - action: media_player.play_media
                         data:
@@ -220,7 +228,7 @@ actions:
                     alias: mass
                   - conditions:
                       - condition: template
-                        value_template: '{{ action == "tag_scanned" and source not in ("sonos", "mass", "") }}'
+                        value_template: '{{ action == "tagScanned" and source not in ("sonos", "mass", "") }}'
                     sequence:
                       - action: media_player.play_media
                         data:
@@ -299,7 +307,7 @@ actions:
           - choose:
               - conditions:
                   - condition: template
-                    value_template: '{{ action == "volume_up" }}'
+                    value_template: '{{ action == "volumeUp" }}'
                   - condition: numeric_state
                     entity_id: !input httpplayer
                     attribute: volume_level
@@ -310,7 +318,7 @@ actions:
                       entity_id: !input httpplayer
               - conditions:
                   - condition: template
-                    value_template: '{{ action == "volume_down" }}'
+                    value_template: '{{ action == "volumeDown" }}'
                 sequence:
                   - action: media_player.volume_down
                     target:
