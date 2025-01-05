@@ -1,0 +1,15 @@
+substitutions:
+  name: "tagtuner"
+  friendly_name: "TagTuner"
+  magic: "250100"
+
+esphome:
+  name: "${name}"
+  friendly_name: ${friendly_name}
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  project:
+    name: LukaGra.${friendly_name}
+    version: dev
