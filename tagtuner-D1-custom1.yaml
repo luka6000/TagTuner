@@ -80,10 +80,6 @@ binary_sensor:
         - text_sensor.template.publish:
             id: status
             state: "clickTriple"
-        # - homeassistant.event:
-        #     event: esphome.tagtuner
-        #     data:
-        #       action: "clickTriple"
         - script.execute:
             id: action_event
             action: "clickTriple"
@@ -123,8 +119,12 @@ binary_sensor:
             id: status
             state: "clickSingle"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickSingle"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
 
 output:
   - platform: gpio
@@ -192,14 +192,22 @@ sensor:
           id: status
           state: "Volume up"
       - script.execute:
-          id: action_event
-          action: "volume_up"
+          id: tagtuner_event
+          action: "volumeUp"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink
     on_anticlockwise:
       - text_sensor.template.publish:
           id: status
           state: "Volume down"
       - script.execute:
-          id: action_event
-          action: "volume_down"
+          id: tagtuner_event
+          action: "volumeDown"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink

@@ -92,6 +92,10 @@ binary_sensor:
         - script.execute:
             id: tagtuner_event
             action: "clickTriple"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 1s
         - OFF for at most 0.25s
@@ -106,6 +110,10 @@ binary_sensor:
         - script.execute:
             id: tagtuner_event
             action: "clickDouble"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -118,6 +126,10 @@ binary_sensor:
         - script.execute:
             id: tagtuner_event
             action: "clickLong"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 0.5s
         - OFF for at least 260ms
@@ -130,6 +142,10 @@ binary_sensor:
         - script.execute:
             id: tagtuner_event
             action: "clickSingle"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
 
 light:
   - platform: esp32_rmt_led_strip
@@ -255,6 +271,10 @@ sensor:
       - script.execute:
           id: tagtuner_event
           action: "volumeUp"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink
     on_anticlockwise:
       - text_sensor.template.publish:
@@ -263,4 +283,8 @@ sensor:
       - script.execute:
           id: tagtuner_event
           action: "volumeDown"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink
