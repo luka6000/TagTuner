@@ -16,3 +16,36 @@ captive_portal:
 
 # Sets up the improv via serial client for Wi-Fi provisioning
 improv_serial:
+
+script:
+  - id: action_event
+    parameters:
+      action: string
+    mode: queued
+    max_runs: 3
+    then:
+      - homeassistant.event:
+          event: esphome.tagtuner
+          data:
+            magic: ${magic}
+            action: !lambda return action;
+
+  - id: tag_event
+    parameters:
+      action: string
+      uid: string
+      uri: string
+      artist: string
+      playlist: string
+    mode: queued
+    max_runs: 3
+    then:
+      - homeassistant.event:
+          event: esphome.tagtuner
+          data:
+            magic: ${magic}
+            action: !lambda return action;
+            uid: !lambda return uid;
+            uri: !lambda return uri;
+            artist: !lambda return artist;
+            playlist: !lambda return playlist;
