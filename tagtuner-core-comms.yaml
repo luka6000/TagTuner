@@ -30,7 +30,7 @@ script:
             magic: ${magic}
             action: !lambda return action;
 
-  - id: tag_event
+  - id: tagtuner_event
     parameters:
       action: string
       uid: string
