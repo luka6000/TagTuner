@@ -227,11 +227,13 @@ pn532_i2c:
         condition:
           api.connected:
         timeout: 20s
-    - homeassistant.event:
-        event: esphome.tagtuner
-        data:
-          action: "tag_removed"
-          uid: !lambda 'return x;'
+    - script.execute:
+        id: tagtuner_event
+        action: "tagRemoved"
+        uid: !lambda 'return x;'
+        uri: ""
+        artist: ""
+        playlist: ""
     - script.execute: led_blink
 
   on_tag:
@@ -278,13 +280,12 @@ pn532_i2c:
               condition:
                 api.connected:
               timeout: 20s
-          - homeassistant.event:
-              event: esphome.tagtuner
-              data:
-                action: "tag_scanned"
-                uid: !lambda 'return x;'
-                uri: !lambda 'return id(uri);'
-                artist: !lambda 'return id(artist);'
-                playlist: !lambda 'return id(playlist);'
+          - script.execute:
+              id: tagtuner_event
+              action: "tagScanned"
+              uid: !lambda 'return x;'
+              uri: !lambda 'return id(uri);'
+              artist: !lambda 'return id(artist);'
+              playlist: !lambda 'return id(playlist);'
           - script.execute: set_tag
     - script.execute: led_ok

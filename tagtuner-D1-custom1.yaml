@@ -1,7 +1,9 @@
-# These substitutions allow the end user to override certain values
-substitutions:
-  name: "tagtuner"
-  friendly_name: "TagTuner"
+packages:
+  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
+  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
+  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  # core-nfc: !include tagtuner-core-nfc.yaml
+  # core-comms: !include tagtuner-core-comms.yaml
 
 esphome:
   name: "${name}"
@@ -42,12 +44,6 @@ logger:
     # pn532: DEBUG
     # pn532_i2c: DEBUG
 
-packages:
-  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
-  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
-  # core-nfc: !include tagtuner-core-nfc.yaml
-  # core-comms: !include tagtuner-core-comms.yaml
-
 i2c:
   id: bus_i2c
   sda: 21
@@ -73,20 +69,34 @@ binary_sensor:
         pullup: true
     on_multi_click:
     - timing:
-        - ON for at most 300ms
-        - OFF for at most 250ms
-        - ON for at most 300ms
-        - OFF for at least 50ms
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+      then:
+        - script.execute: led_blink
+        - logger.log: "Triple Clicked"
+        - text_sensor.template.publish:
+            id: status
+            state: "clickTriple"
+        - script.execute:
+            id: action_event
+            action: "clickTriple"
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at least 0.25s
       then:
         - script.execute: led_blink
         - logger.log: "Double Clicked"
         - text_sensor.template.publish:
             id: status
             state: "clickDouble"
-        - homeassistant.event:
-            event: esphome.tagtuner
-            data:
-              action: "clickDouble"
+        - script.execute:
+            id: action_event
+            action: "clickDouble"
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -96,12 +106,11 @@ binary_sensor:
         - text_sensor.template.publish:
             id: status
             state: "clickLong"
-        - homeassistant.event:
-            event: esphome.tagtuner
-            data:
-              action: "clickLong"
+        - script.execute:
+            id: action_event
+            action: "clickLong"
     - timing:
-        - ON for at most 300ms
+        - ON for at most 0.5s
         - OFF for at least 260ms
       then:
         - script.execute: led_blink
@@ -109,10 +118,13 @@ binary_sensor:
         - text_sensor.template.publish:
             id: status
             state: "clickSingle"
-        - homeassistant.event:
-            event: esphome.tagtuner
-            data:
-              action: "clickSingle"
+        - script.execute:
+            id: tagtuner_event
+            action: "clickSingle"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
 
 output:
   - platform: gpio
@@ -175,23 +187,27 @@ sensor:
     id: rotary
     pin_a: 18
     pin_b: 19
-    min_value: 0
-    max_value: 20
     on_clockwise:
       - text_sensor.template.publish:
           id: status
           state: "Volume up"
-      - homeassistant.event:
-          event: esphome.tagtuner
-          data:
-            action: "volume_up"
+      - script.execute:
+          id: tagtuner_event
+          action: "volumeUp"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink
     on_anticlockwise:
       - text_sensor.template.publish:
           id: status
           state: "Volume down"
-      - homeassistant.event:
-          event: esphome.tagtuner
-          data:
-            action: "volume_down"
+      - script.execute:
+          id: tagtuner_event
+          action: "volumeDown"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
       - script.execute: led_blink
