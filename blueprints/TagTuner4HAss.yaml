@@ -1,6 +1,7 @@
 blueprint:
-  name: TagTuner for HAss
-  description: TagTuner music player for NFC tags automation
+  name: TagTuner music player for NFC tags automation
+  description: https://github.com/luka6000/TagTuner#using-tagtuner
+  author: LukaGra v250105
   domain: automation
   input:
     tuner_id:
@@ -26,41 +27,56 @@ blueprint:
         entity:
           filter:
             - domain: media_player
-    stop_on_tagremoved:
-      name: Stop music
-      description: on tag removed
-      selector:
-        boolean:
-      default: true
-    announce_playlist:
-      name: Announce
-      description: every playlist
-      default: tts.home_assistant_cloud
-      selector:
-        boolean:
-    speaktts:
-      name: Choose TTS engine
-      description: for announcements
-      selector:
-        entity:
-          filter:
-            - domain: tts
-    shuffle_playlist:
-      name: Shuffle
-      description: every playlist
-      selector:
-        boolean:
-      default: false
-    max_volume:
-      name: Volume limiter
-      description: maximum allowed volume
-      default: 1
-      selector:
-        number:
-          min: 0
-          max: 1
-          step: 0.01
-          mode: slider
+    options:
+      name: Additional settings
+      collapsed: true
+      input:
+        stop_on_tagremoved:
+          name: Stop music
+          description: on tag removed
+          selector:
+            boolean:
+          default: true
+        announce_playlist:
+          name: Announce
+          description: every playlist
+          selector:
+            boolean:
+          default: false
+        speaktts:
+          name: Choose TTS engine
+          description: for announcements
+          selector:
+            entity:
+              filter:
+                - domain: tts
+          default: tts.home_assistant_cloud
+        shuffle_playlist:
+          name: Shuffle
+          description: every playlist
+          selector:
+            boolean:
+          default: false
+        max_volume:
+          name: Volume limiter
+          description: maximum allowed volume
+          default: 1
+          selector:
+            number:
+              min: 0
+              max: 1
+              step: 0.01
+              mode: slider
+        version:
+          name: Blueprint version
+          description: just for you to know
+          default: 250105
+        notify_version:
+          name: Notify about version
+          description: mismatch of automation vs yaml firmware
+          selector:
+            boolean:
+          default: true
 
 variables:
   device_id: !input tuner_id
@@ -132,6 +148,8 @@ variables:
     or uri[-8:]=='/shuffle'
     %}{{true}}{%else%}{{false}}{%endif%}
   max_volume: !input max_volume
+  notify_version: !input notify_version
+  blprnt_version: !input version
 
 triggers:
   - trigger: event
@@ -345,7 +363,37 @@ actions:
             {{ [state_attr(massplayer, 'media_album_name'), state_attr(httpplayer, 'media_album_name') ]|select|first }}
         target:
           entity_id: "{{ text_playlist_name }}"
+    alias: update helpers with first song for read-only tags
+  - if:
+      - condition: template
+        value_template: "{{ notify_version == true and trigger.event.data.magic|int(2024) < 250100 }}"
+    then:
+      - action: persistent_notification.create
+        data:
+          notification_id: tagtuner_yaml_firmware
+          title: Friendly notice
+          message: |-
+            TagTuner yaml firmware is outdated at v{{ trigger.event.data.magic|int(2024) }}
+            Please consider upgrading for the best experience.
+            https://github.com/luka6000/TagTuner
 
+            You can disable this notification in TagTuner automation settings.
+    alias: version mismatch notify 1
+  - if:
+      - condition: template
+        value_template: "{{ notify_version == true and trigger.event.data.magic|int(2024) >   blprnt_version|int }}"
+    then:
+      - action: persistent_notification.create
+        data:
+          notification_id: tagtuner_blprnt_version
+          title: Friendly notice
+          message: |-
+            TagTuner blueprint automation is outdated at v{{blprnt_version}} while TagTuner is at v{{ trigger.event.data.magic|int(2024) }}
+            Please consider upgrading for the best experience.
+            https://github.com/luka6000/TagTuner#using-tagtuner
+
+            You can disable this notification in TagTuner automation settings.
+    alias: version mismatch notify 2
 mode: queued
 max: 10
 trace:
