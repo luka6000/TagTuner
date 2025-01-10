@@ -60,6 +60,19 @@ Create automation with this blueprint.\
 Select your TagTuner device (you can have more than one!) and media player that will be your speaker \
 <img width="1048" alt="AA88EF99-C0A6-40CE-A8F9-60A0C926069F" src="https://github.com/user-attachments/assets/2e1a081c-0f3c-4adc-a19b-ac921e2a9050">
 
+I do a monthly updates of the blueprint. You can watch my repo with github to get email notifications. \
+List of current features:
+
+- separate settings for MAss player and HAss player (http sources). If you don't need double setting, just set the same in both
+- Stop music on tag removed: choose if you want this
+- Announce every playlist: you can choose your TTS engine and TagTuner will use your speaker to read artist and playlist names
+- Shuffle every playlist: choose if you want this. You can also add '/shuffle' (without quotes or spaces) at the end of the source URI to shuffle just this album
+- Volume limiter: to limit the maximum volume set with TagTuner knob (kids friendly!)
+- Notify about version mismatch: shoose if you want HA dashboard notification that your blueprint version is to new vs your TagTuner yaml firmware. Currently there are no breaking changes so this is future proofing the blueprint and your experience
+
+<img width="961" alt="image" src="https://github.com/user-attachments/assets/6df765f2-f0b8-47cc-8ecb-f090c4263e97" />
+
+
 ![B459D72A-3B97-4AFB-BF86-19F3298A521F_1_102_a](https://github.com/user-attachments/assets/9b11ebfa-5114-451c-a7fb-fdaacd612d1b)
 
 ### Playing music
@@ -69,7 +82,8 @@ TagTuner will read the tag and send the playlist information to Home Assistant. 
 ### Button operations
 **Single click**: next \
 **Double click**: play/pause \
-**Long click** (>1s): mute/unmute
+**Long click** (>1s): mute/unmute \
+**Triple click**: previous
 
 ### Volume control
 Rotate the dial left: **volume down**. \
@@ -79,7 +93,9 @@ Rotate the dial right: **volume up**.
 Watch the LED light in the button: \
 **white blink**: operation confirmed \
 **flashing red**: writing operation in progress \
-**flashing green**: writing success 
+**flashing green**: writing success \
+
+D1-Custom has a single color led so it's only blinking but it's really easy to understand what's going on with HAss device Diagnostic dashboard in case you would need that.
 
 ### Diagnostic
 Check the Diagnostic->Status messages on the device page in Home Assistant.\
@@ -151,7 +167,7 @@ Any tag id read by TagTuner will be pushed to HAss [blueprint](#using-tagtuner) 
 Choose and print your enclosure with preffered colors and surface patterns
 ![150898D9-AA77-4470-9DA3-2A89EE304011](https://github.com/user-attachments/assets/d036c021-b2bc-496b-a427-b9ae3361d691)
 
-I suggest a cool white base and a dark front plate with a nice carbon fibre pattern.
+I suggest a cool-white (signal white) base and a dark front plate with a nice carbon fibre pattern.
 
 ### Parts for Atom grove version
 This version is focused on minimum soldering since it's based on Grove parts and connectors
@@ -163,7 +179,7 @@ This version is focused on minimum soldering since it's based on Grove parts and
 #### Grove wiring
 First, you need to solder the [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) to the [PN532 NFC](https://s.click.aliexpress.com/e/_De8uw89) board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
-Remember to set the DIP switches to 10 to enable I2C.
+Remember to set the DIP switches to 10 to enable I2C. Correct position for I2c is marked by yellow lines.
 
 The [SeeedStudio rotary encoder](https://www.seeedstudio.com/Grove-Encoder.html?sensecap_affiliate=3ftNV1d&referring_service=link) already has its connector. For the other end of the [cable](https://s.click.aliexpress.com/e/_DEA2jSV), simply use [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) directly to the Atom controller\
 ![7D603FCA-9D48-485F-8AD4-685A469D73F6_1_201_a](https://github.com/user-attachments/assets/3f0e609b-15c2-43da-9a52-8e30b831a6ef)
@@ -199,7 +215,7 @@ hw040 connector:
 
 ![BCAC91FD-93C7-45B1-BD3F-C07717A7AF5C_1_201_a](https://github.com/user-attachments/assets/6c01184f-bc0a-4e16-bff7-f1452aa176a0)
 
-ESP23 D1 mini will fit perfectly into the bottom part braces
+ESP32 D1 mini will fit perfectly into the bottom part braces
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c7907571-c27f-4d40-ac83-a28fe8a409e3" />
 
 Built-in LED is used as confirmation light
