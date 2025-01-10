@@ -111,6 +111,7 @@ Choose NTAG215 (504 bytes) or NTAG216 (888 bytes) tags if you want to include th
 - [Wooden cards](https://s.click.aliexpress.com/e/_DdGYnJf)
 - [Round stickers](https://s.click.aliexpress.com/e/_DB8U8dB)
 
+Record-like cards can be printed (model file included) or you can buy those nice looking [vinyl coasters](https://s.click.aliexpress.com/e/_ooVfjuN). Just remember to put NFC stickers on them ;-)
 Stickers can be used with 3d printed cards or any other object you can place on your TagTuner to play music.\
 I use Canon KC-18IF card-sized labels to customize my wooden NFC cards.
 
