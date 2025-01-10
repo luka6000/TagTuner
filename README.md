@@ -21,7 +21,7 @@ D1-Custom version is only 16mm high
 ![66AA4F85-2C12-4B6F-A300-D6C1CED9CAEC_1_105_c](https://github.com/user-attachments/assets/7e018411-fecd-4189-b498-19e88d62dc3b)
 
 Here is an exploded view of the TagTuner 3D model with a round tag card \
-<img width="1077" alt="35F8BCBF-CFB4-4F8B-A8F3-9931829DD101" src="https://github.com/user-attachments/assets/cd764ba3-65bd-4c20-bd40-68724a8d0756">
+<img width="938" alt="image" src="https://github.com/user-attachments/assets/e78398b6-1221-4449-a99d-038a4879a5e4" />
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
