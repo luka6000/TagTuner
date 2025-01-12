@@ -1,10 +1,5 @@
-# These substitutions allow the end user to override certain values
-substitutions:
-  name: "tagtuner"
-  friendly_name: "TagTuner"
-
 packages:
-  # Include all of the core configuration
+  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   core: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main
 
 esphome:
@@ -26,3 +21,13 @@ dashboard_import:
 # Sets up the improv via serial client for Wi-Fi provisioning
 improv_serial:
   next_url: https://luka6000.github.io/TagTuner/
+
+wifi:
+  ap: !remove
+captive_portal: !remove
+
+button:
+  - id: !remove btn_erase_tag
+  - id: !remove btn_cancel_writing
+script:
+  - id: !remove action_event
