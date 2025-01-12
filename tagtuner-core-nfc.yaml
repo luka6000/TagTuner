@@ -216,17 +216,13 @@ globals:
     type: std::string
 
 pn532_i2c:
-  id: pn532_board
+- id: pn532_board
   update_interval: 350ms
   on_tag_removed:
     - logger.log: "on_tag_removed"
     - text_sensor.template.publish:
         id: status
         state: "Tag removed"
-    - wait_until:
-        condition:
-          api.connected:
-        timeout: 20s
     - script.execute:
         id: tagtuner_event
         action: "tagRemoved"
@@ -276,10 +272,6 @@ pn532_i2c:
               ESP_LOGD("tagtuner", "No TagTuner NDEF, using UID");
               return x;
         else:
-          - wait_until:
-              condition:
-                api.connected:
-              timeout: 20s
           - script.execute:
               id: tagtuner_event
               action: "tagScanned"
