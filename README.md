@@ -19,7 +19,7 @@ All of this is housed in a sleek, custom design case only 16mm high
 Here is an exploded view of the TagTuner 3D model with a round tag card \
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/e78398b6-1221-4449-a99d-038a4879a5e4" />
 
-TagTuner is a device aproved by [Made for ESPHome](https://devices.esphome.io/made-for-esphome) program.
+TagTuner is a device approved by the [Made for ESPHome](https://devices.esphome.io/made-for-esphome) program.
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
@@ -48,8 +48,8 @@ Simply place any NFC tag and watch Status messages.\
 - [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1)
 - [ko-fi/shop]()
 
-Choose and print your enclosure with preffered colors and surface patterns
-![150898D9-AA77-4470-9DA3-2A89EE304011](https://github.com/user-attachments/assets/d036c021-b2bc-496b-a427-b9ae3361d691)
+Choose and print your enclosure with preferred colors and surface patterns
+![A4334D41-580B-43D2-9B9E-4769A9EE2630_1_105_c](https://github.com/user-attachments/assets/a507ec1a-55a8-4e1c-a4b2-368f907f073b)
 
 I suggest a cool-white (signal white) base and a dark front plate with a nice carbon fibre pattern.
 
@@ -78,15 +78,16 @@ hw040 connector:
 ESP32 D1 mini will fit perfectly into the bottom part braces
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c7907571-c27f-4d40-ac83-a28fe8a409e3" />
 
-Built-in LED is used as confirmation light
-![85EAFCF9-9730-4185-8AF7-A039E5863FB1_1_105_c](https://github.com/user-attachments/assets/4572c1d7-16c5-45c3-8909-0a0d37272bc1)
-
+Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results
+![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
 
 I preffer soldering the [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) to the [PN532 NFC](https://s.click.aliexpress.com/e/_De8uw89) board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
 Remember to set the DIP switches to 10 to enable I2C. Correct position for I2c is marked by yellow lines.
 
-Everything will fit into the enclosure.\
+Everything will fit into the enclosure.
+![79F47CA4-0882-47AD-8710-8E5B6021D77A_1_105_c](https://github.com/user-attachments/assets/97d14e1a-97f8-4c64-a5ec-44054e5350db)
+
 Use 10mm M2.5 screws (nfc board, volume encoder, front plate).
 
 ### Firmware
