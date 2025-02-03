@@ -53,6 +53,7 @@ Choose and print your enclosure with preferred colors and surface patterns
 ![A4334D41-580B-43D2-9B9E-4769A9EE2630_1_105_c](https://github.com/user-attachments/assets/a507ec1a-55a8-4e1c-a4b2-368f907f073b)
 
 I suggest a cool-white (signal white) base and a dark front plate with a nice carbon fibre pattern.
+![D7EFA920-1D9A-4D65-AD23-4F0A2328A510_1_105_c](https://github.com/user-attachments/assets/ea6c62d3-68ee-47b1-8d40-b381910d00c3)
 
 ### Parts for D1-Custom version
 - [esp32 D1 mini](https://s.click.aliexpress.com/e/_DkyEAwt) controller with USBC
