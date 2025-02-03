@@ -20,6 +20,7 @@ Here is an exploded view of the TagTuner 3D model with a round tag card \
 <img width="938" alt="image" src="https://github.com/user-attachments/assets/e78398b6-1221-4449-a99d-038a4879a5e4" />
 
 TagTuner is a device approved by the [Made for ESPHome](https://devices.esphome.io/made-for-esphome) program.
+![made-for-esphome-black-on-white](https://github.com/user-attachments/assets/58dfbe3a-5c78-4992-89bf-8bd149d91017)
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
