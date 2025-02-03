@@ -43,11 +43,11 @@ Simply place any NFC tag and watch Status messages.\
 
 ## Build your own TagTuner
 
-### Case options
+### Case
 16mm D1-Custom model case
 
 - [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1)
-- [ko-fi/shop]()
+- [ko-fi/shop](https://ko-fi.com/s/ce428ab53f)
 
 Choose and print your enclosure with preferred colors and surface patterns
 ![A4334D41-580B-43D2-9B9E-4769A9EE2630_1_105_c](https://github.com/user-attachments/assets/a507ec1a-55a8-4e1c-a4b2-368f907f073b)
@@ -99,6 +99,7 @@ Use 10mm M2.5 screws (nfc board, volume encoder, front plate).
 ### Other options
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - [Atom version](atom.md): based on m5stack Atom Echo and grove connectors; free model case but much thicker (23.5mm)
+- [Compact Case](https://www.printables.com/model/1165511-tagtuner-compact-case-rfid-nfc-scanner-home-assist): card-sized case by Youddha (thank you!)
 
 ## Using TagTuner
 TagTuner relies heavily on Home Assistant automation. To get it working, import **TagTuner for HAss** blueprint
