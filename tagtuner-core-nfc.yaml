@@ -217,6 +217,7 @@ globals:
 
 pn532_i2c:
 - id: pn532_board
+  i2c_id: bus_i2c
   update_interval: 350ms
   on_tag_removed:
     - logger.log: "on_tag_removed"
