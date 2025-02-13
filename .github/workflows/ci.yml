@@ -16,10 +16,11 @@ jobs:
       max-parallel: 3
       matrix:
         file:
-          - tagtuner-atom-grove-ble
-          - tagtuner-for-tagreader
+          - tagtuner-D1-custom1.factory
+          - tagtuner-atom-grove-ble.factory
+          - tagtuner-for-tagreader.factory
         esphome-version:
-          # - stable
+          - stable
           - beta
           # - dev
     steps:
