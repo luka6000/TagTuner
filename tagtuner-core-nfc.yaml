@@ -1,10 +1,18 @@
 # this is a modified PN532 to make it work with 888byte tags
 external_components:
+  # - source: ./components
   - source: github://luka6000/TagTuner@main
     components: [ pn532 ]
     refresh: 1min
 
 binary_sensor:
+  - platform: template
+    name: "=Tag="
+    id: is_tag
+    device_class: vibration
+    entity_category: DIAGNOSTIC
+    disabled_by_default: true
+
   - platform: template
     name: "=Reading="
     id: txt_reading
@@ -221,6 +229,9 @@ pn532_i2c:
   update_interval: 350ms
   on_tag_removed:
     - logger.log: "on_tag_removed"
+    - binary_sensor.template.publish:
+        id: is_tag
+        state: false
     - text_sensor.template.publish:
         id: status
         state: "Tag removed"
@@ -235,6 +246,9 @@ pn532_i2c:
 
   on_tag:
     - logger.log: "on_tag"
+    - binary_sensor.template.publish:
+        id: is_tag
+        state: true
     - text_sensor.template.publish:
         id: status
         state: !lambda 'return "Tag "+x;'
