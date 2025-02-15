@@ -238,7 +238,7 @@ All of this is my personal hobby project, available for free download and person
 
 Links to parts listed above are affiliate links, which allow me to earn a small commission from your purchase. Thank you! 🙏
 
-My work, including yaml files, 3d model and documentation, is licensed under \
+This work, including yaml files, 3d model (Atom version) and documentation, is licensed under \
 [Creative Commons (4.0 International License) Attribution—Noncommercial—Share Alike \
 <img width="100" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png">](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 

@@ -84,11 +84,11 @@ LED ring is showing Voice assistant volume.
 **Button hold and dial rotate**: change volume of the Voice assistant
 
 ## Disclaimer
-All of this is my personal hobby project, available for free download and personal use. If you’d like to support me with a coffee, beer, filament, or electronic parts, feel free to use [paypal.me/lukagra](https://paypal.me/lukagra) or [https://ko-fi.com/lukagra](ko-fi.com/lukagra)
+All of this is my personal hobby project, available for free download and personal use. If you’d like to support me with a coffee, beer, filament, or electronic parts, feel free to use [paypal.me/lukagra](https://paypal.me/lukagra) or [ko-fi.com/lukagra](https://ko-fi.com/lukagra)
 
 Links to parts listed above are affiliate links, which allow me to earn a small commission from your purchase. Thank you! 🙏
 
-My work, including yaml files, 3d model and documentation, is licensed under \
+This work, including yaml files, 3d model (Atom version) and documentation, is licensed under \
 [Creative Commons (4.0 International License) Attribution—Noncommercial—Share Alike \
 <img width="100" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png">](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
