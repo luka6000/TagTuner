@@ -22,6 +22,9 @@ Here is an exploded view of the TagTuner 3D model with a round tag card \
 TagTuner is a device approved by the [Made for ESPHome](https://devices.esphome.io/made-for-esphome) program.
 ![made-for-esphome-black-on-white](https://github.com/user-attachments/assets/58dfbe3a-5c78-4992-89bf-8bd149d91017)
 
+Check out also the [TagTuner on HA Voice PE version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-on-HA-Voice-PE.md)
+![2B7737D0-8398-4024-95F7-A9C97CBA63E3_1_105_c](https://github.com/user-attachments/assets/3513e22a-9ef4-4424-92c9-9eba9368f3a5)
+
 ## Getting started
 To start using TagTuner, you’ll need the following:
 - [Home Assistant](https://www.home-assistant.io) 2025.1.x
@@ -44,7 +47,7 @@ Simply place any NFC tag and watch Status messages.\
 ## Build your own TagTuner
 
 ### Case
-16mm D1-Custom model case
+Custom model cases are print-ready
 
 - [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1)
 - [ko-fi/shop](https://ko-fi.com/s/ce428ab53f)
@@ -98,8 +101,9 @@ Use 10mm M2.5 screws (nfc board, volume encoder, front plate).
 
 
 ### Other options
+- [HA Voice PE version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-on-HA-Voice-PE.md): TagTuner on HA Voice PE device
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
-- [Atom version](https://github.com/luka6000/TagTuner/blob/main/atom.md): based on m5stack Atom Echo and grove connectors; free model case but much thicker (23.5mm)
+- [Atom version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-Atom.md): based on m5stack Atom Echo and grove connectors; free model case but much thicker (23.5mm)
 - [Compact Case](https://www.printables.com/model/1165511-tagtuner-compact-case-rfid-nfc-scanner-home-assist): card-sized case by Youddha (thank you!)
 
 ## Using TagTuner
