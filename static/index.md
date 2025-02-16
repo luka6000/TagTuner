@@ -174,6 +174,15 @@ The ladybug icon is your guide.
 ![AA29C1D0-BE96-452C-B2BF-FDD8AF05B9F1_1_102_a](https://github.com/user-attachments/assets/2aa49e88-7832-40c9-b8ea-dc481e9369fa)
 
 ## How to get tags for TagTuner
+### Upcycle tags you already have
+Use whatever nfc tags you have that work with PN532. \
+Simply scan them with TagTuner and check you HA tags panel. \
+Try Amiibos, NFC rings, work badges, etc. \
+You can even [recycle a Sonicare](https://github.com/luka6000/TagTuner/blob/main/Recycled-tags.md
+) toothbrush head 🤙
+
+Check [the read-only tags](https://github.com/luka6000/TagTuner/tree/main?tab=readme-ov-file#for-read-only-tags) section below.
+
 ### Buy tags
 Choose NTAG215 (504 bytes) or NTAG216 (888 bytes) tags if you want to include the playlist name and artist. Otherwise, NTAG213 (144 bytes) will suffice for just links to playlists
 
