@@ -54,7 +54,7 @@ i2c:
   id: bus_i2c
   scan: False
   frequency: 100kHz
-  timeout: 13ms #to prevent pn532 timeout
+  # timeout: 13ms #to prevent pn532 timeout
 
 output:
   - platform: esp8266_pwm

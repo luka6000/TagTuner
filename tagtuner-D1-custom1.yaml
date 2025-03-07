@@ -50,7 +50,7 @@ i2c:
   scl: 22
   scan: False
   frequency: 100kHz
-  timeout: 13ms #to prevent pn532 timeout
+  # timeout: 13ms #to prevent pn532 timeout
 
 esp32_ble_tracker:
   scan_parameters:
