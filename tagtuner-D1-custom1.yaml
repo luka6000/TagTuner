@@ -6,6 +6,7 @@ packages:
   # core-comms: !include tagtuner-core-comms.yaml
 
 esphome:
+  min_version: 2025.2.0
   name: "${name}"
   friendly_name: ${friendly_name}
   # Automatically add the mac address to the name
