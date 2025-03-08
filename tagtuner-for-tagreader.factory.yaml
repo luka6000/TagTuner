@@ -1,5 +1,4 @@
 packages:
-  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   core: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main
 
 esphome:

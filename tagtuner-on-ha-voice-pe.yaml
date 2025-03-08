@@ -29,10 +29,8 @@ switch:
 esphome:
   name: "${name}"
   friendly_name: ${friendly_name}
-  # Automatically add the mac address to the name
-  # so you can use a single firmware for all devices
   name_add_mac_suffix: true
-
+  min_version: 2025.2.0
   on_boot:
     priority: 375
     then:
@@ -104,7 +102,7 @@ sensor:
                   - script.execute:
                       id: tagtuner_event
                       action: "volumeUp"
-                      uid: !lambda 'return std::to_string(id(nabu_media_player).volume);'
+                      uid: !lambda 'return std::to_string(id(external_media_player).volume);'
                       uri: ""
                       artist: ""
                       playlist: ""
@@ -147,7 +145,7 @@ sensor:
                   - script.execute:
                       id: tagtuner_event
                       action: "volumeDown"
-                      uid: !lambda 'return std::to_string(id(nabu_media_player).volume);'
+                      uid: !lambda 'return std::to_string(id(external_media_player).volume);'
                       uri: ""
                       artist: ""
                       playlist: ""
@@ -233,10 +231,10 @@ binary_sensor:
                           else:
                             - if:
                                 condition:
-                                  lambda: return id(nabu_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
+                                  lambda: return id(external_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
                                 then:
                                   - lambda: |
-                                      id(nabu_media_player)
+                                      id(external_media_player)
                                         ->make_call()
                                         .set_command(media_player::MediaPlayerCommand::MEDIA_PLAYER_COMMAND_STOP)
                                         .set_announcement(true)
@@ -558,7 +556,7 @@ script:
             id(control_leds_timer_ticking).execute();
           } else if (id(master_mute_switch).state) {
             id(control_leds_muted_or_silent).execute();
-          } else if (id(nabu_media_player).volume == 0.0f || id(nabu_media_player).is_muted()) {
+          } else if (id(external_media_player).volume == 0.0f || id(external_media_player).is_muted()) {
             id(control_leds_muted_or_silent).execute();
           } else if (id(voice_assistant_phase) == ${voice_assist_idle_phase_id}) {
             id(control_leds_voice_assistant_idle_phase).execute();

@@ -43,6 +43,7 @@ logger:
   #   pn532_i2c: DEBUG
 
 packages:
+  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
   core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
   # I was not able to use light with tagreader hardware and TagTuner firmware.
