@@ -209,7 +209,6 @@ button:
             pn532.is_writing:
           then:
           - lambda: 'id(pn532_board).read_mode();'
-      - logger.log: "Finished writing tag"
       - text_sensor.template.publish:
           id: status
           state: "Finished writing tag"
@@ -228,7 +227,6 @@ pn532_i2c:
   i2c_id: bus_i2c
   update_interval: 350ms
   on_tag_removed:
-    - logger.log: "on_tag_removed"
     - binary_sensor.template.publish:
         id: is_tag
         state: false
@@ -245,7 +243,6 @@ pn532_i2c:
     - script.execute: led_blink
 
   on_tag:
-    - logger.log: "on_tag"
     - binary_sensor.template.publish:
         id: is_tag
         state: true

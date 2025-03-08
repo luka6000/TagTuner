@@ -86,7 +86,6 @@ binary_sensor:
         - ON for at most 1s
       then:
         - script.execute: led_blink
-        - logger.log: "Triple Clicked"
         - text_sensor.template.publish:
             id: status
             state: "clickTriple"
@@ -104,7 +103,6 @@ binary_sensor:
         - OFF for at least 0.25s
       then:
         - script.execute: led_blink
-        - logger.log: "Double Clicked"
         - text_sensor.template.publish:
             id: status
             state: "clickDouble"
@@ -120,7 +118,6 @@ binary_sensor:
         - OFF for at least 50ms
       then:
         - script.execute: led_blink
-        - logger.log: "Single Long Clicked"
         - text_sensor.template.publish:
             id: status
             state: "clickLong"
@@ -136,7 +133,6 @@ binary_sensor:
         - OFF for at least 260ms
       then:
         - script.execute: led_blink
-        - logger.log: "Single Short Clicked"
         - text_sensor.template.publish:
             id: status
             state: "clickSingle"

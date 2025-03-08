@@ -36,7 +36,8 @@ logger:
   # level: VERBOSE
   # level: DEBUG
   # level: WARN
-  level: ERROR
+  # level: ERROR
+  level: NONE
   # logs:
   #   light: WARN
   #   pn532: DEBUG
