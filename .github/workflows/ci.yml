@@ -2,6 +2,9 @@ name: CI
 
 on:
   pull_request:
+    paths:
+      - '*.yaml'
+      - '.github/workflows/ci.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
@@ -27,12 +30,12 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4.1.7
       - name: ESPHome ${{ matrix.esphome-version }}
-        uses: esphome/build-action@v4.0.1
+        uses: esphome/build-action@v6.0.0
         with:
           yaml-file: ${{ matrix.file }}.yaml
           version: ${{ matrix.esphome-version }}
       - name: ESPHome ${{ matrix.esphome-version }} Factory
-        uses: esphome/build-action@v4.0.1
+        uses: esphome/build-action@v6.0.0
         with:
           yaml-file: ${{ matrix.file }}.factory.yaml
           version: ${{ matrix.esphome-version }}
