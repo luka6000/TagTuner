@@ -56,7 +56,7 @@ i2c:
   scl: 32
   scan: False
   frequency: 100kHz
-  # timeout: 13ms #to prevent pn532 timeout
+  timeout: 13ms #to prevent pn532 timeout
 
 i2s_audio:
   - id: i2s_audio_bus
