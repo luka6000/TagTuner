@@ -46,7 +46,7 @@ To start using TagTuner, you’ll need the following:
 - [Music Assistant](https://music-assistant.io) 2.x or [Sonos](https://www.sonos.com/) speaker 
 - configured MAss music [library](https://music-assistant.io/usage/#the-library) and/or a streaming subscription 
 - TagTuner device configured in HAss
-- Programmable NTAG213/215/216 tags
+- any NFC tags or programmable NTAG213/215/216
 
 ![8D01B378-9F47-4FF3-8D71-280600690BE8_1_102_a](https://github.com/user-attachments/assets/cab0a534-d01e-4579-b5ea-96b6a81d9edc)
 
@@ -130,17 +130,18 @@ Create automation with this blueprint.\
 Select your TagTuner device (you can have more than one!) and media player that will be your speaker \
 <img width="1048" alt="AA88EF99-C0A6-40CE-A8F9-60A0C926069F" src="https://github.com/user-attachments/assets/2e1a081c-0f3c-4adc-a19b-ac921e2a9050">
 
-I do a monthly updates of the blueprint. You can watch my repo with github to get email notifications. \
-List of current features:
+I do a monthly updates of the blueprint. You can watch my repo to get email notifications. \
+Current list of features:
 
-- separate settings for MAss player and HAss player (http sources). If you don't need double setting, just set the same in both
+- separate settings for MAss player and HAss player (http sources). If you don't need double setting, just set the same player in both
 - Stop music on tag removed: choose if you want this
 - Announce every playlist: you can choose your TTS engine and TagTuner will use your speaker to read artist and playlist names
 - Shuffle every playlist: choose if you want this. You can also add '/shuffle' (without quotes or spaces) at the end of the source URI to shuffle just this album
 - Volume limiter: to limit the maximum volume set with TagTuner knob (kids friendly!)
+- Default volume on start playing
 - Notify about version mismatch: shoose if you want HA dashboard notification that your blueprint version is to new vs your TagTuner yaml firmware. Currently there are no breaking changes so this is future proofing the blueprint and your experience
 
-<img width="961" alt="image" src="https://github.com/user-attachments/assets/6df765f2-f0b8-47cc-8ecb-f090c4263e97" />
+<img width="1046" alt="image" src="https://github.com/user-attachments/assets/afe982a8-cde0-4c9f-8c76-17ba57b1427b" />
 
 
 ![B459D72A-3B97-4AFB-BF86-19F3298A521F_1_102_a](https://github.com/user-attachments/assets/9b11ebfa-5114-451c-a7fb-fdaacd612d1b)
@@ -178,8 +179,7 @@ The ladybug icon is your guide.
 Use whatever nfc tags you have that work with PN532. \
 Simply scan them with TagTuner and check you HA tags panel. \
 Try Amiibos, NFC rings, work badges, etc. \
-You can even [recycle a Sonicare](https://github.com/luka6000/TagTuner/blob/main/Recycled-tags.md
-) toothbrush head 🤙
+You can even [recycle a Sonicare](https://github.com/luka6000/TagTuner/blob/main/Recycled-tags.md) toothbrush head 🤙
 
 Check [the read-only tags](https://github.com/luka6000/TagTuner/tree/main?tab=readme-ov-file#for-read-only-tags) section below.
 
