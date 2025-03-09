@@ -51,10 +51,10 @@ You can use the button below to install the pre-built firmware directly to your 
     <label><input type="radio" name="type" value="tagtuner-d1-esp32" /> D1-Custom</label>
   </li>
   <li>
-    <label><input type="radio" name="type" value="tagtuner-on-ha-voice-esp32" /> on HA Voice PE</label>
+    <label><input type="radio" name="type" value="tagtuner-on-ha-voice-esp32s3" /> on HA Voice PE</label>
   </li>
   <li>
-    <label><input type="radio" name="type" value="tagtuner-atom-esp32s3" /> atom</label>
+    <label><input type="radio" name="type" value="tagtuner-atom-esp32" /> atom</label>
   </li>
   <li>
     <label><input type="radio" name="type" value="tagtuner-for-tagreader-esp8266" /> tagreader</label>
