@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "tagtuner"
+  name: "tagtuner-for-tagreader"
   friendly_name: "TagTuner"
   d1_mini: d1_mini
   buzpin: D7

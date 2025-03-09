@@ -29,7 +29,7 @@ esphome:
   name_add_mac_suffix: true
 
   project:
-    name: LukaGra.TagTuner on Home Assistant Voice PE
+    name: LukaGra.TagTuner-on-Home-Assistant-Voice-PE
     version: dev
 
 # This should point to the public location of this yaml file.

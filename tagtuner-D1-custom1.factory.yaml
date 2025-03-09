@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "tagtuner"
+  name: "tagtuner-d1"
   friendly_name: "TagTuner"
 
 packages:
@@ -20,7 +20,7 @@ esphome:
   name_add_mac_suffix: true
 
   project:
-    name: LukaGra.TagTuner
+    name: LukaGra.TagTuner-D1
     version: dev
 
 # This should point to the public location of this yaml file.

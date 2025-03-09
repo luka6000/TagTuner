@@ -33,12 +33,48 @@ Check out also the [TagTuner on HA Voice PE version](https://github.com/luka6000
 
 # Installation
 
-You can use the button below to install the pre-built firmware directly to your device via USB from the browser. \
-This works for ESP32 Atom and ESP8266 tagreader.
+You can use the button below to install the pre-built firmware directly to your device via USB from the browser.
 
-<esp-web-install-button manifest="./firmware/manifest.json"></esp-web-install-button>
-
+<style>
+  .invisible {
+    visibility: hidden;
+  }
+  .radios li {
+    list-style: none;
+    line-height: 2em;
+  }
+</style>
 <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
+<p>Select your TagTuner version</p>
+<ul class="radios">
+  <li>
+    <label><input type="radio" name="type" value="tagtuner-d1-esp32" /> D1-Custom</label>
+  </li>
+  <li>
+    <label><input type="radio" name="type" value="tagtuner-on-ha-voice-esp32" /> on HA Voice PE</label>
+  </li>
+  <li>
+    <label><input type="radio" name="type" value="tagtuner-atom-esp32" /> atom</label>
+  </li>
+  <li>
+    <label><input type="radio" name="type" value="tagtuner-for-tagreader-esp8266" /> tagreader</label>
+  </li>
+</ul>
+<p class="button-row" align="center">
+  <esp-web-install-button class="invisible"></esp-web-install-button>
+</p>
+<script>
+  document.querySelectorAll('input[name="type"]').forEach(radio =>
+    radio.addEventListener("change", () => {
+      const button = document.querySelector('esp-web-install-button');
+      button.manifest = `./firmware/manifest-${radio.value}.json`;
+      button.classList.remove('invisible');
+    }
+  ));
+</script>
+
+
+Installer powered by [ESP Web Tools](https://esphome.github.io/esp-web-tools/)
 
 ## Getting started
 To start using TagTuner, you’ll need the following:

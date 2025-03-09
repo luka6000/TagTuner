@@ -1,0 +1,46 @@
+name: Upload firmware to GitHub Release
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Version of the release
+        required: true
+        type: string
+
+jobs:
+  upload:
+    name: Upload
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4.1.9
+        with:
+          path: files
+
+      - name: Copy files to output
+        run: |-
+          shopt -s nullglob
+          mkdir output
+          version="${{ inputs.version }}"
+          pushd files
+          for device in *; do
+            pushd $device
+            pushd $version
+            cp manifest*.json ../../../output/
+            for bin in *.{bin,elf}; do
+              md5sum $bin | head -c 32 > ../../../output/$bin.md5
+              cp $bin ../../../output/
+            done
+            popd
+            popd
+          done
+          popd
+
+      - name: Upload files to release
+        uses: softprops/action-gh-release@v2.2.1
+        with:
+          files: output/*
+          tag_name: ${{ inputs.version }}
