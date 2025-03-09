@@ -36,7 +36,7 @@ Check out also the [TagTuner on HA Voice PE version](https://github.com/luka6000
 You can use the button below to install the pre-built firmware directly to your device via USB from the browser. \
 This works for ESP32 Atom and ESP8266 tagreader.
 
-<esp-web-install-button manifest="./firmware/manifest.json"></esp-web-install-button>
+<esp-web-install-button manifest="./firmware/tagtuner-firmware.manifest.json"></esp-web-install-button>
 
 <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
 

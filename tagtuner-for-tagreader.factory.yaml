@@ -9,7 +9,7 @@ esphome:
   name_add_mac_suffix: true
 
   project:
-    name: LukaGra.TagTuner
+    name: LukaGra.TagTuner-8266
     version: dev
 
 # This should point to the public location of this yaml file.
