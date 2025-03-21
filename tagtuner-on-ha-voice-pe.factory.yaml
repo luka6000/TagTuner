@@ -14,12 +14,12 @@ packages:
       on_disconnect:
         - ble.enable:
   # Include all of the core configuration
-  core: !include tagtuner-on-ha-voice-pe.yaml
-  # core: 
-  #   url: https://github.com/luka6000/TagTuner
-  #   files: tagtuner-on-ha-voice-pe.yaml
-  #   ref: main
-  #   refresh: 0d
+  # core: !include tagtuner-on-ha-voice-pe.yaml
+  core: 
+    url: https://github.com/luka6000/TagTuner
+    files: tagtuner-on-ha-voice-pe.yaml
+    ref: main
+    refresh: 0d
 
 esphome:
   name: "${name}"
