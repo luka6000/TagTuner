@@ -32,6 +32,7 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 
 ### Firmware options
 
+- [quick start](https://luka6000.github.io/TagTuner/#installation): use pre-built firmware with [ESP Web Tools](https://esphome.github.io/esp-web-tools/) powered installer [here](https://luka6000.github.io/TagTuner/#installation)
 - [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo grove connectors + Bluetooth & BLE proxy, ESP-IDF framework
 
 ## Disclaimer
