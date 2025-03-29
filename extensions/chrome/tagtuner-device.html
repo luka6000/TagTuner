@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+  <title>TagTuner</title>
+  <link rel="stylesheet" href="tagtuner.css">
+</head>
+<body>
+  <div class="header">
+    <div class="play-icon">
+      <img src="tagtuner-24.png" alt="tagtuner">
+    </div>
+    <div class="logo">TagTuner Spotify</div>
+  </div>
+  
+  <div class="form-group">
+    <label for="artist">Device URL</label>
+    <input type="text" id="device_url" placeholder="http://my-ha/config/devices/device/5a2a9...572">
+    <p class="hint">
+      Example: <br>
+      <span>http://my-ha/config/devices/device/5a2a9...572</span>
+    </p>
+
+  </div>
+  
+  <div class="button-group">
+    <button id="deviceSetButton" class="primary-btn">Set device URL</button>
+  </div>
+
+  <div class="hint">
+    <p>You can reset device url by using right click on extension icon.</p>
+  </div>
+  
+  <script src="tagtuner-device.js"></script>
+</body>
+</html>
