@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+  <title>TagTuner</title>
+  <link rel="stylesheet" href="tagtuner.css">
+</head>
+<body>
+  <div class="header">
+    <div class="play-icon">
+      <img src="images/tagtuner-24.png" alt="tagtuner">
+    </div>
+    <div class="logo">TagTuner write tool</div>
+  </div>
+
+  <div id="set-url-div" style="display: none">
+    <div class="form-group">
+      <label for="device_url_input">Device URL</label>
+      <input type="text" id="device_url_input" placeholder="http://192.168.1.100">
+    </div>
+
+    <div class="button-group">
+      <button id="deviceSetButton" class="btn primary-btn">Set device URL</button>
+    </div>
+  </div>
+
+  <div id="load-div" style="display: none">
+    <div class="hint" style="display: flex; justify-content: space-between">
+      <span style="font-weight: bold">URL: </span><span id="device_url"></span>
+      <a id="clearDeviceLink">Clear</a>
+    </div>
+    <div class="loader-div" style="display: flex;justify-content: center;align-items: center;">
+      <div id="loading" style="text-align: center">
+        <img src="images/loading.svg" style="padding: 10px 0">
+        <div>Place tag</div>
+      </div>
+      <div id="error" style="display: none">
+        <div>An error append, please retry.</div>
+        <img src="images/fail.svg">
+      </div>
+      <div id="success" style="display: none">
+        <img src="images/check.svg">
+      </div>
+    </div>
+  </div>
+
+  
+  <script src="tagtuner-write.js" type="module"></script>
+</body>
+</html>

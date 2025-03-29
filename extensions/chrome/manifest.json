@@ -1,0 +1,20 @@
+{
+  "name": "TagTuner write tool",
+  "description": "Get informations from Spotify current tab and send it to Home assistant tag tuner device",
+  "version": "1.0",
+  "manifest_version": 3,
+  "icons": {
+    "128": "images/tagtuner-128.png"
+  },
+  "action": {
+    "default_popup": "tagtuner-write.html",
+    "default_icon": "images/tagtuner-128.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage"
+  ]
+}
