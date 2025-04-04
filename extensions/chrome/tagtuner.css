@@ -74,7 +74,7 @@ input::placeholder {
     margin-top: 20px;
 }
 
-button {
+button.btn {
     flex: 1;
     padding: 12px;
     border: none;
@@ -97,16 +97,12 @@ button {
     transform: scale(1.03);
 }
 
-.secondary-btn {
-    background-color: transparent;
-    color: white;
-    border: 1px solid #535353;
+#clearDeviceLink:hover {
+    color: red;
+    text-underline: #00b9f5;
+    text-decoration: underline;
 }
 
-.secondary-btn:hover {
-    border-color: white;
-    transform: scale(1.03);
-}
 .hint {
     padding: 10px 0;
     color: #d6d6d6;

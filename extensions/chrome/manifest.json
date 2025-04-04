@@ -4,16 +4,11 @@
   "version": "1.0",
   "manifest_version": 3,
   "icons": {
-    "16": "tagtuner-128.png",
-    "48": "tagtuner-128.png",
-    "128": "tagtuner-128.png"
+    "128": "images/tagtuner-128.png"
   },
   "action": {
-    "default_icon": "tagtuner-128.png"
-  },
-  "background" : {
-    "service_worker": "tagtuner.js",
-    "type": "module"
+    "default_popup": "tagtuner-write.html",
+    "default_icon": "images/tagtuner-128.png"
   },
   "permissions": [
     "contextMenus",
