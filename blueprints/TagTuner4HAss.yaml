@@ -126,8 +126,8 @@ variables:
       sonos
     {%elif uri[0:14]=='apple_music://'
       or uri[0:9]=='deezer://'
-      or uri[0:19]=='filesystem_local://'
-      or uri[0:17]=='filesystem_smb://'
+      or uri[0:18]=='filesystem_local--'
+      or uri[0:16]=='filesystem_smb--'
       or uri[0:7]=='plex://'
       or uri[0:8]=='qobuz://'
       or uri[0:15]=='radiobrowser://'
