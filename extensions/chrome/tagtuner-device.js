@@ -22,9 +22,10 @@ function showElement(el, show) {
     document.getElementById(el).style.display = show ? "block" : "none";
 }
 
-function clearAndClose(interval) {
+function clearAndClose(interval, error = false) {
     showElement("loading", false)
-    clearInterval(interval)
+    showElement(error ? "error" : "success", true)
+    if(interval) clearInterval(interval)
     setTimeout(() => {
         window.close()
     }, 1500)
@@ -49,24 +50,20 @@ window.onload = async function () {
                             await fetch(baseUrl + "/binary_sensor/_writing_", { signal: AbortSignal.timeout(1000) })
                                 .catch((err) => {
                                     if (err.name === "TimeoutError") {
-                                        console.error("Timeout: It took more than 5 seconds to get the result!");
+                                        console.error("Timeout: It took more than 1 seconds to get the result! Driver is probably writing the tag.");
                                         setTimeout(() => {
-                                            showElement("success", true);
                                             clearAndClose(i)
                                         }, 4000)
                                     } else {
-                                        clearAndClose(i)
-                                        showElement("error", true)
-                                        console.error('Error:', error);
+                                        clearAndClose(i, true)
                                     }
                                 })
                         }, 500)
                         setTimeout(() => {
-                            clearAndClose(i)
+                            clearAndClose(i, true)
                         }, 20000)
                     } else {
-                        showElement("loading", false)
-                        showElement("error", true)
+                        clearAndClose(null, true)
 
                     }
                 })
