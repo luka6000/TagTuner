@@ -22,18 +22,18 @@ document.getElementById('clearDeviceLink').addEventListener('click', async () =>
 })
 
 // Show or hide elements
-function showElement(el, show) {
+function showElementById(el, show) {
     document.getElementById(el).style.display = show ? "block" : "none";
 }
 
 // Used to clear the interval and close the popup
 function clearAndClose(interval, error = false) {
-    showElement("loading", false)
-    showElement(error ? "error" : "success", true)
+    showElementById("loading", false)
+    showElementById(error ? "error" : "success", true)
     if (interval) clearInterval(interval)
     setTimeout(() => {
         window.close()
-    }, 1500)
+    }, 3000)
 }
 
 function fetchDeviceWriting() {
@@ -68,7 +68,7 @@ window.onload = async function () {
         if (localStorage.target_device) {
             baseUrl = localStorage.target_device;
             document.getElementById("device_url").textContent = baseUrl;
-            showElement("load-div", true)
+            showElementById("load-div", true)
             await chrome.scripting.executeScript({
                 target: {tabId: currentTab.id, allFrames: true},
                 func: getPlaylistOrAlbum,
@@ -77,6 +77,12 @@ window.onload = async function () {
                 console.log(res)
                 callDeviceWrite(baseUrl, res.result.artist, res.result.albumOrPlaylistTitle, res.result.url).then((success) => {
                     if (success) {
+                        showElementById('loading', true)
+                        document.getElementById("artist").textContent = res.result.artist;
+                        document.getElementById("playlist").textContent = res.result.albumOrPlaylistTitle;
+                        const urlSpan = document.getElementById("url");
+                        urlSpan.title = res.result.url;
+                        urlSpan.textContent = res.result.url.substring(0, 40) + "...";
                         fetchDeviceWriting();
                     } else {
                         clearAndClose(null, true)
@@ -84,7 +90,7 @@ window.onload = async function () {
                 })
             });
         } else {
-            showElement("set-url-div", true)
+            showElementById("set-url-div", true)
         }
     });
 }

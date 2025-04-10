@@ -18,6 +18,10 @@
       <input type="text" id="device_url_input" placeholder="http://192.168.1.100">
     </div>
 
+    <div class="hint">
+      Should be the device URL (not Home Asssistant one) without trailing slash.
+    </div>
+
     <div class="button-group">
       <button id="deviceSetButton" class="btn primary-btn">Set device URL</button>
     </div>
@@ -28,16 +32,19 @@
       <span style="font-weight: bold">URL: </span><span id="device_url"></span>
       <a id="clearDeviceLink">Clear</a>
     </div>
-    <div class="loader-div" style="display: flex;justify-content: center;align-items: center;">
-      <div id="loading" style="text-align: center">
+    <div class="loader-div">
+      <div id="loading">
+        <div class="writing-infos">Artist:<span id="artist"></span></div>
+        <div class="writing-infos">Album/Playlist:<span id="playlist"></span></div>
+        <div class="writing-infos">Url:<span id="url"></span></div>
         <img src="images/loading.svg" style="padding: 10px 0">
-        <div>Place tag</div>
+        <div class="place-tag">Place tag</div>
       </div>
-      <div id="error" style="display: none">
+      <div id="error">
         <div>An error append, please retry.</div>
         <img src="images/fail.svg">
       </div>
-      <div id="success" style="display: none">
+      <div id="success">
         <img src="images/check.svg">
       </div>
     </div>
