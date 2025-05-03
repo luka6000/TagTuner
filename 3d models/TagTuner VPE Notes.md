@@ -10,6 +10,8 @@ in the bottom of the VPE.
 - `TagTuner VPE.stl` - VPE + NFC reader stand STL
 - `TagTuner disc with B-XD002.stl` - Disc with cavity for NFC chip 
 - `TagTuner disc.stl` - Disc without cavity
+- `TagTuner VPE.jpg` - Photo of assembled unit
+- `TagTuner VPE w-disc.jpg` - Photo of assembled unit with sample disc
 
 ## OpenSCAD design
 I used the BOSL2 OpenSCAD library as part of the design. 
