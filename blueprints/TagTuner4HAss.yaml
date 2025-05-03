@@ -184,7 +184,7 @@ actions:
         sequence:
           - condition: template
             value_template: "{{ stop_on_tagremoved == true }}"
-          - action: media_player.media_stop
+          - action: media_player.media_pause
             target:
               entity_id: !input httpplayer
           - action: media_player.shuffle_set
