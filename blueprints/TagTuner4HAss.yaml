@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v250308
+  author: LukaGra v250503
   domain: automation
   input:
     tuner_id:
@@ -34,6 +34,12 @@ blueprint:
         stop_on_tagremoved:
           name: Stop music
           description: on tag removed
+          selector:
+            boolean:
+          default: true
+        next_on_rescan:
+          name: Skip track
+          description: on tag rescan
           selector:
             boolean:
           default: true
@@ -99,6 +105,7 @@ variables:
   massplayer: !input massplayer
   httpplayer: !input httpplayer
   stop_on_tagremoved: !input stop_on_tagremoved
+  next_on_rescan: !input next_on_rescan
   action: >-
     {%if trigger.event.event_type == 'tag_scanned' %}
       tagScanned
@@ -195,6 +202,65 @@ actions:
                 - !input httpplayer
                 - !input massplayer
         alias: tag_removed
+
+      - conditions:
+          - condition: template
+            value_template: '{{ action == "tagScanned" and source != "" }}'
+          - condition: template
+            value_template: "{{ is_state(text_playlist_uri, uri) }}"
+          - condition: template
+            value_template: "{{ next_on_rescan == true }}"
+          - condition: not
+            conditions:
+              - condition: state
+                entity_id: !input massplayer
+                state: paused
+                for:
+                  hours: 0
+                  minutes: 0
+                  seconds: 3
+        sequence:
+          - alias: play next
+            choose:
+              - conditions:
+                  - condition: template
+                    value_template: >-
+                      {{ action == "tagScanned" and source == "sonos" and
+                      trigger.event.data.playlist != "" }}
+                sequence:
+                  - action: media_player.media_next_track
+                    target:
+                      entity_id: !input httpplayer
+                  - action: media_player.media_play
+                    target:
+                      entity_id: !input httpplayer
+                alias: sonos
+              - conditions:
+                  - condition: template
+                    value_template: '{{ action == "tagScanned" and source == "mass" }}'
+                sequence:
+                  - action: media_player.media_next_track
+                    target:
+                      entity_id: !input massplayer
+                  - action: media_player.media_play
+                    target:
+                      entity_id: !input massplayer
+                alias: mass
+              - conditions:
+                  - condition: template
+                    value_template: >-
+                      {{ action == "tagScanned" and source not in ("sonos",
+                      "mass", "") }}
+                sequence:
+                  - action: media_player.media_next_track
+                    target:
+                      entity_id: !input httpplayer
+                  - action: media_player.media_play
+                    target:
+                      entity_id: !input httpplayer
+                alias: http
+        alias: tag_scanned same rescan
+
       - conditions:
           - condition: template
             value_template: '{{ action == "tagScanned" and source != "" }}'
@@ -293,7 +359,8 @@ actions:
               shuffle: true
             target:
               entity_id: !input httpplayer
-        alias: tag_scanned
+        alias: tag_scanned new source
+
       - conditions:
           - condition: template
             value_template: '{{ action == "clickTriple" }}'
