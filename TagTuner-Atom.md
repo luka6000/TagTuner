@@ -2,6 +2,8 @@
 - [3d models](https://github.com/luka6000/TagTuner/tree/main/3d%20models): Atom Echo Grove version 3d models
 
 Print your enclosure with preffered colors and surface patterns
+![B71AED4C-08D7-4F52-AC81-285DC6743BAC](https://github.com/user-attachments/assets/35055b52-55a9-4207-9440-7b8cfff1b8df)
+
 ![150898D9-AA77-4470-9DA3-2A89EE304011](https://github.com/user-attachments/assets/d036c021-b2bc-496b-a427-b9ae3361d691)
 
 I suggest a cool-white (signal white) base and a dark front plate with a nice carbon fibre pattern.
@@ -30,8 +32,8 @@ Use short (<5mm) M2 screw for Atom and longer (10mm) M2.5 screws for everything 
 
 ### Firmware options
 
-- [tagtuner-atom-grove.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove.yaml): based on m5stack Atom Echo and grove connectors
-- [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo + Bluetooth & BLE proxy, no media player, ESP-IDF framework. This is current default install
+- [quick start](https://luka6000.github.io/TagTuner/#installation): use pre-built firmware with [ESP Web Tools](https://esphome.github.io/esp-web-tools/) powered installer [here](https://luka6000.github.io/TagTuner/#installation)
+- [tagtuner-atom-grove-ble.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-atom-grove-ble.yaml): m5stack Atom Echo grove connectors + Bluetooth & BLE proxy, ESP-IDF framework
 
 ## Disclaimer
 All of this is my personal hobby project, available for free download and personal use. If you’d like to support me with a coffee, beer, filament, or electronic parts, feel free to use [paypal.me/lukagra](https://paypal.me/lukagra) or [ko-fi.com/lukagra](https://ko-fi.com/lukagra)

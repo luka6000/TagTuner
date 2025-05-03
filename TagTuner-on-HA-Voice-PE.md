@@ -65,6 +65,7 @@ Reuse all black screws or use M2.5 screws except for the speaker.
 
 ### Firmware options
 
+- [quick start](https://luka6000.github.io/TagTuner/#installation): use pre-built firmware with [ESP Web Tools](https://esphome.github.io/esp-web-tools/) powered installer [here](https://luka6000.github.io/TagTuner/#installation)
 - [tagtuner-on-ha-voice-pe.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-on-ha-voice-pe.yaml): TagTuner riding on HA Voice PE Grove port
 
 [Usage scenarios](https://luka6000.github.io/TagTuner/#using-tagtuner) are exactly the same as the original D1-Custom solution. \
