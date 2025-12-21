@@ -1,7 +1,62 @@
+packages:
+  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
+  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
+  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  # core-nfc: !include tagtuner-core-nfc.yaml
+  # core-comms: !include tagtuner-core-comms.yaml
+
+# These substitutions allow the end user to override certain values
+substitutions:
+  name: "tagtuner"
+  friendly_name: "TagTuner"
+
+esphome:
+  min_version: 2025.12.0
+  name: "${name}"
+  friendly_name: ${friendly_name}
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  # hello world
+  on_boot:
+    priority: -100
+    then:
+    - light.turn_on:
+        id: led1
+        effect: HelloWorld
+    - delay: 1000ms
+    - light.turn_off: led1
+    - wait_until:
+        condition:
+          api.connected:
+        timeout: 20s
+    - text_sensor.template.publish:
+        id: status
+        state: "Ready"
+
 esp32:
   board: m5stack-atom
   framework:
     type: esp-idf
+
+# To be able to get logs from the device via serial and api.
+logger:
+  # level: VERBOSE
+  level: DEBUG
+  # level: WARN
+  logs:
+    light: WARN
+    # pn532: DEBUG
+    # pn532_i2c: DEBUG
+
+i2c:
+  id: bus_i2c
+  sda: 26
+  scl: 32
+  scan: False
+  frequency: 100kHz
+  timeout: 13ms #to prevent pn532 timeout
 
 esp32_ble_tracker:
   scan_parameters:
@@ -9,17 +64,7 @@ esp32_ble_tracker:
 bluetooth_proxy:
   active: false
 
-packages:
-  atom-grove: github://luka6000/TagTuner/tagtuner-atom-grove.yaml@main
-
-i2s_audio:
-  - id: !remove i2s_audio_bus
-
-media_player:
-  - id: !remove mp1
-
 light:
-  - id: !remove led1
   - platform: esp32_rmt_led_strip
     id: led1
     pin: GPIO27
@@ -68,3 +113,167 @@ light:
               duration: 250ms
             - state: false
               duration: 50ms
+
+binary_sensor:
+  - platform: gpio
+    id: toggle
+    pin:
+      number: GPIO39
+      inverted: true
+    on_multi_click:
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+      then:
+        - script.execute: led_blink
+        - text_sensor.template.publish:
+            id: status
+            state: "clickTriple"
+        - script.execute:
+            id: tagtuner_event
+            action: "clickTriple"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 0.25s
+        - ON for at most 1s
+        - OFF for at least 0.25s
+      then:
+        - script.execute: led_blink
+        - text_sensor.template.publish:
+            id: status
+            state: "clickDouble"
+        - script.execute:
+            id: tagtuner_event
+            action: "clickDouble"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
+    - timing:
+        - ON for 0.5s to 2s
+        - OFF for at least 50ms
+      then:
+        - script.execute: led_blink
+        - text_sensor.template.publish:
+            id: status
+            state: "clickLong"
+        - script.execute:
+            id: tagtuner_event
+            action: "clickLong"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
+    - timing:
+        - ON for at most 0.5s
+        - OFF for at least 260ms
+      then:
+        - script.execute: led_blink
+        - text_sensor.template.publish:
+            id: status
+            state: "clickSingle"
+        - script.execute:
+            id: tagtuner_event
+            action: "clickSingle"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
+
+script:
+  - id: led_blink
+    then:
+    - light.turn_off: led1
+    - light.turn_on:
+        id: led1
+        brightness: 60%
+        red: 100%
+        green: 100%
+        blue: 100%
+        flash_length: 100ms
+  - id: led_ok
+    then:
+    - light.turn_off: led1
+    - light.turn_on:
+        id: led1
+        brightness: 100%
+        red: 0%
+        green: 100%
+        blue: 0%
+        flash_length: 50ms
+    - delay: 100ms
+    - light.turn_on:
+        id: led1
+        brightness: 100%
+        red: 0%
+        green: 100%
+        blue: 0%
+        flash_length: 50ms
+  - id: led_success
+    then:
+    - light.turn_off: led1
+    - light.turn_on:
+        id: led1
+        brightness: 100%
+        red: 0%
+        green: 100%
+        blue: 0%
+        flash_length: 200ms
+    - delay: 250ms
+    - light.turn_on:
+        id: led1
+        brightness: 100%
+        red: 0%
+        green: 100%
+        blue: 0%
+        flash_length: 200ms
+    - delay: 250ms
+    - light.turn_on:
+        id: led1
+        brightness: 100%
+        red: 0%
+        green: 100%
+        blue: 0%
+        flash_length: 500ms
+  - id: led_tagwrite
+    then:
+    - light.turn_on:
+        id: led1
+        effect: TagWrite
+
+sensor:
+  - platform: rotary_encoder
+    id: rotary
+    pin_a: 25
+    pin_b: 21
+    on_clockwise:
+      - text_sensor.template.publish:
+          id: status
+          state: "Volume up"
+      - script.execute:
+          id: tagtuner_event
+          action: "volumeUp"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
+      - script.execute: led_blink
+    on_anticlockwise:
+      - text_sensor.template.publish:
+          id: status
+          state: "Volume down"
+      - script.execute:
+          id: tagtuner_event
+          action: "volumeDown"
+          uid: ""
+          uri: ""
+          artist: ""
+          playlist: ""
+      - script.execute: led_blink
