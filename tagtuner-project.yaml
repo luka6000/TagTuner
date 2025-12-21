@@ -1,7 +1,7 @@
 substitutions:
   name: "tagtuner"
   friendly_name: "TagTuner"
-  magic: "250308"
+  magic: "251221"
 
 esphome:
   name: "${name}"

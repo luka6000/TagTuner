@@ -1,0 +1,38 @@
+# These substitutions allow the end user to override certain values
+substitutions:
+  name: "tagtuner-xiao"
+  friendly_name: "TagTuner"
+
+packages:
+  # Include all of the core configuration
+  core: !include tagtuner-XIAO-custom.yaml
+  # core: 
+  #   url: https://github.com/luka6000/TagTuner
+  #   files: tagtuner-XIAO-custom.yaml
+  #   ref: main
+  #   refresh: 0d
+
+esphome:
+  name: "${name}"
+  friendly_name: ${friendly_name}
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  project:
+    name: LukaGra.TagTuner-XIAO
+    version: dev
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://luka6000/TagTuner/tagtuner-XIAO-custom.yaml@main
+  import_full_config: false
+
+# Sets up the improv via serial client for Wi-Fi provisioning
+improv_serial:
+  next_url: https://luka6000.github.io/TagTuner/
+
+esp32_ble:
+  name: tagtuner
+esp32_improv:
+  authorizer: toggle
