@@ -18,6 +18,7 @@ jobs:
     uses: esphome/workflows/.github/workflows/build.yml@main
     with:
       files: |
+        tagtuner-XIAO-custom.factory.yaml
         tagtuner-atom-grove-ble.factory.yaml
         tagtuner-for-tagreader.factory.yaml
 # tagtuner-atom-grove.factory.yaml

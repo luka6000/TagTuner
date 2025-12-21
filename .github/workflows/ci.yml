@@ -1,10 +1,14 @@
 name: CI
 
 on:
+  push:
+    paths:
+      - '.github/workflows/ci.yml'
   pull_request:
     paths:
       - '*.yaml'
-      - '.github/workflows/ci.yml'
+  schedule:
+    - cron: '0 9 7 * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
@@ -19,7 +23,8 @@ jobs:
       max-parallel: 3
       matrix:
         file:
-          - tagtuner-D1-custom1
+          - tagtuner-XIAO-custom
+          # - tagtuner-D1-custom1
           - tagtuner-atom-grove-ble
           - tagtuner-for-tagreader
         esphome-version:
