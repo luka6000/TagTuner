@@ -27,8 +27,8 @@ Check out also the [TagTuner on HA Voice PE version](https://github.com/luka6000
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
-- [Home Assistant](https://www.home-assistant.io) 2025.1.x
-- [Music Assistant](https://music-assistant.io) 2.x or [Sonos](https://www.sonos.com/) speaker 
+- [Home Assistant](https://www.home-assistant.io) 2025.12.x
+- [Music Assistant](https://music-assistant.io) 2.7.x or [Sonos](https://www.sonos.com/) speaker 
 - configured MAss music [library](https://music-assistant.io/usage/#the-library) and/or a streaming subscription 
 - TagTuner device configured in HAss
 - any NFC tags or programmable NTAG213/215/216
@@ -58,8 +58,8 @@ I suggest a cool-white (signal white) base and a dark front plate with a nice ca
 
 ### BOM for XIAO-Custom version
 - [XIAO esp32-c6](https://s.click.aliexpress.com/e/_c3hnW7jV) controller with built-in antenna
-- [pn532](https://s.click.aliexpress.com/e/_c3EiPVGr) NFC reader
-- [grove angle connectors](https://s.click.aliexpress.com/e/_DDF07mN)
+- [pn532](https://s.click.aliexpress.com/e/_c3l9MKHr) NFC reader
+- [grove angle connectors](https://s.click.aliexpress.com/e/_c3xcepEd)
 - [grove cables](https://s.click.aliexpress.com/e/_c3rtIVGR)
 - [hw040](https://s.click.aliexpress.com/e/_c3vSH4wJ) rotary encoder
 - [dupont cables](https://s.click.aliexpress.com/e/_c4FUMZi7) for hw040
@@ -81,17 +81,18 @@ hw040 connector (use dupont cable):
 
 ![IMG_3879](https://github.com/user-attachments/assets/89939c33-9ba4-458e-9037-983e964e1784)
 
-Route and solder the VBUS and GND wires along the bottom side to ensure the front LED remains unobstructed.
+Route and solder the VCC (red) and GND (white) wires along the bottom side of XIAO to ensure the front LED remains unobstructed.
 
 XIAO will fit perfectly into the bottom part braces
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/729de545-c39a-4701-8ef3-378c20e3397d" />
 
-Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results
+Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results \
+(TODO: XIAO front plate LED)
 ![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
 
 I preffer soldering the grove angle connector to the PN532 NFC board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
-Remember to set the DIP switches to 10 to enable I2C. Correct position for I2c is marked by yellow lines.
+Remember to set the DIP switches to 10 to enable I2C. Correct switches position for I2c is marked by yellow lines.
 
 Everything will fit into the enclosure.
 ![IMG_3884](https://github.com/user-attachments/assets/486370be-21fa-4e10-a11b-db0cf5e78d17)
@@ -104,6 +105,7 @@ Use 10mm M2.5 screws (nfc board, volume encoder, front plate).
 - [tagtuner-XIAO-custom.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-XIAO-custom.yaml): XIAO ESP32-C6 with HW-040 rotary encoder and button. Bluetooth & BLE proxy, ESP-IDF framework
 
 ### Other options
+- [D1 mini](https://github.com/luka6000/TagTuner/blob/main/TagTuner-D1.md): TagTuner Custom1 based on the ESP32 D1 Mini; previously my preferred version but dropped in favor of the XIAO because of the poor quality of available D1 boards
 - [HA Voice PE version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-on-HA-Voice-PE.md): TagTuner on HA Voice PE device
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - [Atom version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-Atom.md): based on m5stack Atom Echo and grove connectors; free model case but much thicker (23.5mm)
