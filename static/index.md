@@ -48,7 +48,7 @@ You can use the button below to install the pre-built firmware directly to your 
 <p>Select your TagTuner version</p>
 <ul class="radios">
   <li>
-    <label><input type="radio" name="type" value="tagtuner-d1-esp32" /> D1-Custom</label>
+    <label><input type="radio" name="type" value="tagtuner-xiao-esp32c6" /> XIAO Custom</label>
   </li>
   <li>
     <label><input type="radio" name="type" value="tagtuner-on-ha-voice-esp32s3" /> HA Voice PE</label>
@@ -58,6 +58,9 @@ You can use the button below to install the pre-built firmware directly to your 
   </li>
   <li>
     <label><input type="radio" name="type" value="tagtuner-for-tagreader-esp8266" /> tagreader</label>
+  </li>
+  <li>
+    <label><input type="radio" name="type" value="tagtuner-d1-esp32" /> D1 Custom</label>
   </li>
 </ul>
 <p class="button-row" align="center">
@@ -78,8 +81,8 @@ Installer powered by [ESP Web Tools](https://esphome.github.io/esp-web-tools/)
 
 ## Getting started
 To start using TagTuner, you’ll need the following:
-- [Home Assistant](https://www.home-assistant.io) 2025.1.x
-- [Music Assistant](https://music-assistant.io) 2.x or [Sonos](https://www.sonos.com/) speaker 
+- [Home Assistant](https://www.home-assistant.io) 2025.12.x
+- [Music Assistant](https://music-assistant.io) 2.7.x or [Sonos](https://www.sonos.com/) speaker 
 - configured MAss music [library](https://music-assistant.io/usage/#the-library) and/or a streaming subscription 
 - TagTuner device configured in HAss
 - any NFC tags or programmable NTAG213/215/216
@@ -103,55 +106,60 @@ Custom model cases are print-ready
 - [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1)
 - [ko-fi/shop](https://ko-fi.com/s/ce428ab53f)
 
-Choose and print your enclosure with preferred colors and surface patterns
-![A4334D41-580B-43D2-9B9E-4769A9EE2630_1_105_c](https://github.com/user-attachments/assets/a507ec1a-55a8-4e1c-a4b2-368f907f073b)
-
+Choose and print your enclosure with preferred colors and surface patterns. \
 I suggest a cool-white (signal white) base and a dark front plate with a nice carbon fibre pattern.
 ![D7EFA920-1D9A-4D65-AD23-4F0A2328A510_1_105_c](https://github.com/user-attachments/assets/ea6c62d3-68ee-47b1-8d40-b381910d00c3)
 
-### Parts for D1-Custom version
-- [esp32 D1 mini](https://s.click.aliexpress.com/e/_DkyEAwt) controller with USBC
-- [pn532](https://s.click.aliexpress.com/e/_De8uw89) NFC reader
-- [hw040](https://s.click.aliexpress.com/e/_DlIIMtn) rotary encoder
-- [grove angle connectors](https://s.click.aliexpress.com/e/_DDF07mN)
+### BOM for XIAO-Custom version
+- [XIAO esp32-c6](https://s.click.aliexpress.com/e/_c3hnW7jV) controller with built-in antenna
+- [pn532](https://s.click.aliexpress.com/e/_c3l9MKHr) NFC reader
+- [grove angle connectors](https://s.click.aliexpress.com/e/_c3xcepEd)
+- [grove cables](https://s.click.aliexpress.com/e/_c3rtIVGR)
+- [hw040](https://s.click.aliexpress.com/e/_c3vSH4wJ) rotary encoder
+- [dupont cables](https://s.click.aliexpress.com/e/_c4FUMZi7) for hw040
+- [M2.5 10mm](https://s.click.aliexpress.com/e/_c3gFU5Zv) screws
 
-#### Wiring D1-Custom
-pn532 connector:
+#### Wiring XIAO-Custom
+pn532 connector (use grove cable):
+- GND: GND (bottom cable)
+- VCC: VBUS (+5V, bottom cable)
+- SDA/TXD: D4
+- SCL/RXD: D5
+
+hw040 connector (use dupont cable):
+- CLK: D8
+- DT: D9
+- SW: D10
+- +: 3V3 (+3.3V)
 - GND: GND
-- VCC: VCC (+5V)
-- SDA/TXD: IO21
-- SCL/RXD: IO22
 
-hw040 connector:
-- CLK: IO18
-- DT: IO19
-- SW: IO23
-- +: +3.3V
-- GND: GND
+![IMG_3879](https://github.com/user-attachments/assets/89939c33-9ba4-458e-9037-983e964e1784)
 
-![BCAC91FD-93C7-45B1-BD3F-C07717A7AF5C_1_201_a](https://github.com/user-attachments/assets/6c01184f-bc0a-4e16-bff7-f1452aa176a0)
+Route and solder the VCC (red) and GND (white) wires along the bottom side of XIAO to ensure the front LED remains unobstructed.
 
-ESP32 D1 mini will fit perfectly into the bottom part braces
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/c7907571-c27f-4d40-ac83-a28fe8a409e3" />
+XIAO will fit perfectly into the bottom part braces
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/729de545-c39a-4701-8ef3-378c20e3397d" />
 
-Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results
+Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results \
+(TODO: XIAO front plate LED)
 ![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
 
-I preffer soldering the [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) to the [PN532 NFC](https://s.click.aliexpress.com/e/_De8uw89) board
+I preffer soldering the grove angle connector to the PN532 NFC board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
-Remember to set the DIP switches to 10 to enable I2C. Correct position for I2c is marked by yellow lines.
+Remember to set the DIP switches to 10 to enable I2C. Correct switches position for I2c is marked by yellow lines.
 
 Everything will fit into the enclosure.
-![79F47CA4-0882-47AD-8710-8E5B6021D77A_1_105_c](https://github.com/user-attachments/assets/97d14e1a-97f8-4c64-a5ec-44054e5350db)
+![IMG_3884](https://github.com/user-attachments/assets/486370be-21fa-4e10-a11b-db0cf5e78d17)
 
 Use 10mm M2.5 screws (nfc board, volume encoder, front plate).
 
 ### Firmware
 
-- [tagtuner-D1-custom1.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-D1-custom1.yaml): ESP32 D1 mini with HW-040 rotary encoder and button. Bluetooth & BLE proxy, ESP-IDF framework
-
+- [quick start](https://luka6000.github.io/TagTuner/#installation): use pre-built firmware with [ESP Web Tools](https://esphome.github.io/esp-web-tools/) powered installer [here](https://luka6000.github.io/TagTuner/#installation)
+- [tagtuner-XIAO-custom.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-XIAO-custom.yaml): XIAO ESP32-C6 with HW-040 rotary encoder and button. Bluetooth & BLE proxy, ESP-IDF framework
 
 ### Other options
+- [D1 mini](https://github.com/luka6000/TagTuner/blob/main/TagTuner-D1.md): TagTuner Custom1 based on the ESP32 D1 Mini; previously my preferred version but dropped in favor of the XIAO because of the poor quality of available D1 boards
 - [HA Voice PE version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-on-HA-Voice-PE.md): TagTuner on HA Voice PE device
 - [tagtuner-for-tagreader.yaml](https://github.com/luka6000/TagTuner/blob/main/tagtuner-for-tagreader.yaml): TagTuner firmware for [Adonno tagreader](https://github.com/adonno/tagreader) device (buzzer only, no led support)
 - [Atom version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-Atom.md): based on m5stack Atom Echo and grove connectors; free model case but much thicker (23.5mm)
@@ -202,7 +210,7 @@ Watch the LED light in the button: \
 **flashing constant**: writing operation in progress \
 **flashing few times**: operation success
 
-D1-Custom has a single color led so it's only blinking but it's really easy to understand what's going on. Use HAss device Diagnostic dashboard in case you would need status info.
+XIAO-Custom has a single color led so it's only blinking but it's really easy to understand what's going on. Use HAss device Diagnostic dashboard in case you would need status info.
 
 ### Diagnostic
 Check the Diagnostic->Status messages on the device page in Home Assistant.\

@@ -35,9 +35,9 @@ jobs:
             pushd $version
             cp manifest*.json ../../../output/
             for bin in *.{bin,elf}; do
-              md5sum $bin | head -c 32 > "${output_path}$bin.md5"
-              sha256sum $bin | head -c 64 > "${output_path}$bin.sha256"
-              cp $bin "$output_path"
+              md5sum $bin | head -c 32 > ../../../output/$bin.md5
+              sha256sum $bin | head -c 64 > "../../../output/$bin.sha256"
+              cp $bin ../../../output/              
             done
             popd
             popd
