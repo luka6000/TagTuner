@@ -24,7 +24,7 @@ jobs:
           - tagtuner-for-tagreader
         esphome-version:
           - stable
-          - beta
+          # - beta
           # - dev
 
     steps:
