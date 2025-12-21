@@ -14,8 +14,8 @@ esphome:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://luka6000/TagTuner/tagtuner-for-tagreader.factory.yaml@main
-  import_full_config: true
+  package_import_url: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main
+  import_full_config: false
 
 # Sets up the improv via serial client for Wi-Fi provisioning
 improv_serial:
