@@ -24,18 +24,19 @@ jobs:
           - tagtuner-for-tagreader
         esphome-version:
           - stable
-          - beta
+          # - beta
           # - dev
+
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v6
       - name: ESPHome ${{ matrix.esphome-version }}
-        uses: esphome/build-action@v6.0.0
+        uses: esphome/build-action@v7
         with:
           yaml-file: ${{ matrix.file }}.yaml
           version: ${{ matrix.esphome-version }}
       - name: ESPHome ${{ matrix.esphome-version }} Factory
-        uses: esphome/build-action@v6.0.0
+        uses: esphome/build-action@v7
         with:
           yaml-file: ${{ matrix.file }}.factory.yaml
           version: ${{ matrix.esphome-version }}
