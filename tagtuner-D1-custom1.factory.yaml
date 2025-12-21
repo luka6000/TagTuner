@@ -25,7 +25,7 @@ esphome:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://luka6000/TagTuner/tagtuner-D1-custom1.yaml@main
+  package_import_url: github://luka6000/TagTuner/tagtuner-D1-custom1.factory.yaml@main
   import_full_config: true
 
 # Sets up the improv via serial client for Wi-Fi provisioning
