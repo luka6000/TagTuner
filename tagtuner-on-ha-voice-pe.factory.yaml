@@ -34,8 +34,8 @@ esphome:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://luka6000/TagTuner/tagtuner-on-ha-voice-pe.factory.yaml@main
-  import_full_config: true
+  package_import_url: github://luka6000/TagTuner/tagtuner-on-ha-voice-pe.yaml@main
+  import_full_config: false
 
 wifi:
   on_connect:

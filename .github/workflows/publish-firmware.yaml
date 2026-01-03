@@ -18,12 +18,12 @@ jobs:
     uses: ./.github/workflows/build.yaml
     with:
       #### Modify below here to match your project ####
-        # tagtuner-D1-custom1.factory.yaml
-        # tagtuner-on-ha-voice-pe.factory.yaml
       files: |
         tagtuner-XIAO-custom.factory.yaml
         tagtuner-atom-grove-ble.factory.yaml
         tagtuner-for-tagreader.factory.yaml
+        tagtuner-on-ha-voice-pe.factory.yaml
+        tagtuner-D1-custom1.factory.yaml
       esphome-version: stable
       combined-name: tagtuner-firmware
       #### Modify above here to match your project ####
