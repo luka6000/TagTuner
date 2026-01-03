@@ -66,7 +66,7 @@ text:
     id: playlist_artist
     name: "Playlist artist"
     icon: mdi:account-music
-    entity_category: CONFIG
+    # entity_category: CONFIG
     optimistic: true
     min_length: 0
     max_length: 50
@@ -76,7 +76,7 @@ text:
     id: playlist_info
     name: "Playlist name or album title"
     icon: mdi:playlist-music
-    entity_category: CONFIG
+    # entity_category: CONFIG
     optimistic: true
     min_length: 0
     max_length: 100
@@ -86,7 +86,7 @@ text:
     id: playlist_uri
     name: "Playlist URI"
     icon: mdi:link-variant
-    entity_category: CONFIG
+    # entity_category: CONFIG
     optimistic: true
     min_length: 0
     max_length: 255
@@ -117,7 +117,7 @@ button:
     name: Cancel writing 
     id: btn_cancel_writing
     icon: "mdi:broadcast-off"
-    entity_category: CONFIG
+    # entity_category: CONFIG
     on_press:
       then:
       - lambda: 'id(pn532_board).read_mode();'
@@ -136,7 +136,7 @@ button:
     name: Erase Tag
     id: btn_erase_tag
     icon: "mdi:nfc-search-variant"
-    entity_category: CONFIG    
+    # entity_category: CONFIG
     on_press:
       then:
       - script.execute: led_tagwrite
@@ -172,7 +172,7 @@ button:
     name: Write Tag
     id: btn_write_tag
     icon: "mdi:cast-audio-variant"
-    entity_category: CONFIG    
+    # entity_category: CONFIG
     on_press:
       then:
       - script.execute: led_tagwrite
