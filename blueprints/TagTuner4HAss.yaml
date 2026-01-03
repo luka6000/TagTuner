@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v250503
+  author: LukaGra v260103
   domain: automation
   input:
     tuner_id:
@@ -19,6 +19,7 @@ blueprint:
         entity:
           filter:
             - integration: music_assistant
+              domain: media_player
     httpplayer:
       name: Home Assistant media player
       description: Controls play/stop/volume and maybe plays http playlists. Choose same MAss media player as above in case you don't know better
@@ -61,17 +62,17 @@ blueprint:
           default: 0.3
           selector:
             number:
-              min: 0
+              min: 0.01
               max: 1
               step: 0.01
               mode: slider
         max_volume:
           name: Volume limiter
-          description: maximum allowed volume
+          description: maximum allowed
           default: 1
           selector:
             number:
-              min: 0
+              min: 0.01
               max: 1
               step: 0.01
               mode: slider
@@ -92,7 +93,7 @@ blueprint:
         version:
           name: Blueprint version
           description: just for you to know
-          default: 250308
+          default: 260103
         notify_version:
           name: Notify about version
           description: mismatch of automation vs yaml firmware
@@ -131,20 +132,8 @@ variables:
       http
     {%elif uri[0:10]=='sonos-2://' %}
       sonos
-    {%elif uri[0:14]=='apple_music://'
-      or uri[0:9]=='deezer://'
-      or uri[0:18]=='filesystem_local--'
-      or uri[0:16]=='filesystem_smb--'
-      or uri[0:7]=='plex://'
-      or uri[0:8]=='qobuz://'
-      or uri[0:15]=='radiobrowser://'
-      or uri[0:13]=='soundcloud://'
-      or uri[0:10]=='spotify://'
-      or uri[0:8]=='tidal://'
-      or uri[0:9]=='tunein://'
-      or uri[0:10]=='ytmusic://'
-      or uri[0:10]=='library://'
-      %}mass
+    {% elif uri is match('^(?:filesystem_local|filesystem_smb|apple_music|deezer|plex|qobuz|radiobrowser|soundcloud|spotify|tidal|tunein|ytmusic|library)(?:--.*)?://') %}
+      mass
     {%endif%}
   text_playlist_uri: >-
     {% for entity in device_entities(device_id) %}
@@ -174,6 +163,7 @@ variables:
   notify_version: !input notify_version
   blprnt_version: !input version
   default_volume_set: !input default_volume_set
+  default_volume: !input default_volume
 
 triggers:
   - trigger: event
@@ -214,7 +204,9 @@ actions:
             conditions:
               - condition: state
                 entity_id: !input massplayer
-                state: paused
+                state:
+                  - paused
+                  - idle
                 for:
                   hours: 0
                   minutes: 0
@@ -248,9 +240,7 @@ actions:
                 alias: mass
               - conditions:
                   - condition: template
-                    value_template: >-
-                      {{ action == "tagScanned" and source not in ("sonos",
-                      "mass", "") }}
+                    value_template: '{{ action == "tagScanned" and source == "http" }}'
                 sequence:
                   - action: media_player.media_next_track
                     target:
@@ -259,6 +249,18 @@ actions:
                     target:
                       entity_id: !input httpplayer
                 alias: http
+              - conditions:
+                  - condition: template
+                    value_template: >-
+                      {{ action == "tagScanned" and source not in ("sonos", "mass", "http", "") }}
+                sequence:
+                  - action: media_player.media_next_track
+                    target:
+                      entity_id: !input massplayer
+                  - action: media_player.media_play
+                    target:
+                      entity_id: !input massplayer
+                alias: try_mass
         alias: tag_scanned same rescan
 
       - conditions:
@@ -329,7 +331,7 @@ actions:
                     alias: mass
                   - conditions:
                       - condition: template
-                        value_template: '{{ action == "tagScanned" and source not in ("sonos", "mass", "") }}'
+                        value_template: '{{ action == "tagScanned" and source == "http" }}'
                     sequence:
                       - action: media_player.play_media
                         data:
@@ -338,6 +340,17 @@ actions:
                         target:
                           entity_id: !input httpplayer
                     alias: http
+                  - conditions:
+                      - condition: template
+                        value_template: '{{ action == "tagScanned" and source not in ("sonos", "mass", "http", "") }}'
+                    sequence:
+                      - action: media_player.play_media
+                        data:
+                          media_content_type: music
+                          media_content_id: "{%if uri[-8:] == '/shuffle'%}{{ uri[0:-8] }}{%else%}{{ uri }}{%endif%}"
+                        target:
+                          entity_id: !input massplayer
+                    alias: try_mass
                 alias: play
           - if:
               - condition: template
@@ -470,7 +483,7 @@ actions:
             
             https://github.com/luka6000/TagTuner
 
-            You can disable this notification in TagTuner automation settings.
+            You can disable this notification in TagTuner automation Additional settings.
     alias: version mismatch notify 1
   - if:
       - condition: template
@@ -485,11 +498,11 @@ actions:
             '{{this.attributes.friendly_name}} blueprint automation is outdated at v{{blprnt_version}} while
             {{ device_attr(device_id, "name") }} is at v{{ trigger.event.data.magic|int(2024) }}
 
-            Please consider upgrading for the best experience.
+            Please consider doing Re-import blueprint for the best experience.
 
             https://github.com/luka6000/TagTuner#using-tagtuner
 
-            You can disable this notification in {{this.attributes.friendly_name}} automation settings.'
+            You can disable this notification in {{this.attributes.friendly_name}} automation Additional settings.'
     alias: version mismatch notify 2
 mode: queued
 max: 10
