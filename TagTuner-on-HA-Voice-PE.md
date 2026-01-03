@@ -19,16 +19,16 @@ TagTuner on HA Voice PE is a bit smaller then [D1-Custom](https://github.com/luk
 
 ### Parts for TagTuner on HA Voice PE
 This version of TagTuner is build arround Home Assistant Voice Preview Edition hardware. It uses Grove connector available on HA Voice PE main board at the bottom.
-![havpe](https://voice-pe.home-assistant.io/images/voice_pe_internal_pin_headers.jpg)
-![havpe-grove](https://voice-pe.home-assistant.io/images/voice_pe_internal_pin_group_03_grove_port.jpg) \
-Please check the [HAVPE docs](https://voice-pe.home-assistant.io/guides/internal-gpio/#grove-port) for details 
+![havpe](https://raw.githubusercontent.com/NabuCasa/support/refs/heads/main/static/img/voice-pe/voice_pe_internal_pin_headers.jpg)
+![havpe-grove](https://raw.githubusercontent.com/NabuCasa/support/refs/heads/main/static/img/voice-pe/voice_pe_internal_pin_group_03_grove_port.jpg) \
+Please check the [HAVPE docs](https://support.nabucasa.com/hc/en-us/articles/25938342327581-About-the-internal-GPIO-pins-on-Home-Assistant-Voice-Preview-Edition#grove-port) for details 
 
 You'll need:
 
 - [HA Voice PE](https://www.home-assistant.io/voice-pe/)
-- [pn532](https://s.click.aliexpress.com/e/_De8uw89) NFC reader
-- [grove angle connectors](https://s.click.aliexpress.com/e/_DDF07mN)
-- [grove cables](https://s.click.aliexpress.com/e/_DEA2jSV)
+- [pn532](https://s.click.aliexpress.com/e/_c3l9MKHr) NFC reader
+- [grove cables](https://s.click.aliexpress.com/e/_c3rtIVGR)
+- [M2.5 10mm](https://s.click.aliexpress.com/e/_c3gFU5Zv) screws
 
 We'll reuse all HA Voice PE components swaping just the enclosure
 - 4 rubber pads and screws

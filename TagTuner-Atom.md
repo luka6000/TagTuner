@@ -11,10 +11,13 @@ I suggest a cool-white (signal white) base and a dark front plate with a nice ca
 ### Parts for Atom grove version
 This version is focused on minimum soldering since it's based on Grove parts and connectors
 - [m5stack Atom Echo](https://s.click.aliexpress.com/e/_DCenStP) controller
-- [pn532](https://s.click.aliexpress.com/e/_De8uw89) NFC reader
-- [grove angle connectors](https://s.click.aliexpress.com/e/_DDF07mN)
-- [grove cables](https://s.click.aliexpress.com/e/_DEA2jSV)
-- [grove rotary encoder](https://www.seeedstudio.com/Grove-Encoder.html?sensecap_affiliate=3ftNV1d&referring_service=link)
+- [pn532](https://s.click.aliexpress.com/e/_c3l9MKHr) NFC reader
+- [grove angle connectors](https://s.click.aliexpress.com/e/_c3xcepEd)
+- [grove cables](https://s.click.aliexpress.com/e/_c3rtIVGR)
+- [hw040](https://s.click.aliexpress.com/e/_c3vSH4wJ) rotary encoder
+- [dupont cables](https://s.click.aliexpress.com/e/_c4FUMZi7) for hw040
+- [M2.5 10mm](https://s.click.aliexpress.com/e/_c3gFU5Zv) screws
+
 #### Grove wiring
 First, you need to solder the [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) to the [PN532 NFC](https://s.click.aliexpress.com/e/_De8uw89) board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)

@@ -16,9 +16,13 @@ jobs:
       contents: write
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v4.1.9
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           path: files
+
+      - name: Tree
+        run: |-
+          tree
 
       - name: Copy files to output
         run: |-
@@ -32,7 +36,8 @@ jobs:
             cp manifest*.json ../../../output/
             for bin in *.{bin,elf}; do
               md5sum $bin | head -c 32 > ../../../output/$bin.md5
-              cp $bin ../../../output/
+              sha256sum $bin | head -c 64 > "../../../output/$bin.sha256"
+              cp $bin ../../../output/              
             done
             popd
             popd
@@ -40,7 +45,7 @@ jobs:
           popd
 
       - name: Upload files to release
-        uses: softprops/action-gh-release@v2.2.1
+        uses: softprops/action-gh-release@6cbd405e2c4e67a21c47fa9e383d020e4e28b836 # v2.3.3
         with:
           files: output/*
           tag_name: ${{ inputs.version }}

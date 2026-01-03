@@ -11,7 +11,7 @@ substitutions:
   friendly_name: "TagTuner"
 
 esphome:
-  min_version: 2025.2.0
+  min_version: 2025.12.0
   name: "${name}"
   friendly_name: ${friendly_name}
   # Automatically add the mac address to the name
@@ -151,7 +151,6 @@ light:
     chipset: SK6812
     num_leds: 1
     rgb_order: grb
-    rmt_channel: 0
     restore_mode: ALWAYS_OFF
     default_transition_length: 0s
     flash_transition_length: 0s

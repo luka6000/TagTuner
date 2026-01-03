@@ -5,11 +5,6 @@ packages:
   # core-nfc: !include tagtuner-core-nfc.yaml
   # core-comms: !include tagtuner-core-comms.yaml
 
-# These substitutions allow the end user to override certain values
-substitutions:
-  name: "tagtuner"
-  friendly_name: "TagTuner"
-
 esphome:
   min_version: 2025.12.0
   name: "${name}"
@@ -24,7 +19,7 @@ esphome:
     then:
     - light.turn_on:
         id: led1
-        effect: HelloWorld
+        effect: TagWrite
     - delay: 1000ms
     - light.turn_off: led1
     - wait_until:
@@ -36,9 +31,13 @@ esphome:
         state: "Ready"
 
 esp32:
-  board: m5stack-atom
+  board: seeed_xiao_esp32c6
   framework:
     type: esp-idf
+    sdkconfig_options:
+      CONFIG_PM_ENABLE: 'Y'
+      CONFIG_PM_DFS_INIT_AUTO: 'Y'
+      CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ_80: 'Y'
 
 # To be able to get logs from the device via serial and api.
 logger:
@@ -52,8 +51,8 @@ logger:
 
 i2c:
   id: bus_i2c
-  sda: 26
-  scl: 32
+  sda: 22 #D4
+  scl: 23 #D5
   scan: False
   frequency: 100kHz
   timeout: 13ms #to prevent pn532 timeout
@@ -64,62 +63,15 @@ esp32_ble_tracker:
 bluetooth_proxy:
   active: false
 
-light:
-  - platform: esp32_rmt_led_strip
-    id: led1
-    pin: GPIO27
-    chipset: SK6812
-    num_leds: 1
-    rgb_order: grb
-    restore_mode: ALWAYS_OFF
-    default_transition_length: 0s
-    flash_transition_length: 0s
-    effects:
-      - strobe:
-          name: HelloWorld
-          colors:
-            - state: true
-              brightness: 100%
-              red: 100%
-              green: 0%
-              blue: 0%
-              duration: 250ms
-            - state: true
-              brightness: 100%
-              red: 0%
-              green: 100%
-              blue: 0%
-              duration: 250ms
-            - state: true
-              brightness: 100%
-              red: 0%
-              green: 0%
-              blue: 100%
-              duration: 250ms
-            - state: true
-              brightness: 100%
-              red: 100%
-              green: 100%
-              blue: 100%
-              duration: 250ms
-      - strobe:
-          name: TagWrite
-          colors:
-            - state: true
-              brightness: 100%
-              red: 100%
-              green: 0%
-              blue: 0%
-              duration: 250ms
-            - state: false
-              duration: 50ms
-
 binary_sensor:
   - platform: gpio
     id: toggle
     pin:
-      number: GPIO39
+      number: 18 #D10
       inverted: true
+      mode:
+        input: true
+        pullup: true
     on_multi_click:
     - timing:
         - ON for at most 1s
@@ -133,12 +85,8 @@ binary_sensor:
             id: status
             state: "clickTriple"
         - script.execute:
-            id: tagtuner_event
+            id: action_event
             action: "clickTriple"
-            uid: ""
-            uri: ""
-            artist: ""
-            playlist: ""
     - timing:
         - ON for at most 1s
         - OFF for at most 0.25s
@@ -150,12 +98,8 @@ binary_sensor:
             id: status
             state: "clickDouble"
         - script.execute:
-            id: tagtuner_event
+            id: action_event
             action: "clickDouble"
-            uid: ""
-            uri: ""
-            artist: ""
-            playlist: ""
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -165,12 +109,8 @@ binary_sensor:
             id: status
             state: "clickLong"
         - script.execute:
-            id: tagtuner_event
+            id: action_event
             action: "clickLong"
-            uid: ""
-            uri: ""
-            artist: ""
-            playlist: ""
     - timing:
         - ON for at most 0.5s
         - OFF for at least 260ms
@@ -187,60 +127,56 @@ binary_sensor:
             artist: ""
             playlist: ""
 
+output:
+  - platform: gpio
+    pin: 15
+    inverted: true
+    id: led1_gpio
+
+light:
+  - platform: binary
+    id: led1
+    output: led1_gpio
+    restore_mode: ALWAYS_OFF
+    effects:
+      - strobe:
+          name: TagWrite
+          colors:
+            - state: true
+              duration: 250ms
+            - state: false
+              duration: 50ms
+
 script:
   - id: led_blink
     then:
     - light.turn_off: led1
     - light.turn_on:
         id: led1
-        brightness: 60%
-        red: 100%
-        green: 100%
-        blue: 100%
         flash_length: 100ms
   - id: led_ok
     then:
     - light.turn_off: led1
     - light.turn_on:
         id: led1
-        brightness: 100%
-        red: 0%
-        green: 100%
-        blue: 0%
         flash_length: 50ms
     - delay: 100ms
     - light.turn_on:
         id: led1
-        brightness: 100%
-        red: 0%
-        green: 100%
-        blue: 0%
         flash_length: 50ms
   - id: led_success
     then:
     - light.turn_off: led1
     - light.turn_on:
         id: led1
-        brightness: 100%
-        red: 0%
-        green: 100%
-        blue: 0%
         flash_length: 200ms
     - delay: 250ms
     - light.turn_on:
         id: led1
-        brightness: 100%
-        red: 0%
-        green: 100%
-        blue: 0%
         flash_length: 200ms
     - delay: 250ms
     - light.turn_on:
         id: led1
-        brightness: 100%
-        red: 0%
-        green: 100%
-        blue: 0%
         flash_length: 500ms
   - id: led_tagwrite
     then:
@@ -251,8 +187,9 @@ script:
 sensor:
   - platform: rotary_encoder
     id: rotary
-    pin_a: 25
-    pin_b: 21
+    pin_a: 19 #D8
+    pin_b: 20 #D9
+    restore_mode: ALWAYS_ZERO
     on_clockwise:
       - text_sensor.template.publish:
           id: status
