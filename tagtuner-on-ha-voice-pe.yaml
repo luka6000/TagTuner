@@ -3,7 +3,8 @@ substitutions:
   friendly_name: TagTuner on HA Voice
 
 packages:
-  Nabu Casa.Home Assistant Voice PE: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml
+  #25.12.4
+  Nabu Casa.Home Assistant Voice PE: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml@a163e7b980c572df9d3811ff98094350f5aae541
 
   project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
@@ -30,7 +31,7 @@ esphome:
   name: "${name}"
   friendly_name: ${friendly_name}
   name_add_mac_suffix: true
-  min_version: 2025.2.0
+  min_version: 2025.12.0
   on_boot:
     priority: 375
     then:
@@ -38,14 +39,6 @@ esphome:
       - script.execute: control_leds
       - delay: 1s
       - switch.turn_on: internal_speaker_amp
-      # If the hardware switch is ON, force the software switch to be ON too. This covers the case where the Mute hardware switch is operated when the device is turned off
-      - if:
-          condition:
-            binary_sensor.is_on: hardware_mute_switch
-          then:
-            - switch.template.publish:
-                id: master_mute_switch
-                state: ON
 #+tagtuner
       - wait_until:
           condition:
@@ -76,6 +69,9 @@ esphome:
 
 # bluetooth_proxy:
 #   active: false
+
+button:
+  - id: !remove btn_restart
 
 sensor:
   - id: !remove dial
@@ -122,12 +118,23 @@ sensor:
                       id: control_volume
                       increase_volume: true
                 else:
-                  - script.execute:
-                      id: control_hue
-                      increase_hue: true
+                  - if:
+                      condition:
+                        media_player.is_playing:
+                          id: sendspin_group_media_player
+                      then:
+                        - script.execute:
+                            id: control_group_volume
+                            increase_volume: true
+                      else:
+                        - script.execute:
+                            id: control_hue
+                            increase_hue: true
+#+tagtuner
       - delay: 3s
       - lambda: id(dial_touched) = false;
       - script.execute: control_leds
+#=tagtuner
     on_anticlockwise:
       - lambda: id(dial_touched) = true;
 #+tagtuner
@@ -165,12 +172,23 @@ sensor:
                       id: control_volume
                       increase_volume: false
                 else:
-                  - script.execute:
-                      id: control_hue
-                      increase_hue: false
+                  - if:
+                      condition:
+                        media_player.is_playing:
+                          id: sendspin_group_media_player
+                      then:
+                        - script.execute:
+                            id: control_group_volume
+                            increase_volume: false
+                      else:
+                        - script.execute:
+                            id: control_hue
+                            increase_hue: false
+#+tagtuner
       - delay: 3s
       - lambda: id(dial_touched) = false;
       - script.execute: control_leds
+#=tagtuner
 
 binary_sensor:
   - id: !remove center_button
@@ -221,7 +239,7 @@ binary_sensor:
 #=tagtuner
                 - if:
                     condition:
-                      lambda: return !id(init_in_progress) && !id(color_changed);
+                      lambda: return !id(init_in_progress) && !id(color_changed) && !id(group_volume_changed);
                     then:
                       - if:
                           condition:
@@ -231,38 +249,37 @@ binary_sensor:
                           else:
                             - if:
                                 condition:
-                                  lambda: return id(external_media_player)->state == media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
+                                  voice_assistant.is_running:
                                 then:
-                                  - lambda: |
-                                      id(external_media_player)
-                                        ->make_call()
-                                        .set_command(media_player::MediaPlayerCommand::MEDIA_PLAYER_COMMAND_STOP)
-                                        .set_announcement(true)
-                                        .perform();
+                                  - voice_assistant.stop:
                                 else:
                                   - if:
                                       condition:
-                                        voice_assistant.is_running:
+                                        media_player.is_announcing:
+                                          id: external_media_player
                                       then:
-                                        - voice_assistant.stop:
+                                        media_player.stop:
+                                          announcement: true
+                                          id: external_media_player
                                       else:
                                         - if:
                                             condition:
                                               media_player.is_playing:
+                                                id: external_media_player
                                             then:
                                               - media_player.pause:
+                                                  id: external_media_player
                                             else:
                                               - if:
                                                   condition:
                                                     and:
                                                       - switch.is_off: master_mute_switch
-                                                      - not:
-                                                          voice_assistant.is_running
+                                                      - not: voice_assistant.is_running
                                                   then:
                                                     - script.execute:
                                                         id: play_sound
                                                         priority: true
-                                                        sound_file: !lambda return id(center_button_press_sound);
+                                                        sound_file: "center_button_press_sound"
                                                     - delay: 300ms
                                                     - voice_assistant.start:
       # Double Click
@@ -292,12 +309,12 @@ binary_sensor:
 #=tagtuner
                 - if:
                     condition:
-                      lambda: return !id(init_in_progress) && !id(color_changed);
+                      lambda: return !id(init_in_progress) && !id(color_changed) && !id(group_volume_changed);
                     then:
                       - script.execute:
                           id: play_sound
                           priority: false
-                          sound_file: !lambda return id(center_button_double_press_sound);
+                          sound_file: "center_button_double_press_sound"
                       - event.trigger:
                           id: button_press_event
                           event_type: "double_press"
@@ -330,12 +347,12 @@ binary_sensor:
 #=tagtuner
                 - if:
                     condition:
-                      lambda: return !id(init_in_progress) && !id(color_changed);
+                      lambda: return !id(init_in_progress) && !id(color_changed) && !id(group_volume_changed);
                     then:
                       - script.execute:
                           id: play_sound
                           priority: false
-                          sound_file: !lambda return id(center_button_triple_press_sound);
+                          sound_file: "center_button_triple_press_sound"
                       - event.trigger:
                           id: button_press_event
                           event_type: "triple_press"
@@ -367,12 +384,12 @@ binary_sensor:
 #=tagtuner
                 - if:
                     condition:
-                      lambda: return !id(init_in_progress) && !id(color_changed);
+                      lambda: return !id(init_in_progress) && !id(color_changed) && !id(group_volume_changed);
                     then:
                       - script.execute:
                           id: play_sound
                           priority: false
-                          sound_file: !lambda return id(center_button_long_press_sound);
+                          sound_file: "center_button_long_press_sound"
                       - light.turn_off: voice_assistant_leds
                       - event.trigger:
                           id: button_press_event
@@ -404,13 +421,13 @@ binary_sensor:
                 - script.execute:
                     id: play_sound
                     priority: true
-                    sound_file: !lambda return id(easter_egg_tick_sound);
+                    sound_file: "easter_egg_tick_sound"
                 - delay: 4s
                 - light.turn_off: voice_assistant_leds
                 - script.execute:
                     id: play_sound
                     priority: true
-                    sound_file: !lambda return id(easter_egg_tada_sound);
+                    sound_file: "easter_egg_tada_sound"
                 - light.turn_on:
                     brightness: 100%
                     id: voice_assistant_leds
@@ -434,7 +451,7 @@ binary_sensor:
                 - script.execute:
                     id: play_sound
                     priority: true
-                    sound_file: !lambda return id(factory_reset_initiated_sound);
+                    sound_file: "factory_reset_initiated_sound"
                 - wait_until:
                     binary_sensor.is_off: center_button
                 - if:
@@ -445,7 +462,7 @@ binary_sensor:
                       - script.execute:
                           id: play_sound
                           priority: true
-                          sound_file: !lambda return id(factory_reset_cancelled_sound);
+                          sound_file: "factory_reset_cancelled_sound"
       # Factory Reset Confirmed.
       #  . Audible warning to prompt user to release the button
       #  . Set factory_reset_requested to true
@@ -459,7 +476,7 @@ binary_sensor:
                 - script.execute:
                     id: play_sound
                     priority: true
-                    sound_file: !lambda return id(factory_reset_confirmed_sound);
+                    sound_file: "factory_reset_confirmed_sound"
                 - light.turn_on:
                     brightness: 100%
                     red: 100%
@@ -501,7 +518,6 @@ script:
         effect: "Twinkle"
     - delay: 1000ms
     - light.turn_off: voice_assistant_leds
-
   - id: led_tagwrite
     then:
     - lambda: 'return;'
@@ -512,52 +528,3 @@ script:
         blue: 0%
         id: voice_assistant_leds
         effect: "Twinkle"
-
-  - id: !remove control_leds
-  # Master script controlling the LEDs, based on different conditions : initialization in progress, wifi and api connected and voice assistant phase.
-  # For the sake of simplicity and re-usability, the script calls child scripts defined below.
-  # This script will be called every time one of these conditions is changing.
-  - id: control_leds
-    then:
-      - lambda: |
-          id(check_if_timers_active).execute();
-          if (id(is_timer_active)){
-            id(fetch_first_active_timer).execute();
-          }
-          if (id(improv_ble_in_progress)) {
-            id(control_leds_improv_ble_state).execute();
-          } else if (id(init_in_progress)) {
-            id(control_leds_init_state).execute();
-          } else if (!id(wifi_id).is_connected() || !id(api_id).is_connected()){
-            id(control_leds_no_ha_connection_state).execute();
-          } else if (id(jack_plugged_recently)) {
-            id(control_leds_jack_plugged_recently).execute();
-          } else if (id(jack_unplugged_recently)) {
-            id(control_leds_jack_unplugged_recently).execute();
-          } else if (id(dial_touched)) {
-            id(control_leds_dial_touched).execute();
-          } else if (id(timer_ringing).state) {
-            id(control_leds_timer_ringing).execute();
-          } else if (id(center_button).state) {
-            id(control_leds_center_button_touched).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_waiting_for_command_phase_id}) {
-            id(control_leds_voice_assistant_waiting_for_command_phase).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_listening_for_command_phase_id}) {
-            id(control_leds_voice_assistant_listening_for_command_phase).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_thinking_phase_id}) {
-            id(control_leds_voice_assistant_thinking_phase).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_replying_phase_id}) {
-            id(control_leds_voice_assistant_replying_phase).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_error_phase_id}) {
-            id(control_leds_voice_assistant_error_phase).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_not_ready_phase_id}) {
-            id(control_leds_voice_assistant_not_ready_phase).execute();
-          } else if (id(is_timer_active)) {
-            id(control_leds_timer_ticking).execute();
-          } else if (id(master_mute_switch).state) {
-            id(control_leds_muted_or_silent).execute();
-          } else if (id(external_media_player).volume == 0.0f || id(external_media_player).is_muted()) {
-            id(control_leds_muted_or_silent).execute();
-          } else if (id(voice_assistant_phase) == ${voice_assist_idle_phase_id}) {
-            id(control_leds_voice_assistant_idle_phase).execute();
-          }
