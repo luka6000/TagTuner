@@ -26,6 +26,9 @@ Remember to set the DIP switches to 10 to enable I2C. Correct position for I2c i
 The [SeeedStudio rotary encoder](https://www.seeedstudio.com/Grove-Encoder.html?sensecap_affiliate=3ftNV1d&referring_service=link) already has its connector. For the other end of the [cable](https://s.click.aliexpress.com/e/_DEA2jSV), simply use [grove angle connector](https://s.click.aliexpress.com/e/_DDF07mN) directly to the Atom controller\
 ![7D603FCA-9D48-485F-8AD4-685A469D73F6_1_201_a](https://github.com/user-attachments/assets/3f0e609b-15c2-43da-9a52-8e30b831a6ef)
 
+Just use the force ;-)
+![528C987E-321C-4D8D-81F6-45F3D853613B_1_201_a](https://github.com/user-attachments/assets/248ef825-9c18-4447-9822-559ca3267cb7)
+
 It's really as simple as that
 ![8CD41A9B-E7F6-46FE-8770-5138BF0B893E_1_201_a](https://github.com/user-attachments/assets/a2f7ff86-7c88-4d17-807e-382d4e55d938)
 
