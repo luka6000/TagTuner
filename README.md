@@ -186,7 +186,7 @@ I use Canon KC-18IF card-sized labels to customize my wooden NFC cards.
 
 ### Program tags for Music Assistant
 If your speaker is one of Music Assistant media players, your tags need to have a MAss URI.\
-[Here](https://music-assistant.io/faq/how-to/#get-the-uri) you can find instructions on how to get URI for the playlist or album you want.
+[Here](https://music-assistant.io/faq/how-to/#get-the-uri) you can find instructions on how to get URI for the playlist or album you want. In the latest versions you can basically copy the URI directly from the Provider details section for that media.
 
 On the TagTuner device page, you'll find all the fileds nesesary to write the playlist URI to your tag \
 <img width="324" alt="38842E5D-4B81-4B88-8815-FD35B67D8357" src="https://github.com/user-attachments/assets/e6e480e0-020a-49a8-b126-f4356e159fbc">
