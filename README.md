@@ -233,12 +233,12 @@ Any tag id read by TagTuner will be pushed to HAss [blueprint](#using-tagtuner) 
 
 ![8C579E90-8189-417C-8D1E-49295F2F88D9_1_102_a](https://github.com/user-attachments/assets/cc76a561-0545-4d9f-bb38-eff220161ae8)
 
-## Help me
+## Help
 OK, I can try. Please choose your preferred way of communication
 
-- [reddit](https://www.reddit.com/r/homeassistant/comments/1go2l9l/tagtuner_nfc_music_player_showoff/)
 - [HAss community](https://community.home-assistant.io/t/tagtuner-music-player-for-nfc-tags/787529)
 - [MAss discord](https://discord.com/channels/753947050995089438/1300230612958838908/1300230612958838908)
+- [reddit](https://www.reddit.com/r/homeassistant/comments/1go2l9l/tagtuner_nfc_music_player_showoff/)
 
 ## A little history
 It all began one day back in 2022. \
