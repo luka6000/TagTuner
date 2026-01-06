@@ -90,8 +90,12 @@ Built-in LED is used as confirmation light. Print the led peg with clear filamen
 (TODO: XIAO front plate LED)
 ![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
 
-I preffer soldering the grove angle connector to the PN532 NFC board
+I prefer soldering the grove angle connector to the PN532 NFC board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
+
+Just use the force ;-)
+![528C987E-321C-4D8D-81F6-45F3D853613B_1_201_a](https://github.com/user-attachments/assets/248ef825-9c18-4447-9822-559ca3267cb7)
+
 Remember to set the DIP switches to 10 to enable I2C. Correct switches position for I2c is marked by yellow lines.
 
 Everything will fit into the enclosure.
