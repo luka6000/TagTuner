@@ -11,6 +11,15 @@ blueprint:
         device:
           filter:
             - integration: esphome
+    event_action:
+      name: TagTuner Action
+      description: tracing TagTuner Related automation
+      default: "event.tagtuner__action"
+      selector:
+        entity:
+          filter:
+            - integration: esphome
+              domain: event
     massplayer:
       name: Music Assistant media player
       description: This is your MAss media player for this tuner
@@ -137,19 +146,19 @@ variables:
     {%endif%}
   text_playlist_uri: >-
     {% for entity in device_entities(device_id) %}
-      {% if entity|contains("playlist_uri") %}
+      {% if entity is match("^text..*_playlist_uri") %}
         {{ entity }}
       {% endif%}
     {% endfor%}
   text_playlist_artist: >-
     {% for entity in device_entities(device_id) %}
-      {% if entity|contains("playlist_artist") %}
+      {% if entity is match("^text..*_playlist_artist") %}
         {{ entity }}
       {% endif%}
     {% endfor%}
   text_playlist_name: >-
     {% for entity in device_entities(device_id) %}
-      {% if entity|contains("playlist_name_or_album_title") %}
+      {% if entity is match("^text..*_playlist_name_or_album_title") %}
         {{ entity }}
       {% endif%}
     {% endfor%}
@@ -170,6 +179,10 @@ triggers:
     event_type: esphome.tagtuner
   - trigger: event
     event_type: tag_scanned
+  - trigger: state
+    entity_id: !input event_action
+    to:
+      - "event action for TagTuner Related automation"
 conditions:
   - condition: template
     value_template: "{{ trigger.event.data.device_id == device_id }}"
@@ -478,9 +491,9 @@ actions:
           title: Friendly notice
           message: >-
             {{ device_attr(device_id, "name") }} yaml firmware is outdated at v{{ trigger.event.data.magic|int(2024) }}
-            
+
             Please consider upgrading for the best experience.
-            
+
             https://github.com/luka6000/TagTuner
 
             You can disable this notification in TagTuner automation Additional settings.
