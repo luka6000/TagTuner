@@ -83,13 +83,17 @@ blueprint:
             boolean:
           default: false
         speaktts:
-          name: Choose TTS engine
+          name: TTS engine
           description: for announcements
           selector:
             entity:
               filter:
                 - domain: tts
           default: tts.home_assistant_cloud
+        speaktts_language:
+          name: TTS engine language
+          description: different TTS engines might require different language codes
+          default: en-US
         version:
           name: Blueprint version
           description: just for you to know
@@ -287,7 +291,7 @@ actions:
                             data:
                               media_player_entity_id: !input httpplayer
                               message: "tag scanned"
-                              language: en-US
+                              language: !input speaktts_language
                         alias: plain
                       - conditions:
                           - condition: template
@@ -301,7 +305,7 @@ actions:
                               message: >-
                                 {{ states(text_playlist_artist) }}
                                 {{ states(text_playlist_name) }}
-                              language: en-US
+                              language: !input speaktts_language
                         alias: from tag
                 alias: announcement
               - choose:
