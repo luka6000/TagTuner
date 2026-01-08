@@ -28,6 +28,9 @@ script:
     mode: queued
     max_runs: 3
     then:
+      - event.trigger:
+          id: tagtuner_action
+          event_type: !lambda return action;
       - homeassistant.event:
           event: esphome.tagtuner
           data:
