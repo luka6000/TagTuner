@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v260103
+  author: LukaGra v260109
   domain: automation
   input:
     tuner_id:
@@ -106,7 +106,7 @@ blueprint:
         version:
           name: Blueprint version
           description: just for you to know
-          default: 260103
+          default: 260109
         notify_version:
           name: Notify about version
           description: mismatch of automation vs yaml firmware
