@@ -28,5 +28,3 @@ captive_portal: !remove
 button:
   - id: !remove btn_erase_tag
   - id: !remove btn_cancel_writing
-script:
-  - id: !remove action_event
