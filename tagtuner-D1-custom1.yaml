@@ -200,6 +200,7 @@ sensor:
     id: rotary
     pin_a: 18
     pin_b: 19
+    resolution: 2
     restore_mode: ALWAYS_ZERO
     on_clockwise:
       - text_sensor.template.publish:
