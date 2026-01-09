@@ -253,6 +253,7 @@ sensor:
     id: rotary
     pin_a: 25
     pin_b: 21
+    resolution: 2
     on_clockwise:
       - text_sensor.template.publish:
           id: status
