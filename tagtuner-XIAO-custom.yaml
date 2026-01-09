@@ -85,8 +85,12 @@ binary_sensor:
             id: status
             state: "clickTriple"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickTriple"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 1s
         - OFF for at most 0.25s
@@ -98,8 +102,12 @@ binary_sensor:
             id: status
             state: "clickDouble"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickDouble"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -109,8 +117,12 @@ binary_sensor:
             id: status
             state: "clickLong"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickLong"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 0.5s
         - OFF for at least 260ms

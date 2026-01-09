@@ -261,6 +261,7 @@ sensor:
     pin_a: 25
     pin_b: 21
     resolution: 2
+    restore_mode: ALWAYS_ZERO
     on_clockwise:
       - text_sensor.template.publish:
           id: status

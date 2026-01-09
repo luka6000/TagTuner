@@ -1,9 +1,9 @@
 packages:
   project: github://luka6000/TagTuner/tagtuner-project.yaml@main
-  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
-  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
-  # core-nfc: !include tagtuner-core-nfc.yaml
-  # core-comms: !include tagtuner-core-comms.yaml
+  # core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
+  # core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  core-nfc: !include tagtuner-core-nfc.yaml
+  core-comms: !include tagtuner-core-comms.yaml
 
 esphome:
   min_version: 2025.12.0
@@ -34,6 +34,10 @@ esp32:
   board: wemos_d1_mini32
   framework:
     type: esp-idf
+    sdkconfig_options:
+      CONFIG_PM_ENABLE: 'Y'
+      CONFIG_PM_DFS_INIT_AUTO: 'Y'
+      CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ_80: 'Y'
 
 # To be able to get logs from the device via serial and api.
 logger:
@@ -81,8 +85,12 @@ binary_sensor:
             id: status
             state: "clickTriple"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickTriple"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 1s
         - OFF for at most 0.25s
@@ -94,8 +102,12 @@ binary_sensor:
             id: status
             state: "clickDouble"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickDouble"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for 0.5s to 2s
         - OFF for at least 50ms
@@ -105,8 +117,12 @@ binary_sensor:
             id: status
             state: "clickLong"
         - script.execute:
-            id: action_event
+            id: tagtuner_event
             action: "clickLong"
+            uid: ""
+            uri: ""
+            artist: ""
+            playlist: ""
     - timing:
         - ON for at most 0.5s
         - OFF for at least 260ms
@@ -185,6 +201,7 @@ sensor:
     pin_a: 18
     pin_b: 19
     resolution: 2
+    restore_mode: ALWAYS_ZERO
     on_clockwise:
       - text_sensor.template.publish:
           id: status

@@ -18,18 +18,6 @@ captive_portal:
 improv_serial:
 
 script:
-  - id: action_event
-    parameters:
-      action: string
-    mode: queued
-    max_runs: 3
-    then:
-      - homeassistant.event:
-          event: esphome.tagtuner
-          data:
-            magic: ${magic}
-            action: !lambda return action;
-
   - id: tagtuner_event
     parameters:
       action: string
@@ -40,6 +28,9 @@ script:
     mode: queued
     max_runs: 3
     then:
+      - event.trigger:
+          id: tagtuner_action
+          event_type: !lambda return action;
       - homeassistant.event:
           event: esphome.tagtuner
           data:
@@ -49,3 +40,20 @@ script:
             uri: !lambda return uri;
             artist: !lambda return artist;
             playlist: !lambda return playlist;
+
+event:
+  - platform: template
+    id: tagtuner_action
+    name: "Action"
+    # icon: mdi:button-pointer
+    # device_class: button
+    event_types:
+      - clickTriple
+      - clickDouble
+      - clickLong
+      - clickSingle
+      - volumeUp
+      - volumeDown
+      - tagRemoved
+      - tagScanned
+
