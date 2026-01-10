@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v260109
+  author: LukaGra v260110
   domain: automation
   input:
     tuner_id:
@@ -14,7 +14,7 @@ blueprint:
     event_action:
       name: TagTuner Action
       description: tracing TagTuner Related automation
-      default: "event.tagtuner__action"
+      default: "event.tagtuner_action"
       selector:
         entity:
           filter:
@@ -101,12 +101,12 @@ blueprint:
           default: tts.home_assistant_cloud
         speaktts_language:
           name: TTS engine language
-          description: different TTS engines might require different language codes
+          description: might require changing
           default: en-US
         version:
           name: Blueprint version
           description: just for you to know
-          default: 260109
+          default: 260110
         notify_version:
           name: Notify about version
           description: mismatch of automation vs yaml firmware
