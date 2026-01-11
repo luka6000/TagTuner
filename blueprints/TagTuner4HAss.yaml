@@ -486,7 +486,7 @@ actions:
     alias: update helpers with first song for read-only tags
   - if:
       - condition: template
-        value_template: "{{ notify_version == true and trigger.event.data.magic|int(2024) < 250100 }}"
+        value_template: "{{ notify_version == true and trigger.event.data.magic|int(2024) < 260100 }}"
     then:
       - action: persistent_notification.create
         data:
