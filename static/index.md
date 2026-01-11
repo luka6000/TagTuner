@@ -103,7 +103,7 @@ Simply place any NFC tag and watch Status messages.\
 ### Case
 Custom model cases are print-ready
 
-- [printables](https://www.printables.com/model/1109660-tagtuner-d1-custom1)
+- [printables](https://www.printables.com/model/1109660)
 - [ko-fi/shop](https://ko-fi.com/s/ce428ab53f)
 
 Choose and print your enclosure with preferred colors and surface patterns. \
@@ -141,7 +141,7 @@ XIAO will fit perfectly into the bottom part braces
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/729de545-c39a-4701-8ef3-378c20e3397d" />
 
 Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results \
-(TODO: XIAO front plate LED)
+(TODO: XIAO front plate LED pic)
 ![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
 
 I preffer soldering the grove angle connector to the PN532 NFC board
