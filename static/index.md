@@ -20,6 +20,8 @@ TagTuner is made with [ESPHome](https://www.esphome.io) and includes
 - a LED light
 
 All of this is housed in a sleek, custom design case only 16mm high
+![IMG_4100](https://github.com/user-attachments/assets/dcfb5153-bd27-4f3e-93d6-61b5589968ab)
+
 ![66AA4F85-2C12-4B6F-A300-D6C1CED9CAEC_1_105_c](https://github.com/user-attachments/assets/7e018411-fecd-4189-b498-19e88d62dc3b)
 
 Here is an exploded view of the TagTuner 3D model with a round tag card \
@@ -141,11 +143,14 @@ XIAO will fit perfectly into the bottom part braces
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/729de545-c39a-4701-8ef3-378c20e3397d" />
 
 Built-in LED is used as confirmation light. Print the led peg with clear filament and it will give great results \
-(TODO: XIAO front plate LED pic)
-![IMG_2940](https://github.com/user-attachments/assets/e50b129d-66d2-4ead-8c5c-6e190eb7a39f)
+![IMG_4109](https://github.com/user-attachments/assets/4353100e-4f89-4b26-94c9-b5832e30e6c0)
 
 I prefer soldering the grove angle connector to the PN532 NFC board
 ![CA3A603C-CE5B-4982-AF24-9E40D3E554C2_1_201_a](https://github.com/user-attachments/assets/977e082d-af23-4d34-a981-68bd14b8df44)
+
+Just use the force ;-)
+![528C987E-321C-4D8D-81F6-45F3D853613B_1_201_a](https://github.com/user-attachments/assets/248ef825-9c18-4447-9822-559ca3267cb7)
+
 Remember to set the DIP switches to 10 to enable I2C. Correct switches position for I2c is marked by yellow lines.
 
 Everything will fit into the enclosure.
