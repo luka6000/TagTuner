@@ -28,10 +28,6 @@ dashboard_import:
   package_import_url: github://luka6000/TagTuner/tagtuner-atom-grove-ble.yaml@main
   import_full_config: false
 
-# Sets up the improv via serial client for Wi-Fi provisioning
-improv_serial:
-  next_url: https://luka6000.github.io/TagTuner/
-
 esp32_ble:
   name: tagtuner
 esp32_improv:
