@@ -411,9 +411,22 @@ actions:
           - condition: template
             value_template: '{{ action == "clickSingle" }}'
         sequence:
-          - action: media_player.media_next_track
-            target:
-              entity_id: !input httpplayer
+          - if:
+              - condition: state
+                entity_id: !input httpplayer
+                state:
+                  - playing
+            then:
+              - action: media_player.media_next_track
+                target:
+                  entity_id: !input httpplayer
+                data: {}
+            else:
+              - action: media_player.media_play
+                metadata: {}
+                target:
+                  entity_id: !input httpplayer
+                data: {}
         alias: clickSingle
       - conditions:
           - condition: template
