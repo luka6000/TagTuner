@@ -18,6 +18,7 @@ ota:
     id: ota_http_request
 
 http_request:
+  verify_ssl: false
 
 update:
   - platform: http_request
