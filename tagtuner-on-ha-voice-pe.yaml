@@ -4,7 +4,7 @@ substitutions:
 
 packages:
   #25.12.4
-  Nabu Casa.Home Assistant Voice PE: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml@286639662f221162bef40d020fe523b161036f53
+  Nabu Casa.Home Assistant Voice PE: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml@dev
 
   # project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   # core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
