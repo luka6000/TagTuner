@@ -13,6 +13,19 @@ esphome:
     name: LukaGra.TagTuner-8266
     version: dev
 
+ota:
+  - platform: http_request
+    id: ota_http_request
+
+http_request:
+  verify_ssl: false
+
+update:
+  - platform: http_request
+    name: None
+    id: update_http_request
+    source: https://luka6000.github.io/TagTuner/firmware/manifest-tagtuner-for-tagreader-esp8266.json
+
 # This should point to the public location of this yaml file.
 dashboard_import:
   package_import_url: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main

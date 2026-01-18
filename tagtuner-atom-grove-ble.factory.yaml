@@ -23,6 +23,18 @@ esphome:
     name: LukaGra.TagTuner-Atom
     version: dev
 
+ota:
+  - platform: http_request
+    id: ota_http_request
+
+http_request:
+
+update:
+  - platform: http_request
+    name: None
+    id: update_http_request
+    source: https://luka6000.github.io/TagTuner/firmware/manifest-tagtuner-atom-esp32.json
+
 # This should point to the public location of this yaml file.
 dashboard_import:
   package_import_url: github://luka6000/TagTuner/tagtuner-atom-grove-ble.yaml@main
