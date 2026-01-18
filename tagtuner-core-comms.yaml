@@ -6,6 +6,8 @@ ota:
   platform: esphome
 
 wifi:
+  ap:
+    password: "12345678"
 
 script:
   - id: tagtuner_event
