@@ -1,7 +1,7 @@
 # this is a modified PN532 to make it work with 888byte tags
 external_components:
-  # - source: ./components
-  - source: github://luka6000/TagTuner@main
+  - source: ./components
+  # - source: github://luka6000/TagTuner@main
     components: [ pn532 ]
     refresh: 1min
 

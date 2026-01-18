@@ -1,7 +1,8 @@
 packages:
-  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
+  # project: github://luka6000/TagTuner/tagtuner-project.yaml@main
   # core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
   # core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  project: !include tagtuner-project.yaml
   core-nfc: !include tagtuner-core-nfc.yaml
   core-comms: !include tagtuner-core-comms.yaml
 
