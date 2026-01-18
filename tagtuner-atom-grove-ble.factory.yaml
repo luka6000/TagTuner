@@ -5,12 +5,12 @@ substitutions:
 
 packages:
   # Include all of the core configuration
-  # core: !include tagtuner-atom-grove-ble.yaml
-  core: 
-    url: https://github.com/luka6000/TagTuner
-    files: tagtuner-atom-grove-ble.yaml
-    ref: main
-    refresh: 0d
+  core: !include tagtuner-atom-grove-ble.yaml
+  # core: 
+  #   url: https://github.com/luka6000/TagTuner
+  #   files: tagtuner-atom-grove-ble.yaml
+  #   ref: main
+  #   refresh: 0d
 
 esphome:
   name: "${name}"
@@ -31,7 +31,7 @@ dashboard_import:
 # Sets up the improv via serial client for Wi-Fi provisioning
 improv_serial:
   next_url: https://luka6000.github.io/TagTuner/
-
+  
 esp32_ble:
   name: tagtuner
 esp32_improv:

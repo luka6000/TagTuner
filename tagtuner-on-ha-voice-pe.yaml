@@ -6,12 +6,12 @@ packages:
   #25.12.4
   Nabu Casa.Home Assistant Voice PE: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml@286639662f221162bef40d020fe523b161036f53
 
-  project: github://luka6000/TagTuner/tagtuner-project.yaml@main
-  core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
-  core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
-  # project: !include tagtuner-project.yaml
-  # core-nfc: !include tagtuner-core-nfc.yaml
-  # core-comms: !include tagtuner-core-comms.yaml
+  # project: github://luka6000/TagTuner/tagtuner-project.yaml@main
+  # core-nfc: github://luka6000/TagTuner/tagtuner-core-nfc.yaml@main
+  # core-comms: github://luka6000/TagTuner/tagtuner-core-comms.yaml@main
+  project: !include tagtuner-project.yaml
+  core-nfc: !include tagtuner-core-nfc.yaml
+  core-comms: !include tagtuner-core-comms.yaml
 
 i2c:
   - id: bus_i2c

@@ -1,6 +1,7 @@
 packages:
-  core: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main
-
+  # core: github://luka6000/TagTuner/tagtuner-for-tagreader.yaml@main
+  core: !include tagtuner-for-tagreader.yaml
+  
 esphome:
   name: "${name}"
   friendly_name: ${friendly_name}
@@ -22,8 +23,6 @@ improv_serial:
   next_url: https://luka6000.github.io/TagTuner/
 
 wifi:
-  ap: !remove
-captive_portal: !remove
 
 button:
   - id: !remove btn_erase_tag
