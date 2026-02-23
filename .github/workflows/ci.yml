@@ -8,7 +8,7 @@ on:
     paths:
       - '*.yaml'
   schedule:
-    - cron: '0 9 7 * *'
+    - cron: '0 9 1,11,21 * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
