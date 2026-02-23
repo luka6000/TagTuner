@@ -12,7 +12,6 @@ substitutions:
   friendly_name: "TagTuner"
 
 esphome:
-  min_version: 2026.1.0
   name: "${name}"
   friendly_name: ${friendly_name}
   # Automatically add the mac address to the name

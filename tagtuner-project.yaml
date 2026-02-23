@@ -4,6 +4,7 @@ substitutions:
   magic: "260103"
 
 esphome:
+  min_version: 2026.2.0
   name: "${name}"
   friendly_name: ${friendly_name}
   # Automatically add the mac address to the name
