@@ -87,7 +87,7 @@ script:
         condition:
           switch.is_on: buzzon
         then:
-        - rtttl.play: "write:d=24,o=5,b=100:g,b"
+        - rtttl.play: "write:d=16,o=5,b=100:g,b"
     # - if:
     #     condition:
     #       switch.is_on: ledon
@@ -103,7 +103,7 @@ script:
         condition:
           switch.is_on: buzzon
         then:
-        - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+        - rtttl.play: "success:d=16,o=5,b=100:c,g,b"
     # - if:
     #     condition:
     #       switch.is_on: ledon
@@ -119,7 +119,7 @@ script:
         condition:
           switch.is_on: buzzon
         then:
-        - rtttl.play: "write:d=24,o=5,b=100:b,b"
+        - rtttl.play: "write:d=16,o=5,b=100:b,b"
     # - if:
     #     condition:
     #       switch.is_on: ledon
@@ -135,7 +135,7 @@ script:
         condition:
           switch.is_on: buzzon
         then:
-        - rtttl.play: "write:d=24,o=5,b=100:b"
+        - rtttl.play: "write:d=16,o=5,b=100:b"
     # - if:
     #     condition:
     #       switch.is_on: ledon
