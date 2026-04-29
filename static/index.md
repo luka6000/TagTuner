@@ -1,3 +1,4 @@
+- [Firmware installation](#firmware-installation)
 - [Getting started](#getting-started)
 - [Build your own TagTuner](#build-your-own-tagtuner)
 - [Using TagTuner](#using-tagtuner)
@@ -33,7 +34,7 @@ TagTuner is a device approved by the [Made for ESPHome](https://devices.esphome.
 Check out also the [TagTuner on HA Voice PE version](https://github.com/luka6000/TagTuner/blob/main/TagTuner-on-HA-Voice-PE.md)
 ![2B7737D0-8398-4024-95F7-A9C97CBA63E3_1_105_c](https://github.com/user-attachments/assets/3513e22a-9ef4-4424-92c9-9eba9368f3a5)
 
-# Installation
+## Firmware installation
 
 You can use the button below to install the pre-built firmware directly to your device via USB from the browser.
 
