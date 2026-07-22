@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v260110
+  author: LukaGra v260701
   domain: automation
   input:
     tuner_id:
@@ -106,7 +106,7 @@ blueprint:
         version:
           name: Blueprint version
           description: just for you to know
-          default: 260110
+          default: 260701
         notify_version:
           name: Notify about version
           description: mismatch of automation vs yaml firmware
@@ -115,7 +115,7 @@ blueprint:
           default: true
 
 variables:
-  device_id: !input tuner_id
+  tuner_device_id: !input tuner_id
   massplayer: !input massplayer
   httpplayer: !input httpplayer
   stop_on_tagremoved: !input stop_on_tagremoved
@@ -149,19 +149,19 @@ variables:
       mass
     {%endif%}
   text_playlist_uri: >-
-    {% for entity in device_entities(device_id) %}
+    {% for entity in device_entities(tuner_device_id) %}
       {% if entity is match("^text..*_playlist_uri") %}
         {{ entity }}
       {% endif%}
     {% endfor%}
   text_playlist_artist: >-
-    {% for entity in device_entities(device_id) %}
+    {% for entity in device_entities(tuner_device_id) %}
       {% if entity is match("^text..*_playlist_artist") %}
         {{ entity }}
       {% endif%}
     {% endfor%}
   text_playlist_name: >-
-    {% for entity in device_entities(device_id) %}
+    {% for entity in device_entities(tuner_device_id) %}
       {% if entity is match("^text..*_playlist_name_or_album_title") %}
         {{ entity }}
       {% endif%}
@@ -189,7 +189,7 @@ triggers:
       - "event action for TagTuner Related automation"
 conditions:
   - condition: template
-    value_template: "{{ trigger.event.data.device_id == device_id }}"
+    value_template: "{{ trigger.event.data.device_id == tuner_device_id }}"
 actions:
   - choose:
       - conditions:
@@ -322,6 +322,20 @@ actions:
                         alias: from tag
                 alias: announcement
               - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: '{{ action == "tagScanned" and source == "http" and uri|contains("music.apple.com") and device_attr(httpplayer, "model")|lower|contains("echo") }}'
+                    sequence:
+                      - action: media_player.media_stop
+                        target:
+                          entity_id: !input httpplayer
+                      - action: alexa_devices.send_text_command
+                        data:
+                          device_id: >-
+                            {{ device_id(httpplayer) }}
+                          text_command: >-
+                            Play {{ uri.split('/')[4] }} {{ uri.split('/')[5] }} from Apple Music
+                    alias: alexa & apple_music
                   - conditions:
                       - condition: template
                         value_template: '{{ action == "tagScanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
@@ -504,10 +518,10 @@ actions:
       - action: persistent_notification.create
         data:
           notification_id: >-
-            tagtuner_yaml_firmware_{{ device_attr(device_id, "name") }}
+            tagtuner_yaml_firmware_{{ device_attr(tuner_device_id, "name") }}
           title: Friendly notice
           message: >-
-            {{ device_attr(device_id, "name") }} yaml firmware is outdated at v{{ trigger.event.data.magic|int(2024) }}
+            {{ device_attr(tuner_device_id, "name") }} yaml firmware is outdated at v{{ trigger.event.data.magic|int(2024) }}
 
             Please consider upgrading for the best experience.
 
@@ -522,11 +536,11 @@ actions:
       - action: persistent_notification.create
         data:
           notification_id: >-
-            tagtuner_blprnt_version_{{ device_attr(device_id, "name") }}
+            tagtuner_blprnt_version_{{ device_attr(tuner_device_id, "name") }}
           title: Friendly notice
           message:
             '{{this.attributes.friendly_name}} blueprint automation is outdated at v{{blprnt_version}} while
-            {{ device_attr(device_id, "name") }} is at v{{ trigger.event.data.magic|int(2024) }}
+            {{ device_attr(tuner_device_id, "name") }} is at v{{ trigger.event.data.magic|int(2024) }}
 
             Please consider doing Re-import blueprint for the best experience.
 
