@@ -481,6 +481,15 @@ actions:
                   - action: media_player.volume_up
                     target:
                       entity_id: !input httpplayer
+                  - wait_for_trigger:
+                      - trigger: media_player.volume_changed
+                        target:
+                          entity_id: !input httpplayer
+                        options:
+                          threshold:
+                            type: any
+                    timeout:
+                      seconds: 2
               - conditions:
                   - condition: template
                     value_template: '{{ action == "volumeDown" }}'
@@ -488,6 +497,15 @@ actions:
                   - action: media_player.volume_down
                     target:
                       entity_id: !input httpplayer
+                  - wait_for_trigger:
+                      - trigger: media_player.volume_changed
+                        target:
+                          entity_id: !input httpplayer
+                        options:
+                          threshold:
+                            type: any
+                    timeout:
+                      seconds: 2
         alias: volume
   - if:
       - condition: template
