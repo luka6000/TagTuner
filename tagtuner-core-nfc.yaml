@@ -283,6 +283,14 @@ pn532_i2c:
           - homeassistant.tag_scanned: !lambda |-
               ESP_LOGD("tagtuner", "No TagTuner NDEF, using UID");
               return x;
+    - if:
+        condition:
+          lambda: 'return id(uri).find("https://www.home-assistant.io/tag/") != std::string::npos ;'
+        then:
+          - homeassistant.tag_scanned: !lambda |-
+              ESP_LOGD("tagtuner", "HA NDEF found");
+              size_t pos = id(uri).find("https://www.home-assistant.io/tag/");
+              return id(uri).substr(pos + 34);
         else:
           - script.execute:
               id: tagtuner_event
