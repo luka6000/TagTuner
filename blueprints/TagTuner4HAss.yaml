@@ -1,7 +1,7 @@
 blueprint:
   name: TagTuner music player for NFC tags automation
   description: https://github.com/luka6000/TagTuner#using-tagtuner
-  author: LukaGra v260701
+  author: LukaGra v260901
   domain: automation
   input:
     tuner_id:
@@ -106,7 +106,7 @@ blueprint:
         version:
           name: Blueprint version
           description: just for you to know
-          default: 260701
+          default: 260901
         notify_version:
           name: Notify about version
           description: mismatch of automation vs yaml firmware
@@ -136,11 +136,7 @@ variables:
     {%endif%}
   uri: >-
     {%if trigger.event.event_type == 'tag_scanned' %}
-      {%if trigger.event.data.name[0:5]=='sonos' %}
-        {{ trigger.event.data.name.split('://')[1] }}
-      {%else%}
-        {{ trigger.event.data.name }}
-      {%endif%}
+      {{ trigger.event.data.name }}
     {%else%}
       {{ trigger.event.data.uri }}
     {%endif%}
@@ -152,6 +148,13 @@ variables:
     {% elif uri is match('^(?:filesystem_local|filesystem_smb|apple_music|deezer|plex|qobuz|radiobrowser|soundcloud|spotify|tidal|tunein|ytmusic|library)(?:--.*)?://') %}
       mass
     {%endif%}
+  playlist: >-
+    {%if uri[-8:] == '/shuffle'%}
+      {%set pl = uri[0:-8] %}
+    {%else%}
+      {%set pl = uri %}
+    {%endif%}
+    {{ pl.split('://')[1]}}
   text_playlist_uri: >-
     {% for entity in device_entities(tuner_device_id) %}
       {% if entity is match("^text..*_playlist_uri") %}
@@ -342,14 +345,14 @@ actions:
                     alias: alexa & apple_music
                   - conditions:
                       - condition: template
-                        value_template: '{{ action == "tagScanned" and source == "sonos" and trigger.event.data.playlist != "" }}'
+                        value_template: '{{ action == "tagScanned" and source == "sonos" }}'
                     sequence:
                       - action: media_player.media_stop
                         target:
                           entity_id: !input httpplayer
                       - action: media_player.select_source
                         data:
-                          source: "{{ trigger.event.data.playlist }}"
+                          source: "{%if trigger.event.event_type == 'tag_scanned' and trigger.event.data.name.split('://')[1] != '' %}{{ playlist }}{%else%}{{ trigger.event.data.playlist }}{%endif%}"
                         target:
                           entity_id: !input httpplayer
                     alias: sonos
