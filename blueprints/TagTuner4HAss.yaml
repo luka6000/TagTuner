@@ -136,14 +136,18 @@ variables:
     {%endif%}
   uri: >-
     {%if trigger.event.event_type == 'tag_scanned' %}
-      {{ trigger.event.data.name }}
+      {%if trigger.event.data.name[0:5]=='sonos' %}
+        {{ trigger.event.data.name.split('://')[1] }}
+      {%else%}
+        {{ trigger.event.data.name }}
+      {%endif%}
     {%else%}
       {{ trigger.event.data.uri }}
     {%endif%}
   source: >-
     {%if uri[0:5]=='https' %}
       http
-    {%elif uri[0:10]=='sonos-2://' %}
+    {%elif uri[0:5]=='sonos' %}
       sonos
     {% elif uri is match('^(?:filesystem_local|filesystem_smb|apple_music|deezer|plex|qobuz|radiobrowser|soundcloud|spotify|tidal|tunein|ytmusic|library)(?:--.*)?://') %}
       mass
