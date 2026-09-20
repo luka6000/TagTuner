@@ -1,0 +1,6 @@
+static/* linguist-detectable=false
+*.css linguist-detectable=false
+*.scss linguist-detectable=false
+
+*.yaml linguist-language=YAML
+*.yml linguist-language=YAML
