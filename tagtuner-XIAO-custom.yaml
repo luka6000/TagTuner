@@ -32,6 +32,7 @@ esphome:
 
 esp32:
   board: seeed_xiao_esp32c6
+  watchdog_timeout: 15s
   framework:
     type: esp-idf
     sdkconfig_options:
