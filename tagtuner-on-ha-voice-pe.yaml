@@ -56,6 +56,9 @@ esphome:
             - lambda: id(init_in_progress) = false;
             - script.execute: control_leds
 
+esp32:
+  watchdog_timeout: 15s
+
 # To be able to get logs from the device via serial and api.
 # logger:
 #   # level: VERBOSE
