@@ -520,19 +520,19 @@ actions:
     then:
       - action: text.set_value
         data:
-          value: "{{ uri }}"
+          value: "{{ uri|truncate(255, true, '') }}"
         target:
           entity_id: "{{ text_playlist_uri }}"
       - action: text.set_value
         data:
           value: >-
-            {{ [state_attr(massplayer, 'media_artist'), state_attr(httpplayer, 'media_artist') ]|select|first }}
+            {{ [state_attr(massplayer, 'media_artist'), state_attr(httpplayer, 'media_artist') ]|select|first|truncate(50, true, '…') }}
         target:
           entity_id: "{{ text_playlist_artist }}"
       - action: text.set_value
         data:
           value: >-
-            {{ [state_attr(massplayer, 'media_album_name'), state_attr(httpplayer, 'media_album_name') ]|select|first }}
+            {{ [state_attr(massplayer, 'media_album_name'), state_attr(httpplayer, 'media_album_name') ]|select|first|truncate(100, true, '…') }}
         target:
           entity_id: "{{ text_playlist_name }}"
     alias: update helpers with first song for read-only tags
