@@ -8,6 +8,25 @@ ota:
 wifi:
   ap:
 
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "WiFi RSSI"
+    id: wifi_rssi
+    update_interval: 20s
+    entity_category: "diagnostic"
+    disabled_by_default: true
+
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_rssi
+    name: "WiFi Signal"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "%"
+    entity_category: "diagnostic"
+    device_class: ""
+    icon: "mdi:wifi-strength-2"
+    disabled_by_default: true
+
 script:
   - id: tagtuner_event
     parameters:
