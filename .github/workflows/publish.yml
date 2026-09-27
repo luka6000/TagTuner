@@ -40,7 +40,7 @@ jobs:
           source: ./static
           destination: ./output
       - name: Upload
-        uses: actions/upload-artifact@v4.3.6
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: site
           path: output
