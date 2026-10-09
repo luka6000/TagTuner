@@ -226,20 +226,22 @@ actions:
             value_template: "{{ next_on_rescan == true }}"
           - condition: not
             conditions:
-              - condition: state
-                entity_id: !input massplayer
-                state: paused
-                for:
-                  hours: 0
-                  minutes: 0
-                  seconds: 3
-              - condition: state
-                entity_id: !input massplayer
-                state: idle
-                for:
-                  hours: 0
-                  minutes: 0
-                  seconds: 3
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: !input massplayer
+                    state: paused
+                    for:
+                      hours: 0
+                      minutes: 0
+                      seconds: 3
+                  - condition: state
+                    entity_id: !input massplayer
+                    state: idle
+                    for:
+                      hours: 0
+                      minutes: 0
+                      seconds: 3
         sequence:
           - alias: play next
             choose:
