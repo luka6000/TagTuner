@@ -298,6 +298,20 @@ actions:
           - condition: template
             value_template: '{{ action == "tagScanned" and source != "" }}'
         sequence:
+          # Music Assistant: enable shuffle BEFORE starting playback so the
+          # queue is created shuffled and the first track is random as well.
+          # (Shuffling after playback started only reshuffles the remaining
+          # tracks; the first track would always be the playlist's first.)
+          # Other sources keep the original "shuffle after playback" below.
+          - if:
+              - condition: template
+                value_template: "{{ shuffle_playlist == true and source == 'mass' }}"
+            then:
+              - action: media_player.shuffle_set
+                data:
+                  shuffle: true
+                target:
+                  entity_id: !input httpplayer
           - parallel:
               - sequence:
                   - condition: template
@@ -407,7 +421,7 @@ actions:
                 target:
                   entity_id: !input httpplayer
           - condition: template
-            value_template: "{{ shuffle_playlist == true }}"
+            value_template: "{{ shuffle_playlist == true and source != 'mass' }}"
           - wait_for_trigger:
               - trigger: state
                 entity_id: !input httpplayer
